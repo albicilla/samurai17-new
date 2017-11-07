@@ -1,0 +1,288 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -Aa
+
+The output was:
+1
+<command-line>:0:1: error: missing '(' after predicate
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -D__CLASSIC_C__
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+CMakeCCompilerId.c:283:64: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";
+                                                                ^
+CMakeCCompilerId.c:508:64: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";
+                                                                ^
+CMakeCCompilerId.c:509:60: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";
+                                                            ^
+CMakeCCompilerId.c:528:43: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+   "INFO" ":" "dialect_default[" C_DIALECT "]";
+                                           ^
+CMakeCCompilerId.c:536:10: error: 'argc' was not declared in this scope
+ int main(argc, argv) int argc; char *argv[];
+          ^
+CMakeCCompilerId.c:536:16: error: 'argv' was not declared in this scope
+ int main(argc, argv) int argc; char *argv[];
+                ^
+CMakeCCompilerId.c:536:20: error: expression list treated as compound expression in initializer [-fpermissive]
+ int main(argc, argv) int argc; char *argv[];
+                    ^
+CMakeCCompilerId.c:536:22: error: expected ',' or ';' before 'int'
+ int main(argc, argv) int argc; char *argv[];
+                      ^
+CMakeCCompilerId.c:536:43: error: storage size of 'argv' isn't known
+ int main(argc, argv) int argc; char *argv[];
+                                           ^
+CMakeCCompilerId.c:540:1: error: expected unqualified-id before '{' token
+ {
+ ^
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_1fa1c/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_1fa1c.dir/build.make CMakeFiles/cmTC_1fa1c.dir/build
+Building C object CMakeFiles/cmTC_1fa1c.dir/testCCompiler.c.o
+/usr/local/bin/cc     -o CMakeFiles/cmTC_1fa1c.dir/testCCompiler.c.o   -c /Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c:2:3: error: #error "The CMAKE_C_COMPILER is set to a C++ compiler"
+ # error "The CMAKE_C_COMPILER is set to a C++ compiler"
+   ^
+make[1]: *** [CMakeFiles/cmTC_1fa1c.dir/testCCompiler.c.o] Error 1
+make: *** [cmTC_1fa1c/fast] Error 2
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -Aa
+
+The output was:
+1
+<command-line>:0:1: error: missing '(' after predicate
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -D__CLASSIC_C__
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+CMakeCCompilerId.c:283:64: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";
+                                                                ^
+CMakeCCompilerId.c:508:64: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";
+                                                                ^
+CMakeCCompilerId.c:509:60: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";
+                                                            ^
+CMakeCCompilerId.c:528:43: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+   "INFO" ":" "dialect_default[" C_DIALECT "]";
+                                           ^
+CMakeCCompilerId.c:536:10: error: 'argc' was not declared in this scope
+ int main(argc, argv) int argc; char *argv[];
+          ^
+CMakeCCompilerId.c:536:16: error: 'argv' was not declared in this scope
+ int main(argc, argv) int argc; char *argv[];
+                ^
+CMakeCCompilerId.c:536:20: error: expression list treated as compound expression in initializer [-fpermissive]
+ int main(argc, argv) int argc; char *argv[];
+                    ^
+CMakeCCompilerId.c:536:22: error: expected ',' or ';' before 'int'
+ int main(argc, argv) int argc; char *argv[];
+                      ^
+CMakeCCompilerId.c:536:43: error: storage size of 'argv' isn't known
+ int main(argc, argv) int argc; char *argv[];
+                                           ^
+CMakeCCompilerId.c:540:1: error: expected unqualified-id before '{' token
+ {
+ ^
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ae7d9/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ae7d9.dir/build.make CMakeFiles/cmTC_ae7d9.dir/build
+Building C object CMakeFiles/cmTC_ae7d9.dir/testCCompiler.c.o
+/usr/local/bin/cc     -o CMakeFiles/cmTC_ae7d9.dir/testCCompiler.c.o   -c /Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c:2:3: error: #error "The CMAKE_C_COMPILER is set to a C++ compiler"
+ # error "The CMAKE_C_COMPILER is set to a C++ compiler"
+   ^
+make[1]: *** [CMakeFiles/cmTC_ae7d9.dir/testCCompiler.c.o] Error 1
+make: *** [cmTC_ae7d9/fast] Error 2
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -Aa
+
+The output was:
+1
+<command-line>:0:1: error: missing '(' after predicate
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/cc 
+Build flags: 
+Id flags: -D__CLASSIC_C__
+
+The output was:
+1
+CMakeCCompilerId.c:2:3: error: #error "A C++ compiler has been selected for C."
+ # error "A C++ compiler has been selected for C."
+   ^
+CMakeCCompilerId.c:283:64: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";
+                                                                ^
+CMakeCCompilerId.c:508:64: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";
+                                                                ^
+CMakeCCompilerId.c:509:60: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+ char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";
+                                                            ^
+CMakeCCompilerId.c:528:43: warning: deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+   "INFO" ":" "dialect_default[" C_DIALECT "]";
+                                           ^
+CMakeCCompilerId.c:536:10: error: 'argc' was not declared in this scope
+ int main(argc, argv) int argc; char *argv[];
+          ^
+CMakeCCompilerId.c:536:16: error: 'argv' was not declared in this scope
+ int main(argc, argv) int argc; char *argv[];
+                ^
+CMakeCCompilerId.c:536:20: error: expression list treated as compound expression in initializer [-fpermissive]
+ int main(argc, argv) int argc; char *argv[];
+                    ^
+CMakeCCompilerId.c:536:22: error: expected ',' or ';' before 'int'
+ int main(argc, argv) int argc; char *argv[];
+                      ^
+CMakeCCompilerId.c:536:43: error: storage size of 'argv' isn't known
+ int main(argc, argv) int argc; char *argv[];
+                                           ^
+CMakeCCompilerId.c:540:1: error: expected unqualified-id before '{' token
+ {
+ ^
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c7c8a/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_c7c8a.dir/build.make CMakeFiles/cmTC_c7c8a.dir/build
+Building C object CMakeFiles/cmTC_c7c8a.dir/testCCompiler.c.o
+/usr/local/bin/cc     -o CMakeFiles/cmTC_c7c8a.dir/testCCompiler.c.o   -c /Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c:2:3: error: #error "The CMAKE_C_COMPILER is set to a C++ compiler"
+ # error "The CMAKE_C_COMPILER is set to a C++ compiler"
+   ^
+make[1]: *** [CMakeFiles/cmTC_c7c8a.dir/testCCompiler.c.o] Error 1
+make: *** [cmTC_c7c8a/fast] Error 2
+
+
