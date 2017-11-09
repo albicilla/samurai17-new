@@ -123,32 +123,32 @@ player/fast:
 	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/build
 .PHONY : player/fast
 
-greedy.o: greedy.cpp.o
+greedyC.o: greedyC.cpp.o
 
-.PHONY : greedy.o
+.PHONY : greedyC.o
 
 # target to build an object file
-greedy.cpp.o:
-	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedy.cpp.o
-.PHONY : greedy.cpp.o
+greedyC.cpp.o:
+	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedyC.cpp.o
+.PHONY : greedyC.cpp.o
 
-greedy.i: greedy.cpp.i
+greedyC.i: greedyC.cpp.i
 
-.PHONY : greedy.i
+.PHONY : greedyC.i
 
 # target to preprocess a source file
-greedy.cpp.i:
-	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedy.cpp.i
-.PHONY : greedy.cpp.i
+greedyC.cpp.i:
+	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedyC.cpp.i
+.PHONY : greedyC.cpp.i
 
-greedy.s: greedy.cpp.s
+greedyC.s: greedyC.cpp.s
 
-.PHONY : greedy.s
+.PHONY : greedyC.s
 
 # target to generate assembly for a file
-greedy.cpp.s:
-	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedy.cpp.s
-.PHONY : greedy.cpp.s
+greedyC.cpp.s:
+	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedyC.cpp.s
+.PHONY : greedyC.cpp.s
 
 raceState.o: raceState.cpp.o
 
@@ -186,9 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... player"
-	@echo "... greedy.o"
-	@echo "... greedy.i"
-	@echo "... greedy.s"
+	@echo "... greedyC.o"
+	@echo "... greedyC.i"
+	@echo "... greedyC.s"
 	@echo "... raceState.o"
 	@echo "... raceState.i"
 	@echo "... raceState.s"

@@ -57,28 +57,28 @@ include CMakeFiles/player.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/player.dir/flags.make
 
-CMakeFiles/player.dir/greedy.cpp.o: CMakeFiles/player.dir/flags.make
-CMakeFiles/player.dir/greedy.cpp.o: ../greedy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/player.dir/greedy.cpp.o"
-	/usr/local/bin/g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/player.dir/greedy.cpp.o -c /Users/albicilla/programming/samurAI/samurai17/player/greedy.cpp
+CMakeFiles/player.dir/greedyC.cpp.o: CMakeFiles/player.dir/flags.make
+CMakeFiles/player.dir/greedyC.cpp.o: ../greedyC.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/player.dir/greedyC.cpp.o"
+	/usr/local/bin/g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/player.dir/greedyC.cpp.o -c /Users/albicilla/programming/samurAI/samurai17/player/greedyC.cpp
 
-CMakeFiles/player.dir/greedy.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/player.dir/greedy.cpp.i"
-	/usr/local/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/albicilla/programming/samurAI/samurai17/player/greedy.cpp > CMakeFiles/player.dir/greedy.cpp.i
+CMakeFiles/player.dir/greedyC.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/player.dir/greedyC.cpp.i"
+	/usr/local/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/albicilla/programming/samurAI/samurai17/player/greedyC.cpp > CMakeFiles/player.dir/greedyC.cpp.i
 
-CMakeFiles/player.dir/greedy.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/player.dir/greedy.cpp.s"
-	/usr/local/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/albicilla/programming/samurAI/samurai17/player/greedy.cpp -o CMakeFiles/player.dir/greedy.cpp.s
+CMakeFiles/player.dir/greedyC.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/player.dir/greedyC.cpp.s"
+	/usr/local/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/albicilla/programming/samurAI/samurai17/player/greedyC.cpp -o CMakeFiles/player.dir/greedyC.cpp.s
 
-CMakeFiles/player.dir/greedy.cpp.o.requires:
+CMakeFiles/player.dir/greedyC.cpp.o.requires:
 
-.PHONY : CMakeFiles/player.dir/greedy.cpp.o.requires
+.PHONY : CMakeFiles/player.dir/greedyC.cpp.o.requires
 
-CMakeFiles/player.dir/greedy.cpp.o.provides: CMakeFiles/player.dir/greedy.cpp.o.requires
-	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedy.cpp.o.provides.build
-.PHONY : CMakeFiles/player.dir/greedy.cpp.o.provides
+CMakeFiles/player.dir/greedyC.cpp.o.provides: CMakeFiles/player.dir/greedyC.cpp.o.requires
+	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedyC.cpp.o.provides.build
+.PHONY : CMakeFiles/player.dir/greedyC.cpp.o.provides
 
-CMakeFiles/player.dir/greedy.cpp.o.provides.build: CMakeFiles/player.dir/greedy.cpp.o
+CMakeFiles/player.dir/greedyC.cpp.o.provides.build: CMakeFiles/player.dir/greedyC.cpp.o
 
 
 CMakeFiles/player.dir/raceState.cpp.o: CMakeFiles/player.dir/flags.make
@@ -107,25 +107,25 @@ CMakeFiles/player.dir/raceState.cpp.o.provides.build: CMakeFiles/player.dir/race
 
 # Object files for target player
 player_OBJECTS = \
-"CMakeFiles/player.dir/greedy.cpp.o" \
+"CMakeFiles/player.dir/greedyC.cpp.o" \
 "CMakeFiles/player.dir/raceState.cpp.o"
 
 # External object files for target player
 player_EXTERNAL_OBJECTS =
 
-../player: CMakeFiles/player.dir/greedy.cpp.o
-../player: CMakeFiles/player.dir/raceState.cpp.o
-../player: CMakeFiles/player.dir/build.make
-../player: CMakeFiles/player.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../player"
+../beam91A/player: CMakeFiles/player.dir/greedyC.cpp.o
+../beam91A/player: CMakeFiles/player.dir/raceState.cpp.o
+../beam91A/player: CMakeFiles/player.dir/build.make
+../beam91A/player: CMakeFiles/player.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../beam91A/player"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/player.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/player.dir/build: ../player
+CMakeFiles/player.dir/build: ../beam91A/player
 
 .PHONY : CMakeFiles/player.dir/build
 
-CMakeFiles/player.dir/requires: CMakeFiles/player.dir/greedy.cpp.o.requires
+CMakeFiles/player.dir/requires: CMakeFiles/player.dir/greedyC.cpp.o.requires
 CMakeFiles/player.dir/requires: CMakeFiles/player.dir/raceState.cpp.o.requires
 
 .PHONY : CMakeFiles/player.dir/requires

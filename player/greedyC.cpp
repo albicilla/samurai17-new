@@ -3,20 +3,25 @@
 #include <limits>
 #include "raceState.hpp"
 
-const int searchDepth = 2;
+const int searchDepth = 9;
+const int MAX_DEPTH = 1;
+
+
 
 struct PlayerState {
+    //自機の位置と速度
     Point position;
     IntVec velocity;
 
+    //比較するための比較演算子
     bool operator<(const PlayerState &ps) const {
         return
                 position != ps.position ?
-                position < ps.position :
+                ps.position < position :
                 velocity < ps.velocity;
     }
 
-    PlayerState(Point p, IntVec v) : position(p), velocity(v) {}
+    PlayerState(Point p, IntVec v) : position(p), velocity(v){}
 };
 
 struct Candidate {
@@ -28,72 +33,122 @@ struct Candidate {
             step(t), state(s), from(f), how(h) {}
 };
 
-// rs.positon 現在地　rs.velocity 現在の速度 course コースの情報
+//global宣言
+//候補を格納するqueue
+queue<Candidate *> candidates;
+//たどり着けるかを記録するmap
+map<PlayerState, Candidate *> reached;
+
+
+//次の候補
+//次の9方向に行った時のstateが配列として返される
+vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
+
+
+    //次にいける９^step個(reachedで一応枝刈りしてる)の候補を格納する配列
+    vector<Candidate*> ret;
+
+    candidates.push(ca);
+    while(!candidates.empty()){
+        Candidate *now = candidates.front();
+        //cerr<<"here"<<endl;
+        candidates.pop();
+        //行き先を9種類全てループ
+        for(int cay = 1; cay != -2;cay--){
+            for(int cax = -1;cax != 2; cax++){
+                //cerr<<"search: "<<cay<<" "<<cax<<endl;
+                //cerr<<"now->step: "<<now->step<<endl;
+                //次の速度
+                IntVec nextVelo = now->state.velocity + IntVec(cax,cay);
+                //次の一
+                Point nextPos = now->state.position + nextVelo;
+
+                //ステップ数が0でなく障害物に衝突しない
+                if(!course.obstacled(now->state.position,nextPos)){
+                    //次のプレイヤーの位置、速度を次の候補変数に格納
+                    PlayerState next(nextPos,nextVelo);
+                    Candidate *nextCand =
+                            new Candidate(now->step + 1, next, now, IntVec(cax, cay));
+                    if (reached.count(next) == 0) { //そこにたどり着くのが最初の候補であれば
+                        //探索深さよりも浅く　かつ　コースをはみ出していなければ
+                        if (now->step < searchDepth && nextPos.y < course.length) {
+                            //次の候補に追加
+                            candidates.push(nextCand);
+                        }
+                        //nextにたどり着けることを記録
+                        reached[next] = nextCand;
+                        //cerr<<"statusにpush?"<<endl;
+                        //次行ける結果を格納
+                        ret.push_back(nextCand);
+
+                    }
+
+
+
+                }
+            }
+        }
+
+    }
+
+    return ret;
+}
+
+// rs.positon 自機の現在地　rs.velocity 自機の現在の速度 course コースの情報
 IntVec play(RaceState &rs, const Course &course) {
-    //候補を格納するqueue
-    queue<Candidate *> candidates;
-    //たどり着けるかを記録するmap
-    map<PlayerState, Candidate *> reached;
-    //initialはプレイヤーの状態
+
+    //初期化
+    while (!candidates.empty()) candidates.pop();
+    reached.clear();
+
+
+    //initialはプレイヤーの状態 自機の位置、速度　相手の位置、速度
     PlayerState initial(rs.position, rs.velocity);
     //step 初期のプレイヤーの状態　次のプレイヤーの状態　速度
     Candidate initialCand(0, initial, nullptr, IntVec(0, 0));
     //reached[initial]はinitialに辿りつけることを保存するmap
     reached[initial] = &initialCand;
     //最も良い候補を保存する変数
-    Candidate *best = &initialCand;
-    double goalTime = numeric_limits<double>::max();
     candidates.push(&initialCand);
 
-    //幅優先探索
-    do {
-        Candidate *c = candidates.front();
-        candidates.pop();
-        //速度を9種類全てループ
-        for (int cay = 1; cay != -2; cay--) {
-            for (int cax = -1; cax != 2; cax++) {
-                //次の速度
-                IntVec nextVelo = c->state.velocity + IntVec(cax, cay);
-                //次の位置
-                Point nextPos = c->state.position + nextVelo;
-                //step数が0　ライバルと衝突しない　コース状の障害物に衝突しない
-                if ((c->step != 0 ||
-                     !LineSegment(c->state.position, nextPos).goesThru(rs.oppPosition)) &&
-                    !course.obstacled(c->state.position, nextPos)) {
-                    //次のプレイヤーの位置、速度を次の候補変数に格納
-                    PlayerState next(nextPos, nextVelo);
-                    Candidate *nextCand =
-                            new Candidate(c->step + 1, next, c, IntVec(cax, cay));
 
-                    //次の候補でゴールが可能ならば
-                    if (nextPos.y >= course.length) {
-                        //tに今回の候補でゴールに着くまでの時間を記録
-                        double t = c->step +
-                                   (double) (course.length - c->state.position.y) / nextVelo.y;
-                        //暫定goalTimeより小さければそれに決定
-                        if (t < goalTime) {
-                            best = nextCand;
-                            goalTime = t;
-                        }
-                    } else if (reached.count(next) == 0) { //そこにたどり着くのが最初の候補であれば
-                        //探索深さよりも浅く　かつ　コースをはみ出していなければ
-                        if (c->step < searchDepth && nextPos.y < course.length) {
-                            //次の候補に追加
-                            candidates.push(nextCand);
-                        }
-                        //nextにたどり着けることを記録
-                        reached[next] = nextCand;
-                        //nextのy座標が現在のbestのy座標より大きいならbestを更新
-                        if (nextPos.y > best->state.position.y) {
-                            best = nextCand;
-                        }
-                    }
-                }
+    //探索の深さごとの候補を格納する配列
+    vector<Candidate*> status[MAX_DEPTH+1];
+    status[0].push_back(&initialCand);
+
+
+    for(int depth=0;depth<MAX_DEPTH;++depth){
+        //ビームサーチの切り捨て部分
+        //ここに書く
+
+        //ここまで
+
+        //cerr<<"depth:"<<depth<<endl;
+
+        //深さ depthの状態を列挙
+        for(Candidate* state : status[depth]){
+            //cerr<<"generate_next_status(state,course).size: "<<endl;
+            for(Candidate* next_state: generate_next_status(state,course)) {
+               status[depth + 1].push_back(next_state);
             }
         }
-    } while (!candidates.empty());
+        cerr<<"depth serch巡回中〜"<<endl;
+    }
 
 
+    sort(status[MAX_DEPTH].begin(),status[MAX_DEPTH].end());
+    cerr<<status[MAX_DEPTH].size()<<endl;
+    Candidate *best ;
+
+    if(status[MAX_DEPTH].size()==0){
+        cerr<<"硬派がないみたいだから初期値入れるね！"<<endl;
+        best = &initialCand;
+    }else{
+        best = status[MAX_DEPTH][0];
+    }
+
+
+    cerr<<"best?"<<endl;
 
     if (best == &initialCand) {
         // No good move found
@@ -117,6 +172,7 @@ int main(int argc, char *argv[]) {
     while (true) {
         RaceState rs(cin, course);
         IntVec accel = play(rs, course);
+        cerr<<"accel.x"<<accel.x<<" "<<"accel.y"<<accel.y<<endl;
         cout << accel.x << ' ' << accel.y << endl;
     }
 }

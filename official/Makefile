@@ -1,4 +1,4 @@
-CPPFLAGS= -pthread -std=c++11 -g -Wall
+CPPFLAGS= -pthread -std=c++11 -g -Wall -I /usr/local/Cellar/boost/1.65.1/include
 CPP= c++
 
 OBJECTS= main.o course.o raceState.o player.o

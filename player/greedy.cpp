@@ -3,7 +3,7 @@
 #include <limits>
 #include "raceState.hpp"
 
-const int searchDepth = 2;
+const int searchDepth = 7;
 
 struct PlayerState {
     Point position;

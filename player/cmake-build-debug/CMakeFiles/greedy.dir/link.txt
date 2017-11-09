@@ -1,0 +1,1 @@
+/usr/local/bin/g++   -std=c++14 -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/greedy.dir/greedy.cpp.o CMakeFiles/greedy.dir/raceState.cpp.o  -o ../greedy 

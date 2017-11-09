@@ -38,8 +38,8 @@
 				</MakeCommands>
 			</Target>
 			<Target title="player">
-				<Option output="/Users/albicilla/programming/samurAI/samurai17/player/player" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/albicilla/programming/samurAI/samurai17/player/"/>
+				<Option output="/Users/albicilla/programming/samurAI/samurai17/player/beam91A/player" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/albicilla/programming/samurAI/samurai17/player/beam91A/"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -62,8 +62,8 @@
 				</MakeCommands>
 			</Target>
 			<Target title="player/fast">
-				<Option output="/Users/albicilla/programming/samurAI/samurai17/player/player" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/albicilla/programming/samurAI/samurai17/player/"/>
+				<Option output="/Users/albicilla/programming/samurAI/samurai17/player/beam91A/player" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/albicilla/programming/samurAI/samurai17/player/beam91A/"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -86,7 +86,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/albicilla/programming/samurAI/samurai17/player/greedy.cpp">
+		<Unit filename="/Users/albicilla/programming/samurAI/samurai17/player/greedyC.cpp">
 			<Option target="player"/>
 		</Unit>
 		<Unit filename="/Users/albicilla/programming/samurAI/samurai17/player/raceState.cpp">

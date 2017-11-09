@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/albicilla/programming/samurAI/samurai17/player/greedy.cpp" "/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/player.dir/greedy.cpp.o"
+  "/Users/albicilla/programming/samurAI/samurai17/player/greedyC.cpp" "/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/player.dir/greedyC.cpp.o"
   "/Users/albicilla/programming/samurAI/samurai17/player/raceState.cpp" "/Users/albicilla/programming/samurAI/samurai17/player/cmake-build-debug/CMakeFiles/player.dir/raceState.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
