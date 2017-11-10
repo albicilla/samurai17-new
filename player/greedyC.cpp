@@ -3,8 +3,8 @@
 #include <limits>
 #include "raceState.hpp"
 
-const int searchDepth = 9;
-const int MAX_DEPTH = 1;
+const int searchDepth = 1;
+const int MAX_DEPTH = 5;
 
 
 
@@ -17,8 +17,19 @@ struct PlayerState {
     bool operator<(const PlayerState &ps) const {
         return
                 position != ps.position ?
-                ps.position < position :
-                velocity < ps.velocity;
+                position < ps.position :
+                velocity < velocity;
+    }
+
+    bool operator !=(const PlayerState &ps)const{
+        return position != ps.position;
+    }
+
+    int operator -(const PlayerState &ps)const{
+        return position.y - ps.position.y;
+    }
+    int operator +(const PlayerState &ps)const{
+        return position.y + ps.position.y;
     }
 
     PlayerState(Point p, IntVec v) : position(p), velocity(v){}
@@ -47,6 +58,9 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
 
     //次にいける９^step個(reachedで一応枝刈りしてる)の候補を格納する配列
     vector<Candidate*> ret;
+    //初期化
+    while (!candidates.empty()) candidates.pop();
+    reached.clear();
 
     candidates.push(ca);
     while(!candidates.empty()){
@@ -64,14 +78,15 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
                 Point nextPos = now->state.position + nextVelo;
 
                 //ステップ数が0でなく障害物に衝突しない
-                if(!course.obstacled(now->state.position,nextPos)){
+                if(now->step!=0 ||!course.obstacled(now->state.position,nextPos)){
                     //次のプレイヤーの位置、速度を次の候補変数に格納
                     PlayerState next(nextPos,nextVelo);
+                    //cerr<<"nextCand"<<endl;
                     Candidate *nextCand =
                             new Candidate(now->step + 1, next, now, IntVec(cax, cay));
                     if (reached.count(next) == 0) { //そこにたどり着くのが最初の候補であれば
                         //探索深さよりも浅く　かつ　コースをはみ出していなければ
-                        if (now->step < searchDepth && nextPos.y < course.length) {
+                        if (now->step < searchDepth && nextPos.y < course.length && nextPos.x > 0) {
                             //次の候補に追加
                             candidates.push(nextCand);
                         }
@@ -97,11 +112,12 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
 // rs.positon 自機の現在地　rs.velocity 自機の現在の速度 course コースの情報
 IntVec play(RaceState &rs, const Course &course) {
 
+    cerr<<"s"<<endl;
     //初期化
     while (!candidates.empty()) candidates.pop();
     reached.clear();
 
-
+    cerr<<"t"<<endl;
     //initialはプレイヤーの状態 自機の位置、速度　相手の位置、速度
     PlayerState initial(rs.position, rs.velocity);
     //step 初期のプレイヤーの状態　次のプレイヤーの状態　速度
@@ -117,34 +133,45 @@ IntVec play(RaceState &rs, const Course &course) {
     status[0].push_back(&initialCand);
 
 
-    for(int depth=0;depth<MAX_DEPTH;++depth){
+    for(int depth=0;depth<MAX_DEPTH;depth++){
         //ビームサーチの切り捨て部分
         //ここに書く
 
         //ここまで
 
-        //cerr<<"depth:"<<depth<<endl;
+        cerr<<"depth:"<<depth<<endl;
 
         //深さ depthの状態を列挙
         for(Candidate* state : status[depth]){
             //cerr<<"generate_next_status(state,course).size: "<<endl;
             for(Candidate* next_state: generate_next_status(state,course)) {
+                //cerr<<"next_State";
                status[depth + 1].push_back(next_state);
+                //cerr<<"push_Backした！"<<endl;
             }
+            //cerr<<"中のforループ終了";
         }
-        cerr<<"depth serch巡回中〜"<<endl;
+        //cerr<<"depth serch巡回中〜"<<endl;
     }
 
+    //cerr<<"size計算suruよ"<<endl;
 
-    sort(status[MAX_DEPTH].begin(),status[MAX_DEPTH].end());
+    int size = status[MAX_DEPTH].size();
+    cerr<<"size="<<size<<endl;
+    int temp=-1;
+    Candidate *best;
+    for (int i=0 ;i<size;i++){
+        if(temp<status[MAX_DEPTH][i]->state.position.y){
+            temp=status[MAX_DEPTH][i]->state.position.y;
+            best=status[MAX_DEPTH][i];
+        }
+    }
+    //cerr<<"temp :" <<temp<<endl;
     cerr<<status[MAX_DEPTH].size()<<endl;
-    Candidate *best ;
 
     if(status[MAX_DEPTH].size()==0){
-        cerr<<"硬派がないみたいだから初期値入れるね！"<<endl;
+        cerr<<"候補がないみたいだから初期値入れるね！"<<endl;
         best = &initialCand;
-    }else{
-        best = status[MAX_DEPTH][0];
     }
 
 
