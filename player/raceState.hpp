@@ -13,6 +13,10 @@ struct IntVec {
         return IntVec(x + another.x, y + another.y);
     }
 
+    inline IntVec operator-(const IntVec &another) const {
+        return IntVec(x-another.x,y-another.y);
+    }
+
     inline bool operator==(const IntVec &another) const {
         return x == another.x && y == another.y;
     }
@@ -24,6 +28,7 @@ struct IntVec {
     inline bool operator<(const IntVec &another) const {
         return y != another.y ? y < another.y : x < another.x;
     }
+
 };
 
 typedef IntVec Point;
