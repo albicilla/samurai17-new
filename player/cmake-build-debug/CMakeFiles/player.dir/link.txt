@@ -1,0 +1,1 @@
+/usr/local/bin/g++   -std=c++14 -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/player.dir/greedy.cpp.o CMakeFiles/player.dir/raceState.cpp.o  -o ../player 
