@@ -45,10 +45,10 @@ bool Course::obstacled(Point &from, Point &to) const {
     if (x1 < x2) {
         xstep = 1;
         xstart = max(0, x1);
-        xend = min((int)width, x2);
+        xend = min(width, x2);
     } else {
         xstep = -1;
-        xstart = min((int)width, x1);
+        xstart = min(width, x1);
         xend = max(0, x2);
     }
     if (y1 == y2) {
@@ -61,10 +61,10 @@ bool Course::obstacled(Point &from, Point &to) const {
     if (y1 < y2) {
         ystep = 1;
         ystart = max(0, y1);
-        yend = min((int)length, y2);
+        yend = min(length, y2);
     } else {
         ystep = -1;
-        ystart = min((int)length, y1);
+        ystart = min(length, y1);
         yend = max(0, y2);
     }
     if (x1 == x2) {
