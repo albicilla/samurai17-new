@@ -96,7 +96,7 @@ IntVec play(RaceState &rs, const Course &course) {
 
 
     if (best == &initialCand) {
-        // No good move found
+        // 良い動きが見つからなかったよ！
         // Slowing down for a while might be a good strategy
         int ax = 0, ay = 0;
         if (rs.velocity.x < 0) ax += 1;
