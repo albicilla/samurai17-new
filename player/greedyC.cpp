@@ -3,8 +3,8 @@
 #include <limits>
 #include "raceState.hpp"
 
-const int searchDepth = 1;
-const int MAX_DEPTH = 5;
+const int searchDepth = 10;
+const int MAX_DEPTH = 1;
 
 
 
@@ -42,7 +42,13 @@ struct Candidate {
     IntVec how;            //   with this acceleration
     Candidate(int t, PlayerState s, Candidate *f, IntVec h) :
             step(t), state(s), from(f), how(h) {}
+    int cost;
 };
+
+// 比較関数を定義
+bool GoodEvalOrder( const Candidate* left, const Candidate* right ) {
+    return left->cost < right->cost;
+}
 
 //global宣言
 //候補を格納するqueue
@@ -51,6 +57,20 @@ queue<Candidate *> candidates;
 map<PlayerState, Candidate *> reached;
 
 
+//評価関数 今と次の行く場所、盤面の状態
+int calcCost(Candidate* now,Point nextPos){
+    int ret;
+    //評価値
+    //y方向が高ければ高い方が良い
+    ret+=(nextPos.y)*3;
+    //x方向への移動が大きければ大きいほど良い
+    ret+=abs(now->state.position.x-nextPos.x);
+    //壁から離れていた方が良い
+    //costX-=abs(nextPos.x-7);
+
+
+    return ret;
+}
 //次の候補
 //次の9方向に行った時のstateが配列として返される
 vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
@@ -78,7 +98,7 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
                 Point nextPos = now->state.position + nextVelo;
 
                 //ステップ数が0でなく障害物に衝突しない
-                if(now->step!=0 ||!course.obstacled(now->state.position,nextPos)){
+                if(!course.obstacled(now->state.position,nextPos)){
                     //次のプレイヤーの位置、速度を次の候補変数に格納
                     PlayerState next(nextPos,nextVelo);
                     //cerr<<"nextCand"<<endl;
@@ -86,7 +106,11 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
                             new Candidate(now->step + 1, next, now, IntVec(cax, cay));
                     if (reached.count(next) == 0) { //そこにたどり着くのが最初の候補であれば
                         //探索深さよりも浅く　かつ　コースをはみ出していなければ
-                        if (now->step < searchDepth && nextPos.y < course.length && nextPos.x > 0) {
+                        if (now->step < searchDepth && nextPos.y <= course.length && nextPos.x > 0) {
+
+
+                            //評価値の計算
+                            nextCand->cost=calcCost(now,nextPos);
                             //次の候補に追加
                             candidates.push(nextCand);
                         }
@@ -136,7 +160,12 @@ IntVec play(RaceState &rs, const Course &course) {
     for(int depth=0;depth<MAX_DEPTH;depth++){
         //ビームサーチの切り捨て部分
         //ここに書く
-
+        const int BEAM_WIDTH = 50;
+        //評価値が良い順でsort
+        sort(status[depth].begin(), status[depth].end(), GoodEvalOrder);
+        //上位BEAM_WIDTHに入らないものを削除
+        if(status[depth].size()>BEAM_WIDTH)
+            status[depth].erase(status[depth].begin()+BEAM_WIDTH,status[depth].end());
         //ここまで
 
         cerr<<"depth:"<<depth<<endl;
@@ -154,7 +183,7 @@ IntVec play(RaceState &rs, const Course &course) {
         //cerr<<"depth serch巡回中〜"<<endl;
     }
 
-    //cerr<<"size計算suruよ"<<endl;
+    //cerr<<"size計算するよ"<<endl;
 
     int size = status[MAX_DEPTH].size();
     cerr<<"size="<<size<<endl;

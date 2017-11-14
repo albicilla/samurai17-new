@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/player.dir/greedyC.cpp.o"
   "CMakeFiles/player.dir/raceState.cpp.o"
-  "../beam91A/player.pdb"
-  "../beam91A/player"
+  "../beamT75/player.pdb"
+  "../beamT75/player"
 )
 
 # Per-language clean rules from dependency scanning.
