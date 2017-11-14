@@ -2,6 +2,8 @@ import json
 import random
 from datetime import datetime
 
+import numpy as np
+
 w = 15
 l = 100
 v = 8
@@ -19,9 +21,9 @@ distribution = {
 }
 
 # 分布を使って10個間隔で生成する
-for i in range(0, l, 10):
+for i in range(0, l, 9):
     x_pos = random.randint(0, 2)  # 基準になるx方向の位置を左・中央・右から選ぶ
-    width = random.randint(1, w - 3)  # 障害物の幅を決める
+    width = int(max(min(np.random.normal(w / 2, 1.5), w - 3), 0))  # 障害物の幅を決める
 
     dist = random.choice(list(distribution.keys()))
 
