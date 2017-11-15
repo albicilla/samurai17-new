@@ -1,0 +1,2088 @@
+%PDF-1.3
+%âãÏÓ
+2 0 obj
+<<
+/Length 15000
+>>
+stream
+BT
+/TT2 1 Tf
+0 10 -10 0 35.6667 29 Tm
+0 g
+/GS1 gs
+0 Tc
+0 Tw
+(HOGE University \(team: HOGE\)                                                                                      Page 1 of 3)Tj
+/TT4 1 Tf
+0 7 -7 0 49 46.8 Tm
+[(1:)-599.8(#)]TJ
+/TT2 1 Tf
+0.373 0.62 0.627 rg
+2.4 0 TD
+(include)Tj
+/TT4 1 Tf
+0 g
+4.2 0 TD
+( )Tj
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+0.6 0 TD
+(<map>)Tj
+/TT4 1 Tf
+0 g
+-7.2 -1.1429 TD
+[(2:)-599.8(#)]TJ
+/TT2 1 Tf
+0.373 0.62 0.627 rg
+2.4 0 TD
+(include)Tj
+/TT4 1 Tf
+0 g
+4.2 0 TD
+( )Tj
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+0.6 0 TD
+(<queue>)Tj
+/TT4 1 Tf
+0 g
+-7.2 -1.1429 TD
+[(3:)-599.8(#)]TJ
+/TT2 1 Tf
+0.373 0.62 0.627 rg
+2.4 0 TD
+(include)Tj
+/TT4 1 Tf
+0 g
+4.2 0 TD
+( )Tj
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+0.6 0 TD
+(<limits>)Tj
+/TT4 1 Tf
+0 g
+-7.2 -1.1429 TD
+[(4:)-599.8(#)]TJ
+/TT2 1 Tf
+0.373 0.62 0.627 rg
+2.4 0 TD
+(include)Tj
+/TT4 1 Tf
+0 g
+4.2 0 TD
+( )Tj
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+0.6 0 TD
+("raceState.hpp")Tj
+/TT4 1 Tf
+0 g
+-7.2 -1.1429 TD
+(5:)Tj
+T*
+(6:)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+1.8 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+0.6 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( searchDepth = 10;)Tj
+-7.2 -1.1429 TD
+(7:)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+1.8 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+0.6 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( MAX_DEPTH = 1;)Tj
+-7.2 -1.1429 TD
+(8:)Tj
+T*
+(9:)Tj
+-0.6 -1.1429 TD
+(10:)Tj
+T*
+(11:)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+2.4 0 TD
+(struct)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( PlayerState {)Tj
+-6 -1.1429 TD
+[(12:)-599.7(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//è\\207ªæ©\\237ã\\201®ä½\\215ç½®ã\\201¨é\\200\\237åº¦)Tj
+/TT4 1 Tf
+-4.8 -1.1429 TD
+(13:)Tj
+0 g
+2.4 0 TD
+(    Point position;)Tj
+-2.4 -1.1429 TD
+[(14:)-599.7(    IntVec velocity;)]TJ
+T*
+(15:)Tj
+T*
+[(16:)-599.7(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//æ¯\\224è¼\\203ã\\201\\231ã\\202\\213ã\\201\\237ã\\202\\201ã\\201®æ¯\\224è¼\\203æ¼\\224ç®\\227)Tj
+-6.7429 -1.1429 TD
+(å-\\220)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(17:)Tj
+0 g
+2.4 0 TD
+(    )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+2.4 0 TD
+(bool)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+( )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+0.6 0 TD
+(operator)Tj
+/TT4 1 Tf
+0 g
+4.8 0 TD
+(<\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+1.2 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( PlayerState &ps\) )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+10.8 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( {)Tj
+-30.6 -1.1429 TD
+[(18:)-599.7(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.2 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+-7.2 -1.1429 TD
+[(19:)-599.7(                position != ps.position ?)]TJ
+T*
+[(20:)-599.7(                position < ps.position :)]TJ
+T*
+[(21:)-599.7(                velocity < velocity;)]TJ
+T*
+[(22:)-599.7(    })]TJ
+T*
+(23:)Tj
+T*
+[(24:)-599.7(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(bool)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+( )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+0.6 0 TD
+(operator)Tj
+/TT4 1 Tf
+0 g
+4.8 0 TD
+( !=\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+2.4 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( PlayerState &ps\))Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+10.2 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+({)Tj
+-31.2 -1.1429 TD
+[(25:)-599.7(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.2 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( position != ps.position;)Tj
+-10.8 -1.1429 TD
+[(26:)-599.7(    })]TJ
+T*
+(27:)Tj
+T*
+[(28:)-599.7(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+0.6 0 TD
+(operator)Tj
+/TT4 1 Tf
+0 g
+4.8 0 TD
+( -\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+1.8 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( PlayerState &ps\))Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+10.2 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+({)Tj
+-30 -1.1429 TD
+[(29:)-599.7(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.2 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( position.y - ps.position.y;)Tj
+-10.8 -1.1428 TD
+[(30:)-599.7(    })]TJ
+T*
+[(31:)-599.7(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+0.6 0 TD
+(operator)Tj
+/TT4 1 Tf
+0 g
+4.8 0 TD
+( +\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+1.8 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( PlayerState &ps\))Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+10.2 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+({)Tj
+-30 -1.1429 TD
+[(32:)-599.7(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.2 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( position.y + ps.position.y;)Tj
+-10.8 -1.1429 TD
+[(33:)-599.7(    })]TJ
+T*
+(34:)Tj
+T*
+[(35:)-599.7(    PlayerState\(Point p, IntVec v\) : position\(p\), velocity\(v\){})]TJ
+T*
+[(36:)-599.7(};)]TJ
+T*
+(37:)Tj
+T*
+(38:)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+2.4 0 TD
+(struct)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( Candidate {)Tj
+-6 -1.1429 TD
+[(39:)-599.7(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( step;            )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+10.8 0 TD
+(// Steps needed to come here)Tj
+/TT4 1 Tf
+-17.4 -1.1429 TD
+(40:)Tj
+0 g
+2.4 0 TD
+(    PlayerState state;        )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+18 0 TD
+(// State of the player)Tj
+/TT4 1 Tf
+-20.4 -1.1429 TD
+(41:)Tj
+0 g
+2.4 0 TD
+(    Candidate *from;        )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+16.8 0 TD
+(// Came here from this place)Tj
+/TT4 1 Tf
+-19.2 -1.1429 TD
+(42:)Tj
+0 g
+2.4 0 TD
+(    IntVec how;            )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+16.2 0 TD
+(//   with this acceleration)Tj
+/TT4 1 Tf
+-18.6 -1.1429 TD
+(43:)Tj
+0 g
+2.4 0 TD
+(    Candidate\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+8.4 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( t, PlayerState s, Candidate *f, IntVec h\) :)Tj
+-12.6 -1.1429 TD
+[(44:)-599.7(            step\(t\), state\(s\), from\(f\), how\(h\) {})]TJ
+T*
+[(45:)-599.7(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( cost;)Tj
+-6.6 -1.1429 TD
+[(46:)-599.7(};)]TJ
+T*
+(47:)Tj
+T*
+(48:)Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(// æ¯\\224è¼\\203é\\226¢æ\\225°ã\\202\\222å®\\232ç¾©)Tj
+/TT4 1 Tf
+-2.4 -1.1429 TD
+(49:)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+2.4 0 TD
+(bool)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+( )Tj
+/TT2 1 Tf
+0 0 1 rg
+0.6 0 TD
+(GoodEvalOrder)Tj
+/TT4 1 Tf
+0 g
+7.8 0 TD
+(\( )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+1.2 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( Candidate* left, )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+10.8 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( Candidate* right \) {)Tj
+-31.2 -1.1429 TD
+[(50:)-599.7(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+4.8 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( left->cost < right->cost;)Tj
+-8.4 -1.1429 TD
+[(51:)-599.7(})]TJ
+T*
+(52:)Tj
+T*
+(53:)Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//globalå®£è¨\\200)Tj
+/TT4 1 Tf
+-2.4 -1.1429 TD
+(54:)Tj
+/TT6 1 Tf
+2.4 0 TD
+(//å\\200\\231è£\\234ã\\202\\222æ ¼ç´\\215ã\\201\\231ã\\202\\213queue)Tj
+/TT4 1 Tf
+-2.4 -1.1429 TD
+(55:)Tj
+0 g
+2.4 0 TD
+(queue<Candidate *> candidates;)Tj
+-2.4 -1.1429 TD
+(56:)Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//ã\\201\\237ã\\201©ã\\202\\212ç\\235\\200ã\\201\\221ã\\202\\213ã\\201\\213ã\\202\\222è¨\\230é\\214²ã)Tj
+-4.3429 -1.1429 TD
+(\\201\\231ã\\202\\213map)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(57:)Tj
+0 g
+2.4 0 TD
+(map<PlayerState, Candidate *> reached;)Tj
+-2.4 -1.1429 TD
+(58:)Tj
+T*
+(59:)Tj
+T*
+(60:)Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//è©\\225ä¾¡é\\226¢æ\\225° ä»\\212ã\\201¨æ¬¡ã\\201®è¡\\214ã\\201\\217å ´æ\\211\\200ã\\200\\201ç)Tj
+-4.3429 -1.1429 TD
+(\\233¤é\\235¢ã\\201®ç\\212¶æ\\205\\213)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(61:)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+2.4 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( )Tj
+/TT2 1 Tf
+0 0 1 rg
+0.6 0 TD
+(calcCost)Tj
+/TT4 1 Tf
+0 g
+4.8 0 TD
+(\(Candidate* now,Point nextPos\){)Tj
+-9.6 -1.1429 TD
+[(62:)-599.7(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( ret=0;)Tj
+-6.6 -1.1429 TD
+[(63:)-599.7(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//è©\\225ä¾¡å\\200¤)Tj
+/TT4 1 Tf
+51.9143 74.2857 TD
+(64:)Tj
+0 g
+2.4 0 TD
+(    )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//yæ\\226¹å\\220\\221ã\\201\\214é«\\230ã\\201\\221ã\\202\\214ã\\201°é«\\230ã\\201\\204æ\\226¹ã)Tj
+-6.7429 -1.1429 TD
+(\\201\\214è\\211¯ã\\201\\204)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(65:)Tj
+0 g
+2.4 0 TD
+(    ret+=\(nextPos.y\)*3;)Tj
+-2.4 -1.1429 TD
+[(66:)-599.7(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//xæ\\226¹å\\220\\221ã\\201¸ã\\201®ç§»å\\213\\225ã\\201\\214å¤§ã\\201\\215ã\\201\\221ã\\202)Tj
+-6.7429 -1.1429 TD
+(\\214ã\\201°å¤§ã\\201\\215ã\\201\\204ã\\201»ã\\201©è\\211¯ã\\201\\204)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(67:)Tj
+0 g
+2.4 0 TD
+(    ret+=abs\(now->state.position.x-nextPos.x\);)Tj
+-2.4 -1.1429 TD
+[(68:)-599.7(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//å£\\201ã\\201\\213ã\\202\\211é\\233¢ã\\202\\214ã\\201¦ã\\201\\204ã\\201\\237æ\\226¹ã\\201\\214)Tj
+-6.7429 -1.1429 TD
+(è\\211¯ã\\201\\204)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(69:)Tj
+0 g
+2.4 0 TD
+(    )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//costX-=abs\(nextPos.x-7\);)Tj
+/TT4 1 Tf
+-4.8 -1.1429 TD
+(70:)Tj
+0 g
+T*
+(71:)Tj
+T*
+[(72:)-599.7(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+4.8 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( ret;)Tj
+-8.4 -1.1429 TD
+[(73:)-599.7(})]TJ
+T*
+(74:)Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//æ¬¡ã\\201®å\\200\\231è£\\234)Tj
+/TT4 1 Tf
+-2.4 -1.1429 TD
+(75:)Tj
+/TT6 1 Tf
+2.4 0 TD
+(//æ¬¡ã\\201®9æ\\226¹å\\220\\221ã\\201«è¡\\214ã\\201£ã\\201\\237æ\\231\\202ã\\201®stateã\\201\\214é)Tj
+-4.3429 -1.1429 TD
+(\\205\\215å\\210\\227ã\\201¨ã\\201\\227ã\\201¦è¿\\224ã\\201\\225ã\\202\\214ã\\202\\213)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(76:)Tj
+0 g
+2.4 0 TD
+(vector<Candidate*> generate_next_status\(Candidate *ca,)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+32.4 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( Course &course\){)Tj
+-37.8 -1.1429 TD
+(77:)Tj
+T*
+(78:)Tj
+T*
+[(79:)-599.7(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//æ¬¡ã\\201«ã\\201\\204ã\\201\\221ã\\202\\213ï¼\\231^stepå\\200\\213\(reachedã\\201§ä¸\\200å¿)Tj
+-6.7429 -1.1429 TD
+(\\234æ\\236\\235å\\210\\210ã\\202\\212ã\\201\\227ã\\201¦ã\\202\\213\)ã\\201®å\\200\\231è£\\234ã\\202\\222æ ¼ç´)Tj
+T*
+(\\215ã\\201\\231ã\\202\\213é\\205\\215å\\210\\227)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(80:)Tj
+0 g
+2.4 0 TD
+(    vector<Candidate*> ret;)Tj
+-2.4 -1.1429 TD
+[(81:)-599.7(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//å\\210\\235æ\\234\\237å\\214\\226)Tj
+/TT4 1 Tf
+-4.8 -1.1429 TD
+(82:)Tj
+0 g
+2.4 0 TD
+(    )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+2.4 0 TD
+(while)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( \(!candidates.empty\(\)\) candidates.pop\(\);)Tj
+-7.8 -1.1429 TD
+[(83:)-599.7(    reached.clear\(\);)]TJ
+T*
+(84:)Tj
+T*
+[(85:)-599.7(    candidates.push\(ca\);)]TJ
+T*
+[(86:)-599.7(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+4.8 0 TD
+(while)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+(\(!candidates.empty\(\)\){)Tj
+-7.8 -1.1429 TD
+[(87:)-599.7(        Candidate *now = candidates.front\(\);)]TJ
+T*
+[(88:)-599.7(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.2 0 TD
+(//cerr<<"here"<<endl;)Tj
+/TT4 1 Tf
+-7.2 -1.1429 TD
+(89:)Tj
+0 g
+2.4 0 TD
+(        candidates.pop\(\);)Tj
+-2.4 -1.1429 TD
+[(90:)-599.7(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.2 0 TD
+(//è¡\\214ã\\201\\215å\\205\\210ã\\202\\2229ç¨®é¡\\236å\\205¨ã\\201¦ã\\203«ã\\203¼ã\\203)Tj
+-9.1429 -1.1429 TD
+(\\227)Tj
+/TT4 1 Tf
+1.9429 -1.1429 TD
+(91:)Tj
+0 g
+2.4 0 TD
+(        )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+4.8 0 TD
+(for)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+0.6 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( cay = 1; cay != -2;cay--\){)Tj
+-11.4 -1.1429 TD
+[(92:)-599.7(            )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+9.6 0 TD
+(for)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+0.6 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( cax = -1;cax != 2; cax++\){)Tj
+-13.8 -1.1429 TD
+[(93:)-599.7(                )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+12 0 TD
+(//cerr<<"search: "<<cay<<" "<<cax<<endl;)Tj
+/TT4 1 Tf
+-12 -1.1429 TD
+(94:)Tj
+0 g
+2.4 0 TD
+(                )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+9.6 0 TD
+(//cerr<<"now->step: "<<now->step<<endl;)Tj
+/TT4 1 Tf
+-12 -1.1428 TD
+(95:)Tj
+0 g
+2.4 0 TD
+(                )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+9.6 0 TD
+(//æ¬¡ã\\201®é\\200\\237åº¦)Tj
+/TT4 1 Tf
+-12 -1.1429 TD
+(96:)Tj
+0 g
+2.4 0 TD
+(                IntVec nextVelo = now->state.velocity + IntVec\(cax,cay\);)Tj
+-2.4 -1.1429 TD
+[(97:)-599.7(                )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+12 0 TD
+(//æ¬¡ã\\201®ä¸\\200)Tj
+/TT4 1 Tf
+-12 -1.1429 TD
+(98:)Tj
+0 g
+2.4 0 TD
+(                Point nextPos = now->state.position + nextVelo;)Tj
+-2.4 -1.1429 TD
+(99:)Tj
+-0.6 -1.1429 TD
+[(100:)-599.6(                )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+12.6 0 TD
+(//ã\\202¹ã\\203\\206ã\\203\\203ã\\203\\227æ\\225°ã\\201\\2140ã\\201§ã\\201ªã\\201)Tj
+-13.9429 -1.1429 TD
+(\\217é\\232\\234å®³ç\\211©ã\\201«è¡\\235çª\\201ã\\201\\227ã\\201ªã\\201\\204)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(101:)Tj
+0 g
+3 0 TD
+(                )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+9.6 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+(\(!course.obstacled\(now->state.position,nextPos\)\){)Tj
+-13.8 -1.1429 TD
+[(102:)-599.6(                    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+15 0 TD
+(//æ¬¡ã\\201®ã\\203\\227ã\\203¬ã\\202¤ã\\203¤ã\\203¼ã\\201®ä½\\215ç½®ã\\200)Tj
+-16.3429 -1.1429 TD
+(\\201é\\200\\237åº¦ã\\202\\222æ¬¡ã\\201®å\\200\\231è£\\234å¤\\211æ\\225°ã\\201«æ ¼ç´\\215)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(103:)Tj
+0 g
+3 0 TD
+(                    PlayerState next\(nextPos,nextVelo\);)Tj
+-3 -1.1429 TD
+[(104:)-599.6(                    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+15 0 TD
+(//cerr<<"nextCand"<<endl;)Tj
+/TT4 1 Tf
+-15 -1.1429 TD
+(105:)Tj
+0 g
+3 0 TD
+(                    Candidate *nextCand =)Tj
+-3 -1.1429 TD
+[(106:)-599.6(                            )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+19.8 0 TD
+(new)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( Candidate\(now->step + 1, next, now, IntVec\(cax, cay\))Tj
+-22.9428 -1.1429 TD
+(\);)Tj
+1.3429 -1.1429 TD
+[(107:)-599.6(                    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+15 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+( \(reached.count\(next\) == 0\) { )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+18 0 TD
+(//ã\\201\\235ã\\201\\223ã\\201«ã\\201)Tj
+-35.5429 -1.1429 TD
+(\\237ã\\201©ã\\202\\212ç\\235\\200ã\\201\\217ã\\201®ã\\201\\214æ\\234\\200å\\210\\235ã\\201®å\\200\\231è£\\234ã)Tj
+T*
+(\\201§ã\\201\\202ã\\202\\214ã\\201°)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(108:)Tj
+0 g
+3 0 TD
+(                        )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+14.4 0 TD
+(//æ\\216¢ç´¢æ•±ã\\201\\225ã\\202\\210ã\\202\\212ã\\202\\202æµ\\205ã)Tj
+-18.7429 -1.1429 TD
+(\\201\\217ã\\200\\200ã\\201\\213ã\\201¤ã\\200\\200ã\\202³ã\\203¼ã\\202¹ã\\202\\222ã\\201¯ã\\201¿å\\207ºã\\201)Tj
+T*
+(\\227ã\\201¦ã\\201\\204ã\\201ªã\\201\\221ã\\202\\214ã\\201°)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(109:)Tj
+0 g
+3 0 TD
+(                        )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+14.4 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+( \(now->step < searchDepth && nextPos.y <= course.length &&)Tj
+-19.9429 -1.1429 TD
+( nextPos.x > 0\) {)Tj
+1.3429 -1.1429 TD
+(110:)Tj
+T*
+(111:)Tj
+T*
+[(112:)-599.6(                            )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+19.8 0 TD
+(//è©\\225ä¾¡å\\200¤ã\\201®è¨\\210ç®\\227)Tj
+/TT4 1 Tf
+-19.8 -1.1429 TD
+(113:)Tj
+0 g
+3 0 TD
+(                            nextCand->cost=calcCost\(now,nextPos\);)Tj
+-3 -1.1429 TD
+[(114:)-599.6(                            )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+19.8 0 TD
+(//æ¬¡ã\\201®å\\200\\231è£\\234ã\\201«è¿½å\\212 )Tj
+ET
+endstream
+endobj
+3 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT6 6 0 R
+>>
+/ExtGState <<
+/GS1 7 0 R
+>>
+>>
+endobj
+10 0 obj
+<<
+/Length 13616
+>>
+stream
+BT
+/TT2 1 Tf
+0 10 -10 0 35.6667 29 Tm
+0 g
+/GS1 gs
+0 Tc
+0 Tw
+(HOGE University \(team: HOGE\)                                                                                      Page 2 of 3)Tj
+/TT4 1 Tf
+0 7 -7 0 49 38.4 Tm
+0.698 0.133 0.133 rg
+(115:)Tj
+0 g
+3 0 TD
+(                            candidates.push\(nextCand\);)Tj
+-3 -1.1429 TD
+[(116:)-599.6(                        })]TJ
+T*
+[(117:)-599.6(                        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+17.4 0 TD
+(//nextã\\201«ã\\201\\237ã\\201©ã\\202\\212ç\\235\\200ã\\201\\221ã\\202)Tj
+-18.7429 -1.1429 TD
+(\\213ã\\201\\223ã\\201¨ã\\202\\222è¨\\230é\\214²)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(118:)Tj
+0 g
+3 0 TD
+(                        reached[next] = nextCand;)Tj
+-3 -1.1429 TD
+[(119:)-599.6(                        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+17.4 0 TD
+(//cerr<<"statusã\\201«push?"<<endl;)Tj
+/TT4 1 Tf
+-17.4 -1.1429 TD
+(120:)Tj
+0 g
+3 0 TD
+(                        )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+14.4 0 TD
+(//æ¬¡è¡\\214ã\\201\\221ã\\202\\213çµ\\220æ\\236\\234ã\\202\\222æ ¼ç´)Tj
+-18.7429 -1.1429 TD
+(\\215)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(121:)Tj
+0 g
+3 0 TD
+(                        ret.push_back\(nextCand\);)Tj
+-3 -1.1429 TD
+[(122:)-599.6(                    })]TJ
+T*
+(123:)Tj
+T*
+(124:)Tj
+T*
+(125:)Tj
+T*
+[(126:)-599.6(                })]TJ
+T*
+[(127:)-599.6(            })]TJ
+T*
+[(128:)-599.6(        })]TJ
+T*
+(129:)Tj
+T*
+[(130:)-599.6(    })]TJ
+T*
+(131:)Tj
+T*
+[(132:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( ret;)Tj
+-9 -1.1429 TD
+[(133:)-599.6(})]TJ
+T*
+(134:)Tj
+T*
+(135:)Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+3 0 TD
+(// rs.positon è\\207ªæ©\\237ã\\201®ç\\217¾å\\234¨å\\234°ã\\200\\200rs.velocity è\\207ªæ©\\237ã)Tj
+-4.3429 -1.1429 TD
+(\\201®ç\\217¾å\\234¨ã\\201®é\\200\\237åº¦ course ã\\202³ã\\203¼ã\\202¹ã\\201®æ\\203\\205å ±)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(136:)Tj
+0 g
+3 0 TD
+(IntVec )Tj
+/TT2 1 Tf
+0 0 1 rg
+4.2 0 TD
+(play)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+(\(RaceState &rs, )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+9.6 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( Course &course\) {)Tj
+-22.2 -1.1429 TD
+(137:)Tj
+T*
+[(138:)-599.6(    cerr<<)]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+9 0 TD
+("s")Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(<<endl;)Tj
+-10.8 -1.1429 TD
+[(139:)-599.6(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+5.4 0 TD
+(//å\\210\\235æ\\234\\237å\\214\\226)Tj
+/TT4 1 Tf
+-5.4 -1.1429 TD
+(140:)Tj
+0 g
+3 0 TD
+(    )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+2.4 0 TD
+(while)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( \(!candidates.empty\(\)\) candidates.pop\(\);)Tj
+-8.4 -1.1429 TD
+[(141:)-599.6(    reached.clear\(\);)]TJ
+T*
+(142:)Tj
+T*
+[(143:)-599.6(    cerr<<)]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+9 0 TD
+("t")Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(<<endl;)Tj
+-10.8 -1.1429 TD
+[(144:)-599.6(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+5.4 0 TD
+(//initialã\\201¯ã\\203\\227ã\\203¬ã\\202¤ã\\203¤ã\\203¼ã\\201®ç\\212¶æ\\205\\213 è\\207ªæ©)Tj
+-6.7429 -1.1429 TD
+(\\237ã\\201®ä½\\215ç½®ã\\200\\201é\\200\\237åº¦ã\\200\\200ç\\233¸æ\\211\\213ã\\201®ä½\\215ç½®ã\\200\\201é)Tj
+T*
+(\\200\\237åº¦)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(145:)Tj
+0 g
+3 0 TD
+(    PlayerState initial\(rs.position, rs.velocity\);)Tj
+-3 -1.1429 TD
+[(146:)-599.6(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+5.4 0 TD
+(//step å\\210\\235æ\\234\\237ã\\201®ã\\203\\227ã\\203¬ã\\202¤ã\\203¤ã\\203¼ã\\201®ç\\212¶æ)Tj
+-6.7429 -1.1429 TD
+(\\205\\213ã\\200\\200æ¬¡ã\\201®ã\\203\\227ã\\203¬ã\\202¤ã\\203¤ã\\203¼ã\\201®ç\\212¶æ\\205\\213ã\\200\\200é)Tj
+T*
+(\\200\\237åº¦)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(147:)Tj
+0 g
+3 0 TD
+(    Candidate initialCand\(0, initial, nullptr, IntVec\(0, 0\)\);)Tj
+-3 -1.1429 TD
+[(148:)-599.6(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+5.4 0 TD
+(//reached[initial]ã\\201¯initialã\\201«è¾¿ã\\202\\212ã\\201¤ã\\201\\221ã\\202\\213ã\\201)Tj
+-6.7429 -1.1429 TD
+(\\223ã\\201¨ã\\202\\222ä¿\\235å-\\230ã\\201\\231ã\\202\\213map)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(149:)Tj
+0 g
+3 0 TD
+(    )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//reached[initial] = &initialCand;)Tj
+/TT4 1 Tf
+-5.4 -1.1429 TD
+(150:)Tj
+0 g
+3 0 TD
+(    )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+2.4 0 TD
+(//æ\\234\\200ã\\202\\202è\\211¯ã\\201\\204å\\200\\231è£\\234ã\\202\\222ä¿\\235å-\\230ã\\201\\231)Tj
+-6.7429 -1.1429 TD
+(ã\\202\\213å¤\\211æ\\225°)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(151:)Tj
+0 g
+3 0 TD
+(    candidates.push\(&initialCand\);)Tj
+-3 -1.1429 TD
+(152:)Tj
+T*
+(153:)Tj
+T*
+[(154:)-599.6(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+5.4 0 TD
+(//æ\\216¢ç´¢ã\\201®æ•±ã\\201\\225ã\\201\\224ã\\201¨ã\\201®å\\200\\231è£\\234ã\\202\\222æ ¼ç´)Tj
+-6.7429 -1.1429 TD
+(\\215ã\\201\\231ã\\202\\213é\\205\\215å\\210\\227)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(155:)Tj
+0 g
+3 0 TD
+(    vector<Candidate*> status[MAX_DEPTH+1];)Tj
+-3 -1.1429 TD
+[(156:)-599.6(    status[0].push_back\(&initialCand\);)]TJ
+T*
+(157:)Tj
+T*
+(158:)Tj
+T*
+[(159:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(for)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+0.6 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( depth=0;depth<MAX_DEPTH;depth++\){)Tj
+-9.6 -1.1429 TD
+[(160:)-599.6(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.8 0 TD
+(//ã\\203\\223ã\\203¼ã\\203 ã\\202µã\\203¼ã\\203\\201ã\\201®å\\210\\207ã\\202\\212æ\\215¨ã)Tj
+-9.1429 -1.1429 TD
+(\\201¦é\\203¨å\\210\\206)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(161:)Tj
+0 g
+3 0 TD
+(        )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(//ã\\201\\223ã\\201\\223ã\\201«æ\\233¸ã\\201\\217)Tj
+/TT4 1 Tf
+-7.8 -1.1429 TD
+(162:)Tj
+0 g
+3 0 TD
+(        )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(const)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+0.6 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( BEAM_WIDTH = 50;)Tj
+-13.2 -1.1429 TD
+[(163:)-599.6(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.8 0 TD
+(//è©\\225ä¾¡å\\200¤ã\\201\\214è\\211¯ã\\201\\204é \\206ã\\201§sort)Tj
+/TT4 1 Tf
+-7.8 -1.1429 TD
+(164:)Tj
+0 g
+3 0 TD
+(        sort\(status[depth].begin\(\), status[depth].end\(\), GoodEvalOrder\);)Tj
+-3 -1.1429 TD
+[(165:)-599.6(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.8 0 TD
+(//ä¸\\212ä½\\215BEAM_WIDTHã\\201«å\\205¥ã\\202\\211ã\\201ªã\\201\\204ã\\202\\202ã\\201®ã)Tj
+-9.1429 -1.1429 TD
+(\\202\\222å\\211\\212é\\231¤)Tj
+/TT4 1 Tf
+1.3429 -1.1429 TD
+(166:)Tj
+0 g
+3 0 TD
+(        )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+4.8 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+(\(status[depth].size\(\)>BEAM_WIDTH\))Tj
+-9 -1.1429 TD
+[(167:)-599.6(            status[depth].erase\(status[depth].begin\(\)+BEAM_WIDTH,status[depth].end\(\))]TJ
+-1.3429 -1.1429 TD
+(\);)Tj
+58.0571 74.2857 TD
+[(168:)-599.6(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.8 0 TD
+(//ã\\201\\223ã\\201\\223ã\\201¾ã\\201§)Tj
+/TT4 1 Tf
+-7.8 -1.1429 TD
+(169:)Tj
+0 g
+T*
+[(170:)-599.6(        cerr<<)]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+11.4 0 TD
+("depth:")Tj
+/TT4 1 Tf
+0 g
+4.8 0 TD
+(<<depth<<endl;)Tj
+-16.2 -1.1429 TD
+(171:)Tj
+T*
+[(172:)-599.6(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.8 0 TD
+(//æ•±ã\\201\\225 depthã\\201®ç\\212¶æ\\205\\213ã\\202\\222å\\210\\227æ\\214\\231)Tj
+/TT4 1 Tf
+-7.8 -1.1429 TD
+(173:)Tj
+0 g
+3 0 TD
+(        )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+4.8 0 TD
+(for)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(\(Candidate* state : status[depth]\){)Tj
+-9.6 -1.1429 TD
+[(174:)-599.6(            )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+10.2 0 TD
+(//cerr<<"generate_next_status\(state,course\).size: "<<endl;)Tj
+/TT4 1 Tf
+-10.2 -1.1429 TD
+(175:)Tj
+0 g
+3 0 TD
+(            )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.2 0 TD
+(for)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(\(Candidate* next_state: generate_next_status\(state,course\)\) {)Tj
+-12 -1.1429 TD
+[(176:)-599.6(                )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+12.6 0 TD
+(//cerr<<"next_State";)Tj
+/TT4 1 Tf
+-12.6 -1.1429 TD
+(177:)Tj
+0 g
+3 0 TD
+(                status[depth + 1].push_back\(next_state\);)Tj
+-3 -1.1429 TD
+[(178:)-599.6(                )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+12.6 0 TD
+(//cerr<<"push_Backã\\201\\227ã\\201\\237ï¼\\201"<<endl;)Tj
+/TT4 1 Tf
+-12.6 -1.1429 TD
+(179:)Tj
+0 g
+3 0 TD
+(            })Tj
+-3 -1.1429 TD
+[(180:)-599.6(            )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+10.2 0 TD
+(//cerr<<"ä¸-ã\\201®forã\\203«ã\\203¼ã\\203\\227çµ\\202äº\\206";)Tj
+/TT4 1 Tf
+-10.2 -1.1429 TD
+(181:)Tj
+0 g
+3 0 TD
+(        })Tj
+-3 -1.1429 TD
+[(182:)-599.6(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.8 0 TD
+(//cerr<<"depth serchå•¡å\\233\\236ä¸-ã\\200\\234"<<endl;)Tj
+/TT4 1 Tf
+-7.8 -1.1429 TD
+(183:)Tj
+0 g
+3 0 TD
+(    })Tj
+-3 -1.1429 TD
+(184:)Tj
+T*
+[(185:)-599.6(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+5.4 0 TD
+(//cerr<<"sizeè¨\\210ç®\\227ã\\201\\231ã\\202\\213ã\\202\\210"<<endl;)Tj
+/TT4 1 Tf
+-5.4 -1.1429 TD
+(186:)Tj
+0 g
+T*
+[(187:)-599.6(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+5.4 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( size = \()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+5.4 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(\)status[MAX_DEPTH].size\(\);)Tj
+-14.4 -1.1429 TD
+[(188:)-599.6(    cerr<<)]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+9 0 TD
+("size=")Tj
+/TT4 1 Tf
+0 g
+4.2 0 TD
+(<<size<<endl;)Tj
+-13.2 -1.1429 TD
+[(189:)-599.6(    )]TJ
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+5.4 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( temp=-1;)Tj
+-7.2 -1.1429 TD
+[(190:)-599.6(    Candidate *best=&initialCand;)]TJ
+T*
+[(191:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(for)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( \()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+1.2 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( i=0 ;i<size;i++\){)Tj
+-10.2 -1.1429 TD
+[(192:)-599.6(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.8 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+(\(temp<status[MAX_DEPTH][i]->state.position.y\){)Tj
+-9 -1.1429 TD
+[(193:)-599.6(            temp=status[MAX_DEPTH][i]->state.position.y;)]TJ
+T*
+[(194:)-599.6(            best=status[MAX_DEPTH][i];)]TJ
+T*
+[(195:)-599.6(        })]TJ
+T*
+[(196:)-599.6(    })]TJ
+T*
+[(197:)-599.6(    )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+5.4 0 TD
+(//cerr<<"temp :" <<temp<<endl;)Tj
+/TT4 1 Tf
+-5.4 -1.1428 TD
+(198:)Tj
+0 g
+3 0 TD
+(    cerr<<status[MAX_DEPTH].size\(\)<<endl;)Tj
+-3 -1.1429 TD
+(199:)Tj
+T*
+[(200:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+(\(status[MAX_DEPTH].size\(\)==0\){)Tj
+-6.6 -1.1429 TD
+[(201:)-599.6(        cerr<<)]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+11.4 0 TD
+("å\\200\\231è£\\234ã\\201\\214ã\\201ªã\\201\\204ã\\201¿ã\\201\\237ã\\201\\204ã\\201 )Tj
+-12.7429 -1.1429 TD
+(ã\\201\\213ã\\202\\211å\\210\\235æ\\234\\237å\\200¤å\\205¥ã\\202\\214ã\\202\\213ã\\201-ï¼\\201")Tj
+/TT4 1 Tf
+0 g
+47.4 0 TD
+(<<endl;)Tj
+-46.0571 -1.1429 TD
+[(202:)-599.6(        best = &initialCand;)]TJ
+T*
+[(203:)-599.6(    })]TJ
+T*
+(204:)Tj
+T*
+(205:)Tj
+T*
+[(206:)-599.6(    cerr<<)]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+9 0 TD
+("best?")Tj
+/TT4 1 Tf
+0 g
+4.2 0 TD
+(<<endl;)Tj
+-13.2 -1.1429 TD
+(207:)Tj
+T*
+[(208:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+( \(best == &initialCand\) {)Tj
+-6.6 -1.1429 TD
+[(209:)-599.6(        )]TJ
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+7.8 0 TD
+(// No good move found)Tj
+/TT4 1 Tf
+-7.8 -1.1429 TD
+(210:)Tj
+0 g
+3 0 TD
+(        )Tj
+/TT6 1 Tf
+0.698 0.133 0.133 rg
+4.8 0 TD
+(// Slowing down for a while might be a good strategy)Tj
+/TT4 1 Tf
+-7.8 -1.1429 TD
+(211:)Tj
+0 g
+3 0 TD
+(        )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.8 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( ax = 0, ay = 0;)Tj
+-9.6 -1.1429 TD
+[(212:)-599.6(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.8 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+( \(rs.velocity.x < 0\) ax += 1;)Tj
+-9 -1.1429 TD
+[(213:)-599.6(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.8 0 TD
+(else)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+( )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+0.6 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+( \(rs.velocity.x > 0\) ax -= 1;)Tj
+-12 -1.1429 TD
+[(214:)-599.6(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.8 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+( \(rs.velocity.y < 0\) ay += 1;)Tj
+-9 -1.1429 TD
+[(215:)-599.6(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.8 0 TD
+(else)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+( )Tj
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+0.6 0 TD
+(if)Tj
+/TT4 1 Tf
+0 g
+1.2 0 TD
+( \(rs.velocity.y > 0\) ay -= 1;)Tj
+-12 -1.1429 TD
+[(216:)-599.6(        )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+7.8 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( IntVec\(ax, ay\);)Tj
+-11.4 -1.1429 TD
+[(217:)-599.6(    })]TJ
+T*
+[(218:)-599.6(    Candidate *c = best;)]TJ
+T*
+[(219:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(while)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( \(c->from != &initialCand\) c = c->from;)Tj
+-8.4 -1.1429 TD
+[(220:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(return)Tj
+/TT4 1 Tf
+0 g
+3.6 0 TD
+( c->how;)Tj
+-9 -1.1429 TD
+[(221:)-599.6(})]TJ
+T*
+(222:)Tj
+T*
+(223:)Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+3 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( )Tj
+/TT2 1 Tf
+0 0 1 rg
+0.6 0 TD
+(main)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+(\()Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+0.6 0 TD
+(int)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( argc, )Tj
+/TT2 1 Tf
+0.133 0.545 0.133 rg
+4.2 0 TD
+(char)Tj
+/TT4 1 Tf
+0 g
+2.4 0 TD
+( *argv[]\) {)Tj
+-16.8 -1.1429 TD
+[(224:)-599.6(    Course course\(cin\);)]TJ
+T*
+[(225:)-599.6(    cout << 0 << endl;)]TJ
+T*
+[(226:)-599.6(    cout.flush\(\);)]TJ
+T*
+[(227:)-599.6(    )]TJ
+/TT2 1 Tf
+0.627 0.125 0.941 rg
+5.4 0 TD
+(while)Tj
+/TT4 1 Tf
+0 g
+3 0 TD
+( \(true\) {)Tj
+-8.4 -1.1429 TD
+[(228:)-599.6(        RaceState rs\(cin, course\);)]TJ
+T*
+[(229:)-599.6(        IntVec accel = play\(rs, course\);)]TJ
+T*
+[(230:)-599.6(        cerr<<)]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+11.4 0 TD
+("accel.x")Tj
+/TT4 1 Tf
+0 g
+5.4 0 TD
+(<<accel.x<<)Tj
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+6.6 0 TD
+(" ")Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+(<<)Tj
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+1.2 0 TD
+("accel.y")Tj
+/TT4 1 Tf
+0 g
+5.4 0 TD
+(<<accel.y<<endl;)Tj
+-31.8 -1.1429 TD
+[(231:)-599.6(        cout << accel.x << )]TJ
+/TT2 1 Tf
+0.737 0.561 0.561 rg
+19.2 0 TD
+(’ ’)Tj
+/TT4 1 Tf
+0 g
+1.8 0 TD
+( << accel.y << endl;)Tj
+-21 -1.1429 TD
+[(232:)-599.6(    })]TJ
+ET
+endstream
+endobj
+11 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT6 6 0 R
+>>
+/ExtGState <<
+/GS1 7 0 R
+>>
+>>
+endobj
+13 0 obj
+<<
+/Length 245
+>>
+stream
+BT
+/TT2 1 Tf
+0 10 -10 0 35.6667 29 Tm
+0 g
+/GS1 gs
+0 Tc
+0 Tw
+(HOGE University \(team: HOGE\)                                                                                      Page 3 of 3)Tj
+/TT4 1 Tf
+0 7 -7 0 49 38.4 Tm
+[(233:)-599.6(})]TJ
+ET
+endstream
+endobj
+14 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+>>
+/ExtGState <<
+/GS1 7 0 R
+>>
+>>
+endobj
+7 0 obj
+<<
+/Type /ExtGState
+/SA false
+/SM 0.02
+/OP false
+/op false
+/OPM 1
+/BG2 /Default
+/UCR2 /Default
+/HT /Default
+/TR2 /Default
+>>
+endobj
+15 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 753
+/CapHeight 562
+/Descent -246
+/Flags 262179
+/FontBBox [-113 -250 749 801]
+/FontName /Courier-Bold
+/ItalicAngle 0
+/StemV 133
+/XHeight 439
+/StemH 84
+>>
+endobj
+16 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 753
+/CapHeight 562
+/Descent -246
+/Flags 35
+/FontBBox [-28 -250 628 805]
+/FontName /Courier
+/ItalicAngle 0
+/StemV 51
+/XHeight 426
+/StemH 51
+>>
+endobj
+17 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 753
+/CapHeight 562
+/Descent -246
+/Flags 99
+/FontBBox [-28 -250 742 805]
+/FontName /Courier-Oblique
+/ItalicAngle -15
+/StemV 51
+/XHeight 426
+/StemH 51
+>>
+endobj
+4 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 239
+/Widths [600 0 600 0 0 0 0 0 600 600 0 0 0 600 600 0 
+600 600 600 600 600 600 0 600 0 0 600 0 600 600 600 600 
+0 0 0 600 0 600 0 600 600 0 0 0 0 0 0 600 
+600 0 0 600 0 600 0 0 0 0 0 0 600 0 0 0 
+0 600 600 600 600 600 600 600 600 600 0 0 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 600 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 600 600 600 0 0 0 0 600 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 600 0 0 600 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 600 0 600 600 0 600 0 0 0 0 0 0 600 
+]
+/Encoding /WinAnsiEncoding
+/BaseFont /Courier-Bold
+/FontDescriptor 15 0 R
+>>
+endobj
+5 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 125
+/Widths [600 600 0 600 0 0 600 0 600 600 600 600 600 600 600 0 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+0 600 600 600 600 600 0 600 600 600 0 0 0 600 0 600 
+600 0 600 600 600 0 600 600 600 0 0 600 0 600 0 600 
+0 600 600 600 600 600 600 600 600 600 0 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 0 600 ]
+/Encoding /WinAnsiEncoding
+/BaseFont /Courier
+/FontDescriptor 16 0 R
+>>
+endobj
+6 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 239
+/Widths [600 0 600 0 0 0 600 0 600 600 0 0 600 600 600 600 
+600 600 600 600 600 600 600 600 0 600 600 600 600 600 600 600 
+0 600 600 600 600 600 0 0 600 600 0 0 0 600 600 0 
+600 0 0 600 600 0 0 600 600 0 0 600 600 600 600 600 
+0 600 600 600 600 600 600 600 600 600 0 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 600 0 0 0 0 0 0 0 0 0 0 
+0 600 600 600 600 600 600 600 600 600 600 600 600 0 600 600 
+400 549 600 600 600 576 600 0 600 600 600 600 600 600 600 600 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 600 600 600 600 600 600 600 0 0 0 0 0 600 
+]
+/Encoding /WinAnsiEncoding
+/BaseFont /Courier-Oblique
+/FontDescriptor 17 0 R
+>>
+endobj
+1 0 obj
+<<
+/Type /Page
+/Parent 8 0 R
+/Resources 3 0 R
+/Contents 2 0 R
+>>
+endobj
+9 0 obj
+<<
+/Type /Page
+/Parent 8 0 R
+/Resources 11 0 R
+/Contents 10 0 R
+>>
+endobj
+12 0 obj
+<<
+/Type /Page
+/Parent 8 0 R
+/Resources 14 0 R
+/Contents 13 0 R
+>>
+endobj
+18 0 obj
+<<
+/S /D
+>>
+endobj
+19 0 obj
+<<
+/Nums [0 18 0 R ]
+>>
+endobj
+8 0 obj
+<<
+/Type /Pages
+/Kids [1 0 R 9 0 R 12 0 R]
+/Count 3
+/Rotate 90
+/MediaBox [0 0 595 842]
+>>
+endobj
+20 0 obj
+<<
+/CreationDate (D:20171115200058+09'00')
+/ModDate (D:20171115200058+09'00')
+/Producer (Apple pstopdf)
+>>
+endobj
+21 0 obj
+<<
+/Type /Catalog
+/Pages 8 0 R
+/PageLabels 19 0 R
+>>
+endobj
+xref
+0 22
+0000000000 65535 f 
+0000032142 00000 n 
+0000000016 00000 n 
+0000015069 00000 n 
+0000030112 00000 n 
+0000030832 00000 n 
+0000031333 00000 n 
+0000029378 00000 n 
+0000032455 00000 n 
+0000032222 00000 n 
+0000015186 00000 n 
+0000028856 00000 n 
+0000032304 00000 n 
+0000028974 00000 n 
+0000029271 00000 n 
+0000029518 00000 n 
+0000029720 00000 n 
+0000029911 00000 n 
+0000032387 00000 n 
+0000032415 00000 n 
+0000032560 00000 n 
+0000032683 00000 n 
+trailer
+<<
+/Size 22
+/Root 21 0 R
+/Info 20 0 R
+/ID [<1d129df220d48ad55437ad26e14146b4><1d129df220d48ad55437ad26e14146b4>]
+>>
+startxref
+32752
+%%EOF

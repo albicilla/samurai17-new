@@ -28,12 +28,12 @@ struct Candidate {
             step(t), state(s), from(f), how(h) {}
 };
 
-// rs.positon 現在地　rs.velocity 現在の速度 course コースの情報
+// rs.positon 敵の現在地　rs.velocity 現在の速度 course コースの情報
 IntVec play(RaceState &rs, const Course &course) {
     //候補を格納するqueue
     queue<Candidate *> candidates;
     //たどり着けるかを記録するmap
-    map<PlayerState, Candidate *> reached;
+    map<PlayerState, int> reached;
     //initialはプレイヤーの状態
     PlayerState initial(rs.position, rs.velocity);
     //step 初期のプレイヤーの状態　次のプレイヤーの状態　速度
@@ -56,7 +56,7 @@ IntVec play(RaceState &rs, const Course &course) {
                 IntVec nextVelo = c->state.velocity + IntVec(cax, cay);
                 //次の位置
                 Point nextPos = c->state.position + nextVelo;
-                //step数が0　ライバルと衝突しない　コース状の障害物に衝突しない
+                //step数が0　|| ライバルと衝突しない &&　コース状の障害物に衝突しない
                 if ((c->step != 0 ||
                      !LineSegment(c->state.position, nextPos).goesThru(rs.oppPosition)) &&
                     !course.obstacled(c->state.position, nextPos)) {

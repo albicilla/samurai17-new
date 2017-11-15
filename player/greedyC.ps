@@ -1,0 +1,2437 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 24 24 571 818
+%%Title: Enscript Output
+%%For: 拓真
+%%Creator: GNU Enscript 1.6.6
+%%CreationDate: Wed Nov 15 20:00:57 2017
+%%Orientation: Landscape
+%%Pages: (atend)
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6 6
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6 6
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier /F-gs-font MF
+/F-gs-font 7 7 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [595 842] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-simple 1.6 6
+
+/do_header {	% print default simple header
+  gsave
+    d_header_x d_header_y HFpt_h 3 div add translate
+
+    HF setfont
+    user_header_p {
+      5 0 moveto user_header_left_str show
+
+      d_header_w user_header_center_str stringwidth pop sub 2 div
+      0 moveto user_header_center_str show
+
+      d_header_w user_header_right_str stringwidth pop sub 5 sub
+      0 moveto user_header_right_str show
+    } {
+      5 0 moveto fname show
+      45 0 rmoveto fmodstr show
+      45 0 rmoveto pagenumstr show
+    } ifelse
+
+  grestore
+} def
+%%EndResource
+/d_page_w 794 def
+/d_page_h 547 def
+/d_header_x 0 def
+/d_header_y 532 def
+/d_header_w 794 def
+/d_header_h 15 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 794 def
+/d_footer_h 0 def
+/d_output_w 794 def
+/d_output_h 532 def
+/cols 2 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 1 def
+/fname (greedyC.cpp) def
+/fdir (.) def
+/ftail (greedyC.cpp) def
+% User defined strings:
+/fmodstr (Wed Nov 15 19:57:57 2017) def
+/pagenumstr (1) def
+/user_header_p true def
+/user_header_left_str (HOGE University \(team: HOGE\)                                                                                      Page 1 of 3) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+22.8 522 M (1:) s
+35.4 522 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 522 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 522 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 522 M
+(<map>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 514 M (2:) s
+35.4 514 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 514 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 514 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 514 M
+(<queue>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 506 M (3:) s
+35.4 506 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 506 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 506 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 506 M
+(<limits>) s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 498 M (4:) s
+35.4 498 M
+(#) s
+/Courier-Bold 7 7 SUF
+0.372549 0.619608 0.627451 setrgbcolor
+39.6 498 M
+(include) s
+/F-gs-font 7 7 SF
+0 setgray
+69 498 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+73.2 498 M
+("raceState.hpp") s
+/F-gs-font 7 7 SF
+0 setgray
+22.8 490 M (5:) s
+22.8 482 M (6:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 482 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 482 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+60.6 482 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 482 M
+( searchDepth = 10;) s
+22.8 474 M (7:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 474 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+56.4 474 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+60.6 474 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 474 M
+( MAX_DEPTH = 1;) s
+22.8 466 M (8:) s
+22.8 458 M (9:) s
+18.6 450 M (10:) s
+18.6 442 M (11:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 442 M
+(struct) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 442 M
+( PlayerState {) s
+18.6 434 M (12:) s
+35.4 434 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 434 M
+(//\350\\207\252\346\251\\237\343\\201\256\344\275\\215\347\275\256\343\\201\250\351\\200\\237\345\272\246) s
+/F-gs-font 7 7 SF
+18.6 426 M (13:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 426 M
+(    Point position;) s
+18.6 418 M (14:) s
+35.4 418 M
+(    IntVec velocity;) s
+18.6 410 M (15:) s
+18.6 402 M (16:) s
+35.4 402 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 402 M
+(//\346\257\\224\350\274\\203\343\\201\\231\343\\202\\213\343\\201\\237\343\\202\\201\343\\201\256\346\257\\224\350\274\\203\346\274\\224\347\256\\227) s
+5 394 M
+(\345\255\\220) s
+/F-gs-font 7 7 SF
+18.6 386 M (17:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 386 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+52.2 386 M
+(bool) s
+/F-gs-font 7 7 SF
+0 setgray
+69 386 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+73.2 386 M
+(operator) s
+/F-gs-font 7 7 SF
+0 setgray
+106.8 386 M
+(<\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+115.2 386 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+136.2 386 M
+( PlayerState &ps\) ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+211.8 386 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+232.8 386 M
+( {) s
+18.6 378 M (18:) s
+35.4 378 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 378 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+18.6 370 M (19:) s
+35.4 370 M
+(                position != ps.position ?) s
+18.6 362 M (20:) s
+35.4 362 M
+(                position < ps.position :) s
+18.6 354 M (21:) s
+35.4 354 M
+(                velocity < velocity;) s
+18.6 346 M (22:) s
+35.4 346 M
+(    }) s
+18.6 338 M (23:) s
+18.6 330 M (24:) s
+35.4 330 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+52.2 330 M
+(bool) s
+/F-gs-font 7 7 SF
+0 setgray
+69 330 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+73.2 330 M
+(operator) s
+/F-gs-font 7 7 SF
+0 setgray
+106.8 330 M
+( !=\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+123.6 330 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+144.6 330 M
+( PlayerState &ps\)) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+216 330 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+237 330 M
+({) s
+18.6 322 M (25:) s
+35.4 322 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 322 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+94.2 322 M
+( position != ps.position;) s
+18.6 314 M (26:) s
+35.4 314 M
+(    }) s
+18.6 306 M (27:) s
+18.6 298 M (28:) s
+35.4 298 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+52.2 298 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 298 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 298 M
+(operator) s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 298 M
+( -\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+115.2 298 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+136.2 298 M
+( PlayerState &ps\)) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+207.6 298 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+228.6 298 M
+({) s
+18.6 290 M (29:) s
+35.4 290 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 290 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+94.2 290 M
+( position.y - ps.position.y;) s
+18.6 282 M (30:) s
+35.4 282 M
+(    }) s
+18.6 274 M (31:) s
+35.4 274 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+52.2 274 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 274 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 274 M
+(operator) s
+/F-gs-font 7 7 SF
+0 setgray
+102.6 274 M
+( +\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+115.2 274 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+136.2 274 M
+( PlayerState &ps\)) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+207.6 274 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+228.6 274 M
+({) s
+18.6 266 M (32:) s
+35.4 266 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 266 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+94.2 266 M
+( position.y + ps.position.y;) s
+18.6 258 M (33:) s
+35.4 258 M
+(    }) s
+18.6 250 M (34:) s
+18.6 242 M (35:) s
+35.4 242 M
+(    PlayerState\(Point p, IntVec v\) : position\(p\), velocity\(v\){}) s
+18.6 234 M (36:) s
+35.4 234 M
+(};) s
+18.6 226 M (37:) s
+18.6 218 M (38:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 218 M
+(struct) s
+/F-gs-font 7 7 SF
+0 setgray
+60.6 218 M
+( Candidate {) s
+18.6 210 M (39:) s
+35.4 210 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+52.2 210 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 210 M
+( step;            ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+140.4 210 M
+(// Steps needed to come here) s
+/F-gs-font 7 7 SF
+18.6 202 M (40:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 202 M
+(    PlayerState state;        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+161.4 202 M
+(// State of the player) s
+/F-gs-font 7 7 SF
+18.6 194 M (41:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 194 M
+(    Candidate *from;        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+153 194 M
+(// Came here from this place) s
+/F-gs-font 7 7 SF
+18.6 186 M (42:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 186 M
+(    IntVec how;            ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+148.8 186 M
+(//   with this acceleration) s
+/F-gs-font 7 7 SF
+18.6 178 M (43:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 178 M
+(    Candidate\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+94.2 178 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+106.8 178 M
+( t, PlayerState s, Candidate *f, IntVec h\) :) s
+18.6 170 M (44:) s
+35.4 170 M
+(            step\(t\), state\(s\), from\(f\), how\(h\) {}) s
+18.6 162 M (45:) s
+35.4 162 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+52.2 162 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 162 M
+( cost;) s
+18.6 154 M (46:) s
+35.4 154 M
+(};) s
+18.6 146 M (47:) s
+18.6 138 M (48:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 138 M
+(// \346\257\\224\350\274\\203\351\\226\242\346\\225\260\343\\202\\222\345\256\\232\347\276\251) s
+/F-gs-font 7 7 SF
+18.6 130 M (49:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 130 M
+(bool) s
+/F-gs-font 7 7 SF
+0 setgray
+52.2 130 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+56.4 130 M
+(GoodEvalOrder) s
+/F-gs-font 7 7 SF
+0 setgray
+111 130 M
+(\( ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+119.4 130 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+140.4 130 M
+( Candidate* left, ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+216 130 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+237 130 M
+( Candidate* right \) {) s
+18.6 122 M (50:) s
+35.4 122 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+52.2 122 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+77.4 122 M
+( left->cost < right->cost;) s
+18.6 114 M (51:) s
+35.4 114 M
+(}) s
+18.6 106 M (52:) s
+18.6 98 M (53:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 98 M
+(//global\345\256\243\350\250\\200) s
+/F-gs-font 7 7 SF
+18.6 90 M (54:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 90 M
+(//\345\\200\\231\350\243\\234\343\\202\\222\346\240\274\347\264\\215\343\\201\\231\343\\202\\213queue) s
+/F-gs-font 7 7 SF
+18.6 82 M (55:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 82 M
+(queue<Candidate *> candidates;) s
+18.6 74 M (56:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 74 M
+(//\343\\201\\237\343\\201\251\343\\202\\212\347\\235\\200\343\\201\\221\343\\202\\213\343\\201\\213\343\\202\\222\350\250\\230\351\\214\262\343) s
+5 66 M
+(\\201\\231\343\\202\\213map) s
+/F-gs-font 7 7 SF
+18.6 58 M (57:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 58 M
+(map<PlayerState, Candidate *> reached;) s
+18.6 50 M (58:) s
+18.6 42 M (59:) s
+18.6 34 M (60:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 34 M
+(//\350\251\\225\344\276\241\351\\226\242\346\\225\260 \344\273\\212\343\\201\250\346\254\241\343\\201\256\350\241\\214\343\\201\\217\345\240\264\346\\211\\200\343\\200\\201\347) s
+5 26 M
+(\\233\244\351\\235\242\343\\201\256\347\\212\266\346\\205\\213) s
+/F-gs-font 7 7 SF
+18.6 18 M (61:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+35.4 18 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+48 18 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+52.2 18 M
+(calcCost) s
+/F-gs-font 7 7 SF
+0 setgray
+85.8 18 M
+(\(Candidate* now,Point nextPos\){) s
+18.6 10 M (62:) s
+35.4 10 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+52.2 10 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 10 M
+( ret=0;) s
+18.6 2 M (63:) s
+35.4 2 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 2 M
+(//\350\251\\225\344\276\241\345\\200\244) s
+/F-gs-font 7 7 SF
+415.6 522 M (64:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 522 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 522 M
+(//y\346\\226\271\345\\220\\221\343\\201\\214\351\253\\230\343\\201\\221\343\\202\\214\343\\201\260\351\253\\230\343\\201\\204\346\\226\271\343) s
+402 514 M
+(\\201\\214\350\\211\257\343\\201\\204) s
+/F-gs-font 7 7 SF
+415.6 506 M (65:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 506 M
+(    ret+=\(nextPos.y\)*3;) s
+415.6 498 M (66:) s
+432.4 498 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 498 M
+(//x\346\\226\271\345\\220\\221\343\\201\270\343\\201\256\347\247\273\345\\213\\225\343\\201\\214\345\244\247\343\\201\\215\343\\201\\221\343\\202) s
+402 490 M
+(\\214\343\\201\260\345\244\247\343\\201\\215\343\\201\\204\343\\201\273\343\\201\251\350\\211\257\343\\201\\204) s
+/F-gs-font 7 7 SF
+415.6 482 M (67:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 482 M
+(    ret+=abs\(now->state.position.x-nextPos.x\);) s
+415.6 474 M (68:) s
+432.4 474 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 474 M
+(//\345\243\\201\343\\201\\213\343\\202\\211\351\\233\242\343\\202\\214\343\\201\246\343\\201\\204\343\\201\\237\346\\226\271\343\\201\\214) s
+402 466 M
+(\350\\211\257\343\\201\\204) s
+/F-gs-font 7 7 SF
+415.6 458 M (69:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 458 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 458 M
+(//costX-=abs\(nextPos.x-7\);) s
+/F-gs-font 7 7 SF
+415.6 450 M (70:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+415.6 442 M (71:) s
+415.6 434 M (72:) s
+432.4 434 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 434 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+474.4 434 M
+( ret;) s
+415.6 426 M (73:) s
+432.4 426 M
+(}) s
+415.6 418 M (74:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+432.4 418 M
+(//\346\254\241\343\\201\256\345\\200\\231\350\243\\234) s
+/F-gs-font 7 7 SF
+415.6 410 M (75:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+432.4 410 M
+(//\346\254\241\343\\201\2569\346\\226\271\345\\220\\221\343\\201\253\350\241\\214\343\\201\243\343\\201\\237\346\\231\\202\343\\201\256state\343\\201\\214\351) s
+402 402 M
+(\\205\\215\345\\210\\227\343\\201\250\343\\201\\227\343\\201\246\350\277\\224\343\\201\\225\343\\202\\214\343\\202\\213) s
+/F-gs-font 7 7 SF
+415.6 394 M (76:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 394 M
+(vector<Candidate*> generate_next_status\(Candidate *ca,) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+659.2 394 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+680.2 394 M
+( Course &course\){) s
+415.6 386 M (77:) s
+415.6 378 M (78:) s
+415.6 370 M (79:) s
+432.4 370 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 370 M
+(//\346\254\241\343\\201\253\343\\201\\204\343\\201\\221\343\\202\\213\357\274\\231^step\345\\200\\213\(reached\343\\201\247\344\270\\200\345\277) s
+402 362 M
+(\\234\346\\236\\235\345\\210\\210\343\\202\\212\343\\201\\227\343\\201\246\343\\202\\213\)\343\\201\256\345\\200\\231\350\243\\234\343\\202\\222\346\240\274\347\264) s
+402 354 M
+(\\215\343\\201\\231\343\\202\\213\351\\205\\215\345\\210\\227) s
+/F-gs-font 7 7 SF
+415.6 346 M (80:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 346 M
+(    vector<Candidate*> ret;) s
+415.6 338 M (81:) s
+432.4 338 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 338 M
+(//\345\\210\\235\346\\234\\237\345\\214\\226) s
+/F-gs-font 7 7 SF
+415.6 330 M (82:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 330 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 330 M
+(while) s
+/F-gs-font 7 7 SF
+0 setgray
+470.2 330 M
+( \(!candidates.empty\(\)\) candidates.pop\(\);) s
+415.6 322 M (83:) s
+432.4 322 M
+(    reached.clear\(\);) s
+415.6 314 M (84:) s
+415.6 306 M (85:) s
+432.4 306 M
+(    candidates.push\(ca\);) s
+415.6 298 M (86:) s
+432.4 298 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 298 M
+(while) s
+/F-gs-font 7 7 SF
+0 setgray
+470.2 298 M
+(\(!candidates.empty\(\)\){) s
+415.6 290 M (87:) s
+432.4 290 M
+(        Candidate *now = candidates.front\(\);) s
+415.6 282 M (88:) s
+432.4 282 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+466 282 M
+(//cerr<<"here"<<endl;) s
+/F-gs-font 7 7 SF
+415.6 274 M (89:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 274 M
+(        candidates.pop\(\);) s
+415.6 266 M (90:) s
+432.4 266 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+466 266 M
+(//\350\241\\214\343\\201\\215\345\\205\\210\343\\202\\2229\347\250\256\351\241\\236\345\\205\250\343\\201\246\343\\203\253\343\\203\274\343\\203) s
+402 258 M
+(\\227) s
+/F-gs-font 7 7 SF
+415.6 250 M (91:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 250 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 250 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+478.6 250 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+482.8 250 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+495.4 250 M
+( cay = 1; cay != -2;cay--\){) s
+415.6 242 M (92:) s
+432.4 242 M
+(            ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+482.8 242 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+495.4 242 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+499.6 242 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+512.2 242 M
+( cax = -1;cax != 2; cax++\){) s
+415.6 234 M (93:) s
+432.4 234 M
+(                ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+499.6 234 M
+(//cerr<<"search: "<<cay<<" "<<cax<<endl;) s
+/F-gs-font 7 7 SF
+415.6 226 M (94:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 226 M
+(                ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+499.6 226 M
+(//cerr<<"now->step: "<<now->step<<endl;) s
+/F-gs-font 7 7 SF
+415.6 218 M (95:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 218 M
+(                ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+499.6 218 M
+(//\346\254\241\343\\201\256\351\\200\\237\345\272\246) s
+/F-gs-font 7 7 SF
+415.6 210 M (96:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 210 M
+(                IntVec nextVelo = now->state.velocity + IntVec\(cax,cay\);) s
+415.6 202 M (97:) s
+432.4 202 M
+(                ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+499.6 202 M
+(//\346\254\241\343\\201\256\344\270\\200) s
+/F-gs-font 7 7 SF
+415.6 194 M (98:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 194 M
+(                Point nextPos = now->state.position + nextVelo;) s
+415.6 186 M (99:) s
+411.4 178 M (100:) s
+432.4 178 M
+(                ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+499.6 178 M
+(//\343\\202\271\343\\203\\206\343\\203\\203\343\\203\\227\346\\225\260\343\\201\\2140\343\\201\247\343\\201\252\343\\201) s
+402 170 M
+(\\217\351\\232\\234\345\256\263\347\\211\251\343\\201\253\350\241\\235\347\252\\201\343\\201\\227\343\\201\252\343\\201\\204) s
+/F-gs-font 7 7 SF
+411.4 162 M (101:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 162 M
+(                ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+499.6 162 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+508 162 M
+(\(!course.obstacled\(now->state.position,nextPos\)\){) s
+411.4 154 M (102:) s
+432.4 154 M
+(                    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+516.4 154 M
+(//\346\254\241\343\\201\256\343\\203\\227\343\\203\254\343\\202\244\343\\203\244\343\\203\274\343\\201\256\344\275\\215\347\275\256\343\\200) s
+402 146 M
+(\\201\351\\200\\237\345\272\246\343\\202\\222\346\254\241\343\\201\256\345\\200\\231\350\243\\234\345\244\\211\346\\225\260\343\\201\253\346\240\274\347\264\\215) s
+/F-gs-font 7 7 SF
+411.4 138 M (103:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 138 M
+(                    PlayerState next\(nextPos,nextVelo\);) s
+411.4 130 M (104:) s
+432.4 130 M
+(                    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+516.4 130 M
+(//cerr<<"nextCand"<<endl;) s
+/F-gs-font 7 7 SF
+411.4 122 M (105:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 122 M
+(                    Candidate *nextCand =) s
+411.4 114 M (106:) s
+432.4 114 M
+(                            ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+550 114 M
+(new) s
+/F-gs-font 7 7 SF
+0 setgray
+562.6 114 M
+( Candidate\(now->step + 1, next, now, IntVec\(cax, cay\)) s
+402 106 M
+(\);) s
+411.4 98 M (107:) s
+432.4 98 M
+(                    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+516.4 98 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+524.8 98 M
+( \(reached.count\(next\) == 0\) { ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+650.8 98 M
+(//\343\\201\\235\343\\201\\223\343\\201\253\343\\201) s
+402 90 M
+(\\237\343\\201\251\343\\202\\212\347\\235\\200\343\\201\\217\343\\201\256\343\\201\\214\346\\234\\200\345\\210\\235\343\\201\256\345\\200\\231\350\243\\234\343) s
+402 82 M
+(\\201\247\343\\201\\202\343\\202\\214\343\\201\260) s
+/F-gs-font 7 7 SF
+411.4 74 M (108:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 74 M
+(                        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+533.2 74 M
+(//\346\\216\242\347\264\242\346\267\261\343\\201\\225\343\\202\\210\343\\202\\212\343\\202\\202\346\265\\205\343) s
+402 66 M
+(\\201\\217\343\\200\\200\343\\201\\213\343\\201\244\343\\200\\200\343\\202\263\343\\203\274\343\\202\271\343\\202\\222\343\\201\257\343\\201\277\345\\207\272\343\\201) s
+402 58 M
+(\\227\343\\201\246\343\\201\\204\343\\201\252\343\\201\\221\343\\202\\214\343\\201\260) s
+/F-gs-font 7 7 SF
+411.4 50 M (109:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 50 M
+(                        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+533.2 50 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+541.6 50 M
+( \(now->step < searchDepth && nextPos.y <= course.length &&) s
+402 42 M
+( nextPos.x > 0\) {) s
+411.4 34 M (110:) s
+411.4 26 M (111:) s
+411.4 18 M (112:) s
+432.4 18 M
+(                            ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+550 18 M
+(//\350\251\\225\344\276\241\345\\200\244\343\\201\256\350\250\\210\347\256\\227) s
+/F-gs-font 7 7 SF
+411.4 10 M (113:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 10 M
+(                            nextCand->cost=calcCost\(now,nextPos\);) s
+411.4 2 M (114:) s
+432.4 2 M
+(                            ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+550 2 M
+(//\346\254\241\343\\201\256\345\\200\\231\350\243\\234\343\\201\253\350\277\275\345\\212\240) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 2 def
+/fname (greedyC.cpp) def
+/fdir (.) def
+/ftail (greedyC.cpp) def
+/Courier-Oblique 7 7 SUF
+% User defined strings:
+/fmodstr (Wed Nov 15 19:57:57 2017) def
+/pagenumstr (2) def
+/user_header_p true def
+/user_header_left_str (HOGE University \(team: HOGE\)                                                                                      Page 2 of 3) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+0.698039 0.133333 0.133333 setrgbcolor
+/F-gs-font 7 7 SF
+14.4 522 M (115:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 522 M
+(                            candidates.push\(nextCand\);) s
+14.4 514 M (116:) s
+35.4 514 M
+(                        }) s
+14.4 506 M (117:) s
+35.4 506 M
+(                        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+136.2 506 M
+(//next\343\\201\253\343\\201\\237\343\\201\251\343\\202\\212\347\\235\\200\343\\201\\221\343\\202) s
+5 498 M
+(\\213\343\\201\\223\343\\201\250\343\\202\\222\350\250\\230\351\\214\262) s
+/F-gs-font 7 7 SF
+14.4 490 M (118:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 490 M
+(                        reached[next] = nextCand;) s
+14.4 482 M (119:) s
+35.4 482 M
+(                        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+136.2 482 M
+(//cerr<<"status\343\\201\253push?"<<endl;) s
+/F-gs-font 7 7 SF
+14.4 474 M (120:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 474 M
+(                        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+136.2 474 M
+(//\346\254\241\350\241\\214\343\\201\\221\343\\202\\213\347\265\\220\346\\236\\234\343\\202\\222\346\240\274\347\264) s
+5 466 M
+(\\215) s
+/F-gs-font 7 7 SF
+14.4 458 M (121:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 458 M
+(                        ret.push_back\(nextCand\);) s
+14.4 450 M (122:) s
+35.4 450 M
+(                    }) s
+14.4 442 M (123:) s
+14.4 434 M (124:) s
+14.4 426 M (125:) s
+14.4 418 M (126:) s
+35.4 418 M
+(                }) s
+14.4 410 M (127:) s
+35.4 410 M
+(            }) s
+14.4 402 M (128:) s
+35.4 402 M
+(        }) s
+14.4 394 M (129:) s
+14.4 386 M (130:) s
+35.4 386 M
+(    }) s
+14.4 378 M (131:) s
+14.4 370 M (132:) s
+35.4 370 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+52.2 370 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+77.4 370 M
+( ret;) s
+14.4 362 M (133:) s
+35.4 362 M
+(}) s
+14.4 354 M (134:) s
+14.4 346 M (135:) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+35.4 346 M
+(// rs.positon \350\\207\252\346\251\\237\343\\201\256\347\\217\276\345\\234\250\345\\234\260\343\\200\\200rs.velocity \350\\207\252\346\251\\237\343) s
+5 338 M
+(\\201\256\347\\217\276\345\\234\250\343\\201\256\351\\200\\237\345\272\246 course \343\\202\263\343\\203\274\343\\202\271\343\\201\256\346\\203\\205\345\240\261) s
+/F-gs-font 7 7 SF
+14.4 330 M (136:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 330 M
+(IntVec ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+64.8 330 M
+(play) s
+/F-gs-font 7 7 SF
+0 setgray
+81.6 330 M
+(\(RaceState &rs, ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+148.8 330 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+169.8 330 M
+( Course &course\) {) s
+14.4 322 M (137:) s
+14.4 314 M (138:) s
+35.4 314 M
+(    cerr<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+77.4 314 M
+("s") s
+/F-gs-font 7 7 SF
+0 setgray
+90 314 M
+(<<endl;) s
+14.4 306 M (139:) s
+35.4 306 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 306 M
+(//\345\\210\\235\346\\234\\237\345\\214\\226) s
+/F-gs-font 7 7 SF
+14.4 298 M (140:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 298 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+52.2 298 M
+(while) s
+/F-gs-font 7 7 SF
+0 setgray
+73.2 298 M
+( \(!candidates.empty\(\)\) candidates.pop\(\);) s
+14.4 290 M (141:) s
+35.4 290 M
+(    reached.clear\(\);) s
+14.4 282 M (142:) s
+14.4 274 M (143:) s
+35.4 274 M
+(    cerr<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+77.4 274 M
+("t") s
+/F-gs-font 7 7 SF
+0 setgray
+90 274 M
+(<<endl;) s
+14.4 266 M (144:) s
+35.4 266 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 266 M
+(//initial\343\\201\257\343\\203\\227\343\\203\254\343\\202\244\343\\203\244\343\\203\274\343\\201\256\347\\212\266\346\\205\\213 \350\\207\252\346\251) s
+5 258 M
+(\\237\343\\201\256\344\275\\215\347\275\256\343\\200\\201\351\\200\\237\345\272\246\343\\200\\200\347\\233\270\346\\211\\213\343\\201\256\344\275\\215\347\275\256\343\\200\\201\351) s
+5 250 M
+(\\200\\237\345\272\246) s
+/F-gs-font 7 7 SF
+14.4 242 M (145:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 242 M
+(    PlayerState initial\(rs.position, rs.velocity\);) s
+14.4 234 M (146:) s
+35.4 234 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 234 M
+(//step \345\\210\\235\346\\234\\237\343\\201\256\343\\203\\227\343\\203\254\343\\202\244\343\\203\244\343\\203\274\343\\201\256\347\\212\266\346) s
+5 226 M
+(\\205\\213\343\\200\\200\346\254\241\343\\201\256\343\\203\\227\343\\203\254\343\\202\244\343\\203\244\343\\203\274\343\\201\256\347\\212\266\346\\205\\213\343\\200\\200\351) s
+5 218 M
+(\\200\\237\345\272\246) s
+/F-gs-font 7 7 SF
+14.4 210 M (147:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 210 M
+(    Candidate initialCand\(0, initial, nullptr, IntVec\(0, 0\)\);) s
+14.4 202 M (148:) s
+35.4 202 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 202 M
+(//reached[initial]\343\\201\257initial\343\\201\253\350\276\277\343\\202\\212\343\\201\244\343\\201\\221\343\\202\\213\343\\201) s
+5 194 M
+(\\223\343\\201\250\343\\202\\222\344\277\\235\345\255\\230\343\\201\\231\343\\202\\213map) s
+/F-gs-font 7 7 SF
+14.4 186 M (149:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 186 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 186 M
+(//reached[initial] = &initialCand;) s
+/F-gs-font 7 7 SF
+14.4 178 M (150:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 178 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 178 M
+(//\346\\234\\200\343\\202\\202\350\\211\257\343\\201\\204\345\\200\\231\350\243\\234\343\\202\\222\344\277\\235\345\255\\230\343\\201\\231) s
+5 170 M
+(\343\\202\\213\345\244\\211\346\\225\260) s
+/F-gs-font 7 7 SF
+14.4 162 M (151:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 162 M
+(    candidates.push\(&initialCand\);) s
+14.4 154 M (152:) s
+14.4 146 M (153:) s
+14.4 138 M (154:) s
+35.4 138 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+52.2 138 M
+(//\346\\216\242\347\264\242\343\\201\256\346\267\261\343\\201\\225\343\\201\\224\343\\201\250\343\\201\256\345\\200\\231\350\243\\234\343\\202\\222\346\240\274\347\264) s
+5 130 M
+(\\215\343\\201\\231\343\\202\\213\351\\205\\215\345\\210\\227) s
+/F-gs-font 7 7 SF
+14.4 122 M (155:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 122 M
+(    vector<Candidate*> status[MAX_DEPTH+1];) s
+14.4 114 M (156:) s
+35.4 114 M
+(    status[0].push_back\(&initialCand\);) s
+14.4 106 M (157:) s
+14.4 98 M (158:) s
+14.4 90 M (159:) s
+35.4 90 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+52.2 90 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+64.8 90 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+69 90 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+81.6 90 M
+( depth=0;depth<MAX_DEPTH;depth++\){) s
+14.4 82 M (160:) s
+35.4 82 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+69 82 M
+(//\343\\203\\223\343\\203\274\343\\203\240\343\\202\265\343\\203\274\343\\203\\201\343\\201\256\345\\210\\207\343\\202\\212\346\\215\250\343) s
+5 74 M
+(\\201\246\351\\203\250\345\\210\\206) s
+/F-gs-font 7 7 SF
+14.4 66 M (161:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 66 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+69 66 M
+(//\343\\201\\223\343\\201\\223\343\\201\253\346\\233\270\343\\201\\217) s
+/F-gs-font 7 7 SF
+14.4 58 M (162:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 58 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+69 58 M
+(const) s
+/F-gs-font 7 7 SF
+0 setgray
+90 58 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+94.2 58 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+106.8 58 M
+( BEAM_WIDTH = 50;) s
+14.4 50 M (163:) s
+35.4 50 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+69 50 M
+(//\350\251\\225\344\276\241\345\\200\244\343\\201\\214\350\\211\257\343\\201\\204\351\240\\206\343\\201\247sort) s
+/F-gs-font 7 7 SF
+14.4 42 M (164:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 42 M
+(        sort\(status[depth].begin\(\), status[depth].end\(\), GoodEvalOrder\);) s
+14.4 34 M (165:) s
+35.4 34 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+69 34 M
+(//\344\270\\212\344\275\\215BEAM_WIDTH\343\\201\253\345\\205\245\343\\202\\211\343\\201\252\343\\201\\204\343\\202\\202\343\\201\256\343) s
+5 26 M
+(\\202\\222\345\\211\\212\351\\231\244) s
+/F-gs-font 7 7 SF
+14.4 18 M (166:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+35.4 18 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+69 18 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+77.4 18 M
+(\(status[depth].size\(\)>BEAM_WIDTH\)) s
+14.4 10 M (167:) s
+35.4 10 M
+(            status[depth].erase\(status[depth].begin\(\)+BEAM_WIDTH,status[depth].end\(\)) s
+5 2 M
+(\);) s
+411.4 522 M (168:) s
+432.4 522 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+466 522 M
+(//\343\\201\\223\343\\201\\223\343\\201\276\343\\201\247) s
+/F-gs-font 7 7 SF
+411.4 514 M (169:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+411.4 506 M (170:) s
+432.4 506 M
+(        cerr<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+491.2 506 M
+("depth:") s
+/F-gs-font 7 7 SF
+0 setgray
+524.8 506 M
+(<<depth<<endl;) s
+411.4 498 M (171:) s
+411.4 490 M (172:) s
+432.4 490 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+466 490 M
+(//\346\267\261\343\\201\\225 depth\343\\201\256\347\\212\266\346\\205\\213\343\\202\\222\345\\210\\227\346\\214\\231) s
+/F-gs-font 7 7 SF
+411.4 482 M (173:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 482 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 482 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+478.6 482 M
+(\(Candidate* state : status[depth]\){) s
+411.4 474 M (174:) s
+432.4 474 M
+(            ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+482.8 474 M
+(//cerr<<"generate_next_status\(state,course\).size: "<<endl;) s
+/F-gs-font 7 7 SF
+411.4 466 M (175:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 466 M
+(            ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+482.8 466 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+495.4 466 M
+(\(Candidate* next_state: generate_next_status\(state,course\)\) {) s
+411.4 458 M (176:) s
+432.4 458 M
+(                ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+499.6 458 M
+(//cerr<<"next_State";) s
+/F-gs-font 7 7 SF
+411.4 450 M (177:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 450 M
+(                status[depth + 1].push_back\(next_state\);) s
+411.4 442 M (178:) s
+432.4 442 M
+(                ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+499.6 442 M
+(//cerr<<"push_Back\343\\201\\227\343\\201\\237\357\274\\201"<<endl;) s
+/F-gs-font 7 7 SF
+411.4 434 M (179:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 434 M
+(            }) s
+411.4 426 M (180:) s
+432.4 426 M
+(            ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+482.8 426 M
+(//cerr<<"\344\270\255\343\\201\256for\343\\203\253\343\\203\274\343\\203\\227\347\265\\202\344\272\\206";) s
+/F-gs-font 7 7 SF
+411.4 418 M (181:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 418 M
+(        }) s
+411.4 410 M (182:) s
+432.4 410 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+466 410 M
+(//cerr<<"depth serch\345\267\241\345\\233\\236\344\270\255\343\\200\\234"<<endl;) s
+/F-gs-font 7 7 SF
+411.4 402 M (183:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 402 M
+(    }) s
+411.4 394 M (184:) s
+411.4 386 M (185:) s
+432.4 386 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 386 M
+(//cerr<<"size\350\250\\210\347\256\\227\343\\201\\231\343\\202\\213\343\\202\\210"<<endl;) s
+/F-gs-font 7 7 SF
+411.4 378 M (186:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+411.4 370 M (187:) s
+432.4 370 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+449.2 370 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+461.8 370 M
+( size = \() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+499.6 370 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+512.2 370 M
+(\)status[MAX_DEPTH].size\(\);) s
+411.4 362 M (188:) s
+432.4 362 M
+(    cerr<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.4 362 M
+("size=") s
+/F-gs-font 7 7 SF
+0 setgray
+503.8 362 M
+(<<size<<endl;) s
+411.4 354 M (189:) s
+432.4 354 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+449.2 354 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+461.8 354 M
+( temp=-1;) s
+411.4 346 M (190:) s
+432.4 346 M
+(    Candidate *best=&initialCand;) s
+411.4 338 M (191:) s
+432.4 338 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 338 M
+(for) s
+/F-gs-font 7 7 SF
+0 setgray
+461.8 338 M
+( \() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+470.2 338 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+482.8 338 M
+( i=0 ;i<size;i++\){) s
+411.4 330 M (192:) s
+432.4 330 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 330 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+474.4 330 M
+(\(temp<status[MAX_DEPTH][i]->state.position.y\){) s
+411.4 322 M (193:) s
+432.4 322 M
+(            temp=status[MAX_DEPTH][i]->state.position.y;) s
+411.4 314 M (194:) s
+432.4 314 M
+(            best=status[MAX_DEPTH][i];) s
+411.4 306 M (195:) s
+432.4 306 M
+(        }) s
+411.4 298 M (196:) s
+432.4 298 M
+(    }) s
+411.4 290 M (197:) s
+432.4 290 M
+(    ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+449.2 290 M
+(//cerr<<"temp :" <<temp<<endl;) s
+/F-gs-font 7 7 SF
+411.4 282 M (198:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 282 M
+(    cerr<<status[MAX_DEPTH].size\(\)<<endl;) s
+411.4 274 M (199:) s
+411.4 266 M (200:) s
+432.4 266 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 266 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.6 266 M
+(\(status[MAX_DEPTH].size\(\)==0\){) s
+411.4 258 M (201:) s
+432.4 258 M
+(        cerr<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+491.2 258 M
+("\345\\200\\231\350\243\\234\343\\201\\214\343\\201\252\343\\201\\204\343\\201\277\343\\201\\237\343\\201\\204\343\\201\240) s
+402 250 M
+(\343\\201\\213\343\\202\\211\345\\210\\235\346\\234\\237\345\\200\244\345\\205\245\343\\202\\214\343\\202\\213\343\\201\255\357\274\\201") s
+/F-gs-font 7 7 SF
+0 setgray
+733.8 250 M
+(<<endl;) s
+411.4 242 M (202:) s
+432.4 242 M
+(        best = &initialCand;) s
+411.4 234 M (203:) s
+432.4 234 M
+(    }) s
+411.4 226 M (204:) s
+411.4 218 M (205:) s
+411.4 210 M (206:) s
+432.4 210 M
+(    cerr<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+474.4 210 M
+("best?") s
+/F-gs-font 7 7 SF
+0 setgray
+503.8 210 M
+(<<endl;) s
+411.4 202 M (207:) s
+411.4 194 M (208:) s
+432.4 194 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 194 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+457.6 194 M
+( \(best == &initialCand\) {) s
+411.4 186 M (209:) s
+432.4 186 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+466 186 M
+(// No good move found) s
+/F-gs-font 7 7 SF
+411.4 178 M (210:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 178 M
+(        ) s
+/Courier-Oblique 7 7 SUF
+0.698039 0.133333 0.133333 setrgbcolor
+466 178 M
+(// Slowing down for a while might be a good strategy) s
+/F-gs-font 7 7 SF
+411.4 170 M (211:) s
+/Courier-Oblique 7 7 SUF
+/F-gs-font 7 7 SF
+0 setgray
+432.4 170 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+466 170 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+478.6 170 M
+( ax = 0, ay = 0;) s
+411.4 162 M (212:) s
+432.4 162 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 162 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+474.4 162 M
+( \(rs.velocity.x < 0\) ax += 1;) s
+411.4 154 M (213:) s
+432.4 154 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 154 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+482.8 154 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+487 154 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+495.4 154 M
+( \(rs.velocity.x > 0\) ax -= 1;) s
+411.4 146 M (214:) s
+432.4 146 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 146 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+474.4 146 M
+( \(rs.velocity.y < 0\) ay += 1;) s
+411.4 138 M (215:) s
+432.4 138 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 138 M
+(else) s
+/F-gs-font 7 7 SF
+0 setgray
+482.8 138 M
+( ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+487 138 M
+(if) s
+/F-gs-font 7 7 SF
+0 setgray
+495.4 138 M
+( \(rs.velocity.y > 0\) ay -= 1;) s
+411.4 130 M (216:) s
+432.4 130 M
+(        ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+466 130 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+491.2 130 M
+( IntVec\(ax, ay\);) s
+411.4 122 M (217:) s
+432.4 122 M
+(    }) s
+411.4 114 M (218:) s
+432.4 114 M
+(    Candidate *c = best;) s
+411.4 106 M (219:) s
+432.4 106 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 106 M
+(while) s
+/F-gs-font 7 7 SF
+0 setgray
+470.2 106 M
+( \(c->from != &initialCand\) c = c->from;) s
+411.4 98 M (220:) s
+432.4 98 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 98 M
+(return) s
+/F-gs-font 7 7 SF
+0 setgray
+474.4 98 M
+( c->how;) s
+411.4 90 M (221:) s
+432.4 90 M
+(}) s
+411.4 82 M (222:) s
+411.4 74 M (223:) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+432.4 74 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+445 74 M
+( ) s
+/Courier-Bold 7 7 SUF
+0 0 1 setrgbcolor
+449.2 74 M
+(main) s
+/F-gs-font 7 7 SF
+0 setgray
+466 74 M
+(\() s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+470.2 74 M
+(int) s
+/F-gs-font 7 7 SF
+0 setgray
+482.8 74 M
+( argc, ) s
+/Courier-Bold 7 7 SUF
+0.133333 0.545098 0.133333 setrgbcolor
+512.2 74 M
+(char) s
+/F-gs-font 7 7 SF
+0 setgray
+529 74 M
+( *argv[]\) {) s
+411.4 66 M (224:) s
+432.4 66 M
+(    Course course\(cin\);) s
+411.4 58 M (225:) s
+432.4 58 M
+(    cout << 0 << endl;) s
+411.4 50 M (226:) s
+432.4 50 M
+(    cout.flush\(\);) s
+411.4 42 M (227:) s
+432.4 42 M
+(    ) s
+/Courier-Bold 7 7 SUF
+0.627451 0.12549 0.941176 setrgbcolor
+449.2 42 M
+(while) s
+/F-gs-font 7 7 SF
+0 setgray
+470.2 42 M
+( \(true\) {) s
+411.4 34 M (228:) s
+432.4 34 M
+(        RaceState rs\(cin, course\);) s
+411.4 26 M (229:) s
+432.4 26 M
+(        IntVec accel = play\(rs, course\);) s
+411.4 18 M (230:) s
+432.4 18 M
+(        cerr<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+491.2 18 M
+("accel.x") s
+/F-gs-font 7 7 SF
+0 setgray
+529 18 M
+(<<accel.x<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+575.2 18 M
+(" ") s
+/F-gs-font 7 7 SF
+0 setgray
+587.8 18 M
+(<<) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+596.2 18 M
+("accel.y") s
+/F-gs-font 7 7 SF
+0 setgray
+634 18 M
+(<<accel.y<<endl;) s
+411.4 10 M (231:) s
+432.4 10 M
+(        cout << accel.x << ) s
+/Courier-Bold 7 7 SUF
+0.737255 0.560784 0.560784 setrgbcolor
+545.8 10 M
+(' ') s
+/F-gs-font 7 7 SF
+0 setgray
+558.4 10 M
+( << accel.y << endl;) s
+411.4 2 M (232:) s
+432.4 2 M
+(    }) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 3 def
+/fname (greedyC.cpp) def
+/fdir (.) def
+/ftail (greedyC.cpp) def
+% User defined strings:
+/fmodstr (Wed Nov 15 19:57:57 2017) def
+/pagenumstr (3) def
+/user_header_p true def
+/user_header_left_str (HOGE University \(team: HOGE\)                                                                                      Page 3 of 3) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+14.4 522 M (233:) s
+35.4 522 M
+(}) s
+_R
+S
+%%Trailer
+%%Pages: 3
+%%DocumentNeededResources: font Courier-Oblique Courier-Bold Courier 
+%%EOF
