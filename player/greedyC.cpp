@@ -60,7 +60,7 @@ priority_queue<Candidate *, vector<Candidate*>,decltype(cmp)> AllCandidates(cmp)
 
 
 //評価関数 今と次の行く場所、盤面の状態
-int calcCost(Candidate* now,Point nextPos){
+int calcCost(Candidate* now,Point nextPos,RaceState &rs){
     int ret=0;
     //評価値
     //y方向が高ければ高い方が良い
@@ -70,12 +70,26 @@ int calcCost(Candidate* now,Point nextPos){
     //壁から離れていた方が良い
     //costX-=abs(nextPos.x-7);
 
+    //step数が0であり　y方向が相手より下であるか　同じかつx方向が大きい時
+    if(now->step==0 && (rs.position.y < rs.oppPosition.y || (rs.position.y == rs.oppPosition.y)&&rs.position.x < rs.oppPosition.x)){
+        //優先権があるので相手の進路を妨害することの評価値をあげる
+        Point nextOppPos = rs.oppPosition + rs.oppVelocity;
+        LineSegment Me = LineSegment(now->state.position, nextPos);
+        LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPos);
+         //動線の一致　かつ　根元では一致しない
+        if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
+            ret+=1000;
+        }else if(nextPos==rs.oppPosition){
+            //根元一致だと衝突扱いで動けないので評価値をウンと減らす
+            ret-=1000;
+        }
+    }
 
     return ret;
 }
 //次の候補
 //次の9方向に行った時のstateが配列として返される
-vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
+vector<Candidate*> generate_next_status(Candidate *ca,const Course &course,RaceState &rs){
 
 
     //次にいける９^step個の候補を格納する配列
@@ -93,20 +107,21 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
     reached[ca->state] ++;
     while(!candidates.empty()){
         Candidate *now = candidates.front();
+        //前の評価値を伝搬して見る
+        int pastCost=now->cost;
         //cerr<<"here"<<endl;
         candidates.pop();
-        //if(now->step > searchDepth) continue;
         //行き先を9種類全てループ
         for(int cay = 1; cay != -2;cay--){
             for(int cax = -1;cax != 2; cax++){
-                cerr<<"search: "<<cay<<" "<<cax<<endl;
-                cerr<<"now->step: "<<now->step<<endl;
+                //cerr<<"search: "<<cay<<" "<<cax<<endl;
+                //cerr<<"now->step: "<<now->step<<endl;
                 //次の速度
                 IntVec nextVelo = now->state.velocity + IntVec(cax,cay);
                 //次の一
                 Point nextPos = now->state.position + nextVelo;
 
-                //ステップ数が0でなく障害物に衝突しない
+                //障害物に衝突しない
                 if(!course.obstacled(now->state.position,nextPos)&&now->step<searchDepth){
                     //次のプレイヤーの位置、速度を次の候補変数に格納
                     PlayerState next(nextPos,nextVelo);
@@ -117,8 +132,8 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course){
                         //探索深さよりも浅く　かつ　コースをはみ出していなければ
                         if (now->step < searchDepth && nextPos.y <= course.length && nextPos.x > 0 &&nextPos.x<=course.width) {
                             //評価値の計算
-                            nextCand->cost=calcCost(now,nextPos);
-                            cerr<<"cost:"<<nextCand->cost<<endl;
+                            nextCand->cost=calcCost(now,nextPos,rs)+pastCost;
+                            //cerr<<"cost:"<<nextCand->cost<<endl;
                             //次の候補に追加
                             candidates.push(nextCand);
                             AllCandidates.push(nextCand);
@@ -177,7 +192,7 @@ IntVec play(RaceState &rs, const Course &course) {
         //深さ depthの状態を列挙
         for(Candidate* state : status[depth]){
             //cerr<<"generate_next_status(state,course).size: "<<endl;
-            for(Candidate* next_state: generate_next_status(state,course)) {
+            for(Candidate* next_state: generate_next_status(state,course,rs)) {
                 //cerr<<"next_State";
                 status[depth + 1].push_back(next_state);
                 //cerr<<"push_Backした！"<<endl;
