@@ -57,6 +57,53 @@ auto cmp = [](const Candidate* left, const Candidate* right) { return (left->cos
 priority_queue<Candidate *, vector<Candidate*>,decltype(cmp)> AllCandidates(cmp);
 
 
+//優先権判定 1なら自分2なら相手 0ならどちらにもない -1はerror
+int judgePredominance(Candidate* now,Point nextPos,RaceState &rs){
+    int ret=0;
+    //step数が0であり　y方向が相手より下であるか　同じかつx方向が大きい時
+    if(now->step==0 && (rs.position.y < rs.oppPosition.y || (rs.position.y == rs.oppPosition.y)&&rs.position.x < rs.oppPosition.x)){
+        //優先権があるので相手の進路を妨害することの評価値をあげる
+        //Point nextOppPosN = rs.oppPosition + rs.oppVelocity;
+        LineSegment Me = LineSegment(now->state.position, nextPos);
+
+        //敵の次の動線は次の座標から9通りの候補がで生成できる
+        for(int cx=-1;cx<2;cx++){
+            for(int cy=-1;cy<2;cy++){
+                IntVec VeloCandidate = IntVec(cx,cy);
+                Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
+                LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPosCandidate);
+                //動線の一致　かつ　根元では一致しない
+                if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
+                    ret=1;
+                }else if(nextPos==rs.oppPosition){
+                    //根元一致だと衝突扱いで動けない
+                    ret=2;
+                }
+            }
+        }
+
+    }else if(now->step==0){
+        //そうでなければ逆に相手に動線を跨がれないように評価を逆転させる
+        LineSegment Me = LineSegment(now->state.position, nextPos);
+
+        //敵の次の動線は次の座標から9通りの候補がで生成できる
+        for(int cx=-1;cx<2;cx++){
+            for(int cy=-1;cy<2;cy++){
+                IntVec VeloCandidate = IntVec(cx,cy);
+                Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
+                LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPosCandidate);
+                //動線の一致　かつ　根元では一致しない
+                if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
+                    ret=2;
+                }else if(nextPos==rs.oppPosition){
+                    //根元一致だと相手は衝突扱いで動けない
+                    ret=1;
+                }
+            }
+        }
+    }
+    return ret;
+}
 
 //評価関数 今と次の行く場所、盤面の状態
 int calcCost(Candidate* now,Point nextPos,RaceState &rs){
@@ -68,7 +115,22 @@ int calcCost(Candidate* now,Point nextPos,RaceState &rs){
     //ret+=abs(now->state.position.x-nextPos.x);
     //壁から離れていた方が良い
     //costX-=abs(nextPos.x-7);
-
+    switch(judgePredominance(now,nextPos,rs)){
+        //どちらにも優先権がない
+        case 0:
+            break;
+        //こちらに優先権がある
+        case 1:
+            ret+=0;
+            break;
+        //相手に優先権がある
+        case 2:
+            ret-=0;
+            break;
+        default:
+            cerr<<"優先権の判定でエラーが出ています"<<endl;
+            break;
+    }
 
     return ret;
 }
@@ -90,7 +152,7 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course,RaceS
     reached[ca->state] ++;
     while(!candidates.empty()){
         Candidate *now = candidates.front();
-        //前の評価値にがあればを伝搬
+        //前の評価値を伝搬
         int pastCost=now->cost;
         //cerr<<"here"<<endl;
         candidates.pop();
