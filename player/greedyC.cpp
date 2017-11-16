@@ -4,7 +4,7 @@
 #include "raceState.hpp"
 
 const int searchDepth = 10;
-const int MAX_DEPTH = 5;
+const int MAX_DEPTH = 10;
 
 
 
@@ -69,48 +69,6 @@ int calcCost(Candidate* now,Point nextPos,RaceState &rs){
     //壁から離れていた方が良い
     //costX-=abs(nextPos.x-7);
 
-    //step数が0であり　y方向が相手より下であるか　同じかつx方向が大きい時
-    if(now->step==0 && (rs.position.y < rs.oppPosition.y || (rs.position.y == rs.oppPosition.y)&&rs.position.x < rs.oppPosition.x)){
-        //優先権があるので相手の進路を妨害することの評価値をあげる
-        //Point nextOppPosN = rs.oppPosition + rs.oppVelocity;
-        LineSegment Me = LineSegment(now->state.position, nextPos);
-
-        //敵の次の動線は次の座標から9通りの候補がで生成できる
-        for(int cx=-1;cx<2;cx++){
-            for(int cy=-1;cy<2;cy++){
-                IntVec VeloCandidate = IntVec(cx,cy);
-                Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
-                LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPosCandidate);
-                //動線の一致　かつ　根元では一致しない
-                if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
-                    ret+=100000;
-                }else if(nextPos==rs.oppPosition){
-                    //根元一致だと衝突扱いで動けないので評価値をウンと減らす
-                    ret-=100000;
-                }
-            }
-        }
-
-    }else if(now->step==0){
-        //そうでなければ逆に相手に動線を跨がれないように評価を逆転させる
-        LineSegment Me = LineSegment(now->state.position, nextPos);
-
-        //敵の次の動線は次の座標から9通りの候補がで生成できる
-        for(int cx=-1;cx<2;cx++){
-            for(int cy=-1;cy<2;cy++){
-                IntVec VeloCandidate = IntVec(cx,cy);
-                Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
-                LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPosCandidate);
-                //動線の一致　かつ　根元では一致しない
-                if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
-                    ret-=1000;
-                }else if(nextPos==rs.oppPosition){
-                    //根元一致だと衝突扱いで動けないので評価値をウンと減らす
-                    ret+=1000;
-                }
-            }
-        }
-    }
 
     return ret;
 }
@@ -132,7 +90,7 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course,RaceS
     reached[ca->state] ++;
     while(!candidates.empty()){
         Candidate *now = candidates.front();
-        //前の評価値を伝搬して見る
+        //前の評価値にがあればを伝搬
         int pastCost=now->cost;
         //cerr<<"here"<<endl;
         candidates.pop();
@@ -157,7 +115,7 @@ vector<Candidate*> generate_next_status(Candidate *ca,const Course &course,RaceS
                         //探索深さよりも浅く　かつ　コースをはみ出していなければ
                         if (now->step < searchDepth && nextPos.y <= course.length && nextPos.x > 0 &&nextPos.x<=course.width) {
                             //評価値の計算
-                            nextCand->cost=calcCost(now,nextPos,rs)+pastCost;
+                            nextCand->cost=calcCost(now,nextPos,rs);
                             //cerr<<"cost:"<<nextCand->cost<<endl;
                             //次の候補に追加
                             candidates.push(nextCand);
@@ -204,7 +162,7 @@ IntVec play(RaceState &rs, const Course &course) {
     for(int depth=0;depth<MAX_DEPTH;depth++){
         //ビームサーチの切り捨て部分
         //ここに書く
-        const int BEAM_WIDTH = 410;
+        const int BEAM_WIDTH = 80;
         //評価値が良い順でsort
         sort(status[depth].begin(), status[depth].end(), GoodEvalOrder);
         //上位BEAM_WIDTHに入らないものを削除
@@ -258,9 +216,12 @@ int main(int argc, char *argv[]) {
     Course course(cin);
     cout << 0 << endl;
     cout.flush();
+    int counter=0;
     while (true) {
+        counter++;
         RaceState rs(cin, course);
         IntVec accel = play(rs, course);
+        cerr<<"今のstep数"<<counter<<endl;
         cerr<<"x:"<<rs.position.x<<" y:"<<rs.position.y<<endl;
         cerr<<"accel.x"<<accel.x<<" "<<"accel.y"<<accel.y<<endl;
         cout << accel.x << ' ' << accel.y << endl;
