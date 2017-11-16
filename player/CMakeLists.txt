@@ -11,6 +11,6 @@ set(SOURCE_FILES
         greedyC.cpp
         raceState.hpp
         raceState.cpp)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/Users/albicilla/programming/samurAI/samurai17/player/beamT75^/")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/Users/albicilla/programming/samurAI/samurai17/player/beamZ/")
 
 add_executable(player ${SOURCE_FILES})

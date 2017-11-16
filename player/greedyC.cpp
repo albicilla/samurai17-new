@@ -1,11 +1,10 @@
 #include <map>
 #include <queue>
-#include <vector>
 #include <limits>
 #include "raceState.hpp"
 
 const int searchDepth = 10;
-const int MAX_DEPTH = 4;
+const int MAX_DEPTH = 5;
 
 
 
@@ -64,7 +63,7 @@ int calcCost(Candidate* now,Point nextPos,RaceState &rs){
     int ret=0;
     //評価値
     //y方向が高ければ高い方が良い
-    ret+=(nextPos.y)*3;
+    ret+=(nextPos.y);
     //x方向への移動が大きければ大きいほど良い
     //ret+=abs(now->state.position.x-nextPos.x);
     //壁から離れていた方が良い
@@ -73,15 +72,43 @@ int calcCost(Candidate* now,Point nextPos,RaceState &rs){
     //step数が0であり　y方向が相手より下であるか　同じかつx方向が大きい時
     if(now->step==0 && (rs.position.y < rs.oppPosition.y || (rs.position.y == rs.oppPosition.y)&&rs.position.x < rs.oppPosition.x)){
         //優先権があるので相手の進路を妨害することの評価値をあげる
-        Point nextOppPos = rs.oppPosition + rs.oppVelocity;
+        //Point nextOppPosN = rs.oppPosition + rs.oppVelocity;
         LineSegment Me = LineSegment(now->state.position, nextPos);
-        LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPos);
-         //動線の一致　かつ　根元では一致しない
-        if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
-            ret+=1000;
-        }else if(nextPos==rs.oppPosition){
-            //根元一致だと衝突扱いで動けないので評価値をウンと減らす
-            ret-=1000;
+
+        //敵の次の動線は次の座標から9通りの候補がで生成できる
+        for(int cx=-1;cx<2;cx++){
+            for(int cy=-1;cy<2;cy++){
+                IntVec VeloCandidate = IntVec(cx,cy);
+                Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
+                LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPosCandidate);
+                //動線の一致　かつ　根元では一致しない
+                if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
+                    ret+=100000;
+                }else if(nextPos==rs.oppPosition){
+                    //根元一致だと衝突扱いで動けないので評価値をウンと減らす
+                    ret-=100000;
+                }
+            }
+        }
+
+    }else if(now->step==0){
+        //そうでなければ逆に相手に動線を跨がれないように評価を逆転させる
+        LineSegment Me = LineSegment(now->state.position, nextPos);
+
+        //敵の次の動線は次の座標から9通りの候補がで生成できる
+        for(int cx=-1;cx<2;cx++){
+            for(int cy=-1;cy<2;cy++){
+                IntVec VeloCandidate = IntVec(cx,cy);
+                Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
+                LineSegment Enemy = LineSegment(rs.oppPosition,nextOppPosCandidate);
+                //動線の一致　かつ　根元では一致しない
+                if(LineSegment(Me).intersects(Enemy) && nextPos!=rs.oppPosition){
+                    ret-=1000;
+                }else if(nextPos==rs.oppPosition){
+                    //根元一致だと衝突扱いで動けないので評価値をウンと減らす
+                    ret+=1000;
+                }
+            }
         }
     }
 
@@ -90,8 +117,6 @@ int calcCost(Candidate* now,Point nextPos,RaceState &rs){
 //次の候補
 //次の9方向に行った時のstateが配列として返される
 vector<Candidate*> generate_next_status(Candidate *ca,const Course &course,RaceState &rs){
-
-
     //次にいける９^step個の候補を格納する配列
     vector<Candidate*> ret;
     //初期化
@@ -199,7 +224,7 @@ IntVec play(RaceState &rs, const Course &course) {
             }
             //cerr<<"中のforループ終了";
         }
-        cerr<<"depth serch巡回中〜"<<endl;
+        cerr<<"depth search巡回中〜"<<endl;
     }
 
     cerr<<"size計算するよ"<<endl;
