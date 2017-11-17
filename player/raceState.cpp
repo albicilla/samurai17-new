@@ -57,6 +57,7 @@ bool Course::obstacled(Point &from, Point &to) const {
         }
         return false;
     }
+
     int ystep, ystart, yend;
     if (y1 < y2) {
         ystep = 1;
@@ -95,9 +96,9 @@ bool Course::obstacled(Point &from, Point &to) const {
 // 初期化
 Course::Course(istream &in) {
     in >> thinkTime >> stepLimit >> width >> length >> vision;
-    obstacle = vector<vector<ObstState>>(width);
+    obstacle = vector<vector<ObstState>>(width+1);
     for (int x = 0; x != width; x++) {
-        obstacle[x] = vector<ObstState>(length);
+        obstacle[x] = vector<ObstState>(length+1);
         for (int y = 0; y != length; y++) {
             obstacle[x][y] = UNKNOWN;
         }
