@@ -189,11 +189,11 @@ void enemyPlay(RaceState &rs, const Course &course) {
     for(int i=0;i<3 && !Enemy_AllCandidates.empty();i++){
         Candidate* temp = Enemy_AllCandidates.top();
         Enemy_AllCandidates.pop();
-        if (!Enemy_AllCandidates.empty())enemy_assumption[i] = IntVec(temp->state.position.x,temp->state.position.y);
+        if (!Enemy_AllCandidates.empty())enemy_assumption[i] = IntVec(temp->state.velocity.x,temp->state.velocity.y);
     }
     while (!Enemy_AllCandidates.empty())Enemy_AllCandidates.pop();
 }
-//優先権判定 1なら自分2なら相手 0ならどちらにもない -1はerror
+//優先権判定 1なら自分2なら相手 0ならどちらにもない
 int judgePredominance(Candidate *now, Point nextPos, RaceState &rs,const Course &course) {
     int ret = NO_PREDOMINANCE;
 

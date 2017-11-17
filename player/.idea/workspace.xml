@@ -38,8 +38,8 @@
           <file leaf-file-name="raceState.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/raceState.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="194">
-                  <caret line="98" column="48" lean-forward="false" selection-start-line="98" selection-start-column="48" selection-end-line="98" selection-end-column="48" />
+                <state relative-caret-position="269">
+                  <caret line="103" column="9" lean-forward="true" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
                   <folding />
                 </state>
               </provider>
@@ -52,7 +52,7 @@
                   <caret line="417" column="1" lean-forward="true" selection-start-line="417" selection-start-column="1" selection-end-line="417" selection-end-column="1" />
                   <folding>
                     <element signature="e#0#14#0" expanded="true" />
-                    <marker date="1510887721000" expanded="true" signature="9192:10992" ph="{...}" />
+                    <marker date="1510888684000" expanded="true" signature="9183:10983" ph="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -85,8 +85,8 @@
           <file leaf-file-name="greedyC.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/greedyC.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1993">
-                  <caret line="217" column="9" lean-forward="true" selection-start-line="217" selection-start-column="9" selection-end-line="217" selection-end-column="9" />
+                <state relative-caret-position="431">
+                  <caret line="191" column="113" lean-forward="false" selection-start-line="191" selection-start-column="113" selection-end-line="191" selection-end-column="113" />
                   <folding>
                     <element signature="e#0#14#0" expanded="true" />
                   </folding>
@@ -437,25 +437,26 @@
       <workItem from="1510039007773" duration="1898000" />
       <workItem from="1510199646515" duration="13534000" />
       <workItem from="1510214454106" duration="15819000" />
-      <workItem from="1510624229265" duration="65515000" />
+      <workItem from="1510624229265" duration="66304000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106890000" />
+    <option name="totallyTimeSpent" value="107679000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="32" y="23" width="1319" height="741" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.45315486" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.45221445" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4419643" sideWeight="0.19863532" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32886904" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.54684514" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.5477855" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36309522" sideWeight="0.41394997" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36160713" sideWeight="0.41394997" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2217262" sideWeight="0.4821835" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.061011903" sideWeight="0.4821835" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -865,16 +866,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/raceState.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="98" column="48" lean-forward="false" selection-start-line="98" selection-start-column="48" selection-end-line="98" selection-end-column="48" />
+        <state relative-caret-position="269">
+          <caret line="103" column="9" lean-forward="true" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/greedyC.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1993">
-          <caret line="217" column="9" lean-forward="true" selection-start-line="217" selection-start-column="9" selection-end-line="217" selection-end-column="9" />
+        <state relative-caret-position="431">
+          <caret line="191" column="113" lean-forward="false" selection-start-line="191" selection-start-column="113" selection-end-line="191" selection-end-column="113" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
