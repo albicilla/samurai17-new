@@ -197,9 +197,9 @@ void enemyPlay(RaceState &rs, const Course &course) {
 int judgePredominance(Candidate *now, Point nextPos, RaceState &rs,const Course &course) {
     int ret = NO_PREDOMINANCE;
 
-    //step数が0であり　y方向が相手より下であるか　同じかつx方向が大きい時
+    //step数が0であり　y方向が相手より下であるか　同じかつ相手のx方向が大きい時
     if (now->step == 0 &&
-        (rs.position.y < rs.oppPosition.y || (rs.position.y == rs.oppPosition.y) && rs.position.x < rs.oppPosition.x)) {
+        (rs.position.y < rs.oppPosition.y || ((rs.position.y == rs.oppPosition.y) && rs.position.x < rs.oppPosition.x))) {
         //優先権があるので相手の進路を妨害することの評価値をあげる
         //Point nextOppPosN = rs.oppPosition + rs.oppVelocity;
         LineSegment Me = LineSegment(now->state.position, nextPos);
@@ -228,7 +228,7 @@ int judgePredominance(Candidate *now, Point nextPos, RaceState &rs,const Course 
             //動線の一致　かつ　根元では一致しない
             if (LineSegment(Me).intersects(Enemy) && nextPos != rs.oppPosition) {
                 ret = ENEMY_PREDOMINANCE;
-            } else if (nextPos == rs.oppPosition) {
+            }else if (nextPos == rs.oppPosition+rs.oppVelocity) {
                 //根元一致だと衝突扱いで動けない
                 ret = MY_PREDOMINANCE;
             }

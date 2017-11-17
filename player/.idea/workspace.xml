@@ -22,14 +22,14 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.3675136">
+    <splitter split-orientation="horizontal" split-proportion="0.44918332">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="greedy.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/greedy.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="246">
-                  <caret line="56" column="22" lean-forward="false" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
+                <state relative-caret-position="-200">
+                  <caret line="68" column="18" lean-forward="true" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
                   <folding />
                 </state>
               </provider>
@@ -38,8 +38,8 @@
           <file leaf-file-name="raceState.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/raceState.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="269">
-                  <caret line="103" column="9" lean-forward="true" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+                <state relative-caret-position="195">
+                  <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="1" />
                   <folding />
                 </state>
               </provider>
@@ -52,7 +52,7 @@
                   <caret line="417" column="1" lean-forward="true" selection-start-line="417" selection-start-column="1" selection-end-line="417" selection-end-column="1" />
                   <folding>
                     <element signature="e#0#14#0" expanded="true" />
-                    <marker date="1510888684000" expanded="true" signature="9183:10983" ph="{...}" />
+                    <marker date="1510890304000" expanded="true" signature="9202:11002" ph="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -61,7 +61,7 @@
           <file leaf-file-name="raceState.hpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/raceState.hpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="197">
+                <state relative-caret-position="446">
                   <caret line="65" column="18" lean-forward="true" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
                   <folding />
                 </state>
@@ -85,8 +85,8 @@
           <file leaf-file-name="greedyC.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/greedyC.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="431">
-                  <caret line="191" column="113" lean-forward="false" selection-start-line="191" selection-start-column="113" selection-end-line="191" selection-end-column="113" />
+                <state relative-caret-position="279">
+                  <caret line="115" column="28" lean-forward="true" selection-start-line="115" selection-start-column="28" selection-end-line="115" selection-end-column="28" />
                   <folding>
                     <element signature="e#0#14#0" expanded="true" />
                   </folding>
@@ -134,9 +134,10 @@
       <find>searchDepth</find>
       <find>Enemy_AllCandidates</find>
       <find>generate_next_enemy_status</find>
-      <find>obstacle</find>
       <find>calc</find>
       <find>enemy_assumption</find>
+      <find>goes</find>
+      <find>obstacle</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -165,7 +166,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="32" />
+    <option name="x" value="388" />
     <option name="y" value="23" />
     <option name="width" value="1319" />
     <option name="height" value="741" />
@@ -437,26 +438,25 @@
       <workItem from="1510039007773" duration="1898000" />
       <workItem from="1510199646515" duration="13534000" />
       <workItem from="1510214454106" duration="15819000" />
-      <workItem from="1510624229265" duration="66304000" />
+      <workItem from="1510624229265" duration="72708000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107679000" />
+    <option name="totallyTimeSpent" value="114083000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="32" y="23" width="1319" height="741" extended-state="0" />
-    <editor active="true" />
+    <frame x="388" y="23" width="1319" height="741" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.45221445" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.4480712" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4419643" sideWeight="0.19863532" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32886904" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.5477855" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16451858" sideWeight="0.55192876" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36160713" sideWeight="0.41394997" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16666667" sideWeight="0.41394997" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.061011903" sideWeight="0.4821835" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4985119" sideWeight="0.4821835" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -559,6 +559,7 @@
           <caret line="121" column="34" lean-forward="false" selection-start-line="121" selection-start-column="34" selection-end-line="121" selection-end-column="34" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1510890304000" expanded="true" signature="9202:11002" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -619,6 +620,7 @@
           <caret line="105" column="34" lean-forward="false" selection-start-line="105" selection-start-column="34" selection-end-line="105" selection-end-column="34" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1510890304000" expanded="true" signature="9202:11002" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -671,6 +673,7 @@
           <caret line="105" column="39" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1510890304000" expanded="true" signature="9202:11002" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -723,6 +726,7 @@
           <caret line="122" column="0" lean-forward="false" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1510890304000" expanded="true" signature="9202:11002" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -832,14 +836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/greedy.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="56" column="22" lean-forward="false" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../course/sample-course-vision100.smrjky">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -856,29 +852,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/raceState.hpp">
+    <entry file="file://$PROJECT_DIR$/greedy.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="65" column="18" lean-forward="true" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
+        <state relative-caret-position="-200">
+          <caret line="68" column="18" lean-forward="true" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/raceState.cpp">
+    <entry file="file://$PROJECT_DIR$/raceState.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="103" column="9" lean-forward="true" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+        <state relative-caret-position="446">
+          <caret line="65" column="18" lean-forward="true" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/greedyC.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="191" column="113" lean-forward="false" selection-start-line="191" selection-start-column="113" selection-end-line="191" selection-end-column="113" />
+        <state relative-caret-position="141">
+          <caret line="417" column="1" lean-forward="true" selection-start-line="417" selection-start-column="1" selection-end-line="417" selection-end-column="1" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1510890304000" expanded="true" signature="9202:11002" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raceState.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
