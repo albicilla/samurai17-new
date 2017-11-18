@@ -33,7 +33,7 @@ IntVec play(RaceState &rs, const Course &course) {
     //候補を格納するqueue
     queue<Candidate *> candidates;
     //たどり着けるかを記録するmap
-    map<PlayerState, int> reached;
+    map<PlayerState, Candidate*> reached;
     //initialはプレイヤーの状態
     PlayerState initial(rs.position, rs.velocity);
     //step 初期のプレイヤーの状態　次のプレイヤーの状態　速度
@@ -117,6 +117,7 @@ int main(int argc, char *argv[]) {
     while (true) {
         RaceState rs(cin, course);
         IntVec accel = play(rs, course);
+        cerr<<accel.x<<endl;
         cout << accel.x << ' ' << accel.y << endl;
     }
 }

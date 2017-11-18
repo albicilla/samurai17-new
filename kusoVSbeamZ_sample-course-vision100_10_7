@@ -1,0 +1,1249 @@
+{ "filetype": "race log",
+"course":{
+   "filetype": "race course",
+   "width": 15, "length": 100,
+   "x0": 5, "x1": 9,
+  "obstacles": [     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+     [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+     [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1],
+     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+     [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
+     [0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1],
+     [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+     [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+     [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+     [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+}
+,
+"name0": "sample", "name1": "albicilla",
+"time0": 200, "time1": 41,
+"log0": [
+{
+  "step": 0,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 1,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 2,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 3,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 4,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 5,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 6,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 7,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 8,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 9,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 10,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 11,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 12,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 13,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 14,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 15,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 16,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 17,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 18,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 19,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 20,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 21,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 22,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 23,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 24,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 25,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 26,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 27,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 28,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 29,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 30,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 31,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 32,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 33,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 34,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 35,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 36,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 37,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 38,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 39,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 40,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 41,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 42,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 43,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 44,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 45,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 46,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 47,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 48,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 49,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 50,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 51,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 52,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 53,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 54,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 55,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 56,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 57,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 58,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 59,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 60,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 61,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 62,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 63,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 64,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 65,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 66,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 67,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 68,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 69,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 70,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 71,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 72,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 73,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 74,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 75,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 76,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 77,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 78,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 79,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 80,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 81,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 82,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 83,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 84,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 85,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 86,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 87,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 88,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 89,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 90,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 91,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 92,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 93,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 94,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 95,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 96,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 97,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 98,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+},
+{
+  "step": 99,
+  "before": { "x": 5, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 0 }
+}],
+"log1": [
+{
+  "step": 0,
+  "before": { "x": 9, "y": 0 },
+  "velocity": { "x": 0, "y": 0 },
+  "acceleration": { "x": 1, "y": 1 },
+  "result": 0,
+  "after": { "x": 10, "y": 1 }
+},
+{
+  "step": 1,
+  "before": { "x": 10, "y": 1 },
+  "velocity": { "x": 1, "y": 1 },
+  "acceleration": { "x": 1, "y": 1 },
+  "result": 0,
+  "after": { "x": 12, "y": 3 }
+},
+{
+  "step": 2,
+  "before": { "x": 12, "y": 3 },
+  "velocity": { "x": 2, "y": 2 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 13, "y": 6 }
+},
+{
+  "step": 3,
+  "before": { "x": 13, "y": 6 },
+  "velocity": { "x": 1, "y": 3 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 13, "y": 10 }
+},
+{
+  "step": 4,
+  "before": { "x": 13, "y": 10 },
+  "velocity": { "x": 0, "y": 4 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 12, "y": 15 }
+},
+{
+  "step": 5,
+  "before": { "x": 12, "y": 15 },
+  "velocity": { "x": -1, "y": 5 },
+  "acceleration": { "x": -1, "y": -1 },
+  "result": 0,
+  "after": { "x": 10, "y": 19 }
+},
+{
+  "step": 6,
+  "before": { "x": 10, "y": 19 },
+  "velocity": { "x": -2, "y": 4 },
+  "acceleration": { "x": 0, "y": -1 },
+  "result": 0,
+  "after": { "x": 8, "y": 22 }
+},
+{
+  "step": 7,
+  "before": { "x": 8, "y": 22 },
+  "velocity": { "x": -2, "y": 3 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 6, "y": 25 }
+},
+{
+  "step": 8,
+  "before": { "x": 6, "y": 25 },
+  "velocity": { "x": -2, "y": 3 },
+  "acceleration": { "x": 1, "y": 1 },
+  "result": 0,
+  "after": { "x": 5, "y": 29 }
+},
+{
+  "step": 9,
+  "before": { "x": 5, "y": 29 },
+  "velocity": { "x": -1, "y": 4 },
+  "acceleration": { "x": 1, "y": 0 },
+  "result": 0,
+  "after": { "x": 5, "y": 33 }
+},
+{
+  "step": 10,
+  "before": { "x": 5, "y": 33 },
+  "velocity": { "x": 0, "y": 4 },
+  "acceleration": { "x": 1, "y": 0 },
+  "result": 0,
+  "after": { "x": 6, "y": 37 }
+},
+{
+  "step": 11,
+  "before": { "x": 6, "y": 37 },
+  "velocity": { "x": 1, "y": 4 },
+  "acceleration": { "x": 0, "y": -1 },
+  "result": 0,
+  "after": { "x": 7, "y": 40 }
+},
+{
+  "step": 12,
+  "before": { "x": 7, "y": 40 },
+  "velocity": { "x": 1, "y": 3 },
+  "acceleration": { "x": 1, "y": -1 },
+  "result": 0,
+  "after": { "x": 9, "y": 42 }
+},
+{
+  "step": 13,
+  "before": { "x": 9, "y": 42 },
+  "velocity": { "x": 2, "y": 2 },
+  "acceleration": { "x": 0, "y": -1 },
+  "result": 0,
+  "after": { "x": 11, "y": 43 }
+},
+{
+  "step": 14,
+  "before": { "x": 11, "y": 43 },
+  "velocity": { "x": 2, "y": 1 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 12, "y": 45 }
+},
+{
+  "step": 15,
+  "before": { "x": 12, "y": 45 },
+  "velocity": { "x": 1, "y": 2 },
+  "acceleration": { "x": -1, "y": -1 },
+  "result": 0,
+  "after": { "x": 12, "y": 46 }
+},
+{
+  "step": 16,
+  "before": { "x": 12, "y": 46 },
+  "velocity": { "x": 0, "y": 1 },
+  "acceleration": { "x": -1, "y": -1 },
+  "result": 0,
+  "after": { "x": 11, "y": 46 }
+},
+{
+  "step": 17,
+  "before": { "x": 11, "y": 46 },
+  "velocity": { "x": -1, "y": 0 },
+  "acceleration": { "x": -1, "y": 0 },
+  "result": 0,
+  "after": { "x": 9, "y": 46 }
+},
+{
+  "step": 18,
+  "before": { "x": 9, "y": 46 },
+  "velocity": { "x": -2, "y": 0 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 6, "y": 47 }
+},
+{
+  "step": 19,
+  "before": { "x": 6, "y": 47 },
+  "velocity": { "x": -3, "y": 1 },
+  "acceleration": { "x": 1, "y": 1 },
+  "result": 0,
+  "after": { "x": 4, "y": 49 }
+},
+{
+  "step": 20,
+  "before": { "x": 4, "y": 49 },
+  "velocity": { "x": -2, "y": 2 },
+  "acceleration": { "x": 1, "y": 1 },
+  "result": 0,
+  "after": { "x": 3, "y": 52 }
+},
+{
+  "step": 21,
+  "before": { "x": 3, "y": 52 },
+  "velocity": { "x": -1, "y": 3 },
+  "acceleration": { "x": 1, "y": 0 },
+  "result": 0,
+  "after": { "x": 3, "y": 55 }
+},
+{
+  "step": 22,
+  "before": { "x": 3, "y": 55 },
+  "velocity": { "x": 0, "y": 3 },
+  "acceleration": { "x": 1, "y": 0 },
+  "result": 0,
+  "after": { "x": 4, "y": 58 }
+},
+{
+  "step": 23,
+  "before": { "x": 4, "y": 58 },
+  "velocity": { "x": 1, "y": 3 },
+  "acceleration": { "x": 1, "y": -1 },
+  "result": 0,
+  "after": { "x": 6, "y": 60 }
+},
+{
+  "step": 24,
+  "before": { "x": 6, "y": 60 },
+  "velocity": { "x": 2, "y": 2 },
+  "acceleration": { "x": 0, "y": -1 },
+  "result": 0,
+  "after": { "x": 8, "y": 61 }
+},
+{
+  "step": 25,
+  "before": { "x": 8, "y": 61 },
+  "velocity": { "x": 2, "y": 1 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 10, "y": 62 }
+},
+{
+  "step": 26,
+  "before": { "x": 10, "y": 62 },
+  "velocity": { "x": 2, "y": 1 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 11, "y": 64 }
+},
+{
+  "step": 27,
+  "before": { "x": 11, "y": 64 },
+  "velocity": { "x": 1, "y": 2 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 11, "y": 67 }
+},
+{
+  "step": 28,
+  "before": { "x": 11, "y": 67 },
+  "velocity": { "x": 0, "y": 3 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 10, "y": 71 }
+},
+{
+  "step": 29,
+  "before": { "x": 10, "y": 71 },
+  "velocity": { "x": -1, "y": 4 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 8, "y": 76 }
+},
+{
+  "step": 30,
+  "before": { "x": 8, "y": 76 },
+  "velocity": { "x": -2, "y": 5 },
+  "acceleration": { "x": 1, "y": -1 },
+  "result": 0,
+  "after": { "x": 7, "y": 80 }
+},
+{
+  "step": 31,
+  "before": { "x": 7, "y": 80 },
+  "velocity": { "x": -1, "y": 4 },
+  "acceleration": { "x": 1, "y": -1 },
+  "result": 0,
+  "after": { "x": 7, "y": 83 }
+},
+{
+  "step": 32,
+  "before": { "x": 7, "y": 83 },
+  "velocity": { "x": 0, "y": 3 },
+  "acceleration": { "x": 1, "y": -1 },
+  "result": 0,
+  "after": { "x": 8, "y": 85 }
+},
+{
+  "step": 33,
+  "before": { "x": 8, "y": 85 },
+  "velocity": { "x": 1, "y": 2 },
+  "acceleration": { "x": 1, "y": -1 },
+  "result": 0,
+  "after": { "x": 10, "y": 86 }
+},
+{
+  "step": 34,
+  "before": { "x": 10, "y": 86 },
+  "velocity": { "x": 2, "y": 1 },
+  "acceleration": { "x": 0, "y": 0 },
+  "result": 0,
+  "after": { "x": 12, "y": 87 }
+},
+{
+  "step": 35,
+  "before": { "x": 12, "y": 87 },
+  "velocity": { "x": 2, "y": 1 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 13, "y": 89 }
+},
+{
+  "step": 36,
+  "before": { "x": 13, "y": 89 },
+  "velocity": { "x": 1, "y": 2 },
+  "acceleration": { "x": -1, "y": 0 },
+  "result": 0,
+  "after": { "x": 13, "y": 91 }
+},
+{
+  "step": 37,
+  "before": { "x": 13, "y": 91 },
+  "velocity": { "x": 0, "y": 2 },
+  "acceleration": { "x": -1, "y": -1 },
+  "result": 0,
+  "after": { "x": 12, "y": 92 }
+},
+{
+  "step": 38,
+  "before": { "x": 12, "y": 92 },
+  "velocity": { "x": -1, "y": 1 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 10, "y": 94 }
+},
+{
+  "step": 39,
+  "before": { "x": 10, "y": 94 },
+  "velocity": { "x": -2, "y": 2 },
+  "acceleration": { "x": -1, "y": 1 },
+  "result": 0,
+  "after": { "x": 7, "y": 97 }
+},
+{
+  "step": 40,
+  "before": { "x": 7, "y": 97 },
+  "velocity": { "x": -3, "y": 3 },
+  "acceleration": { "x": 0, "y": -1 },
+  "result": 0,
+  "after": { "x": 4, "y": 99 }
+},
+{
+  "step": 41,
+  "before": { "x": 4, "y": 99 },
+  "velocity": { "x": -3, "y": 2 },
+  "acceleration": { "x": 1, "y": -1 },
+  "result": 0,
+  "after": { "x": 2, "y": 100 }
+}]
+}

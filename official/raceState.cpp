@@ -7,12 +7,13 @@ StepRecord::StepRecord(int step, PlayerState bfr, IntVec accel,
 
 
 RaceState::RaceState(RaceCourse &course,
-		     string &player0, string &name0, FILE* logFile0,
-		     string &player1, string &name1, FILE* logFile1):
+		     string &player0, string &name0,
+		     string &player1, string &name1,
+         const std::array<Option, 2>& options):
   course(&course),
-  players({
-      Player(player0, course, course.startX[0], name0, logFile0),
-	Player(player1, course, course.startX[1], name1, logFile1)}) {
+  players{
+      Player(player0, course, course.startX[0], name0, options[0]),
+	Player(player1, course, course.startX[1], name1, options[1])} {
   goalTime[0] = goalTime[1] = 2*course.stepLimit;
   goaled[0] = goaled[1] = false;
 }
@@ -24,21 +25,43 @@ bool RaceState::playOneStep(int c) {
   int res[2];
   LineSegment move[2];
   for (int p = 0; p != 2; p++) {
+    if (players[p].status != Status::VALID) {
+      res[p] = FUNNY;
+      accel[p] = IntVec(0, 0);
+      nextVelocity[p] = IntVec(0, 0);
+      nextPosition[p] = players[p].position;
+      continue;
+    }
     if (!goaled[p]) {
       res[p] = NORMAL;
       accel[p] = players[p].play(c, players[1-p], *course);
+      if (players[p].status != Status::VALID) {
+        res[p] = FUNNY;
+        accel[p] = IntVec(0, 0);
+        nextVelocity[p] = IntVec(0, 0);
+        nextPosition[p] = players[p].position;
+        continue;
+      }
       nextVelocity[p] = players[p].velocity + accel[p];
       nextPosition[p] = players[p].position + nextVelocity[p];
       move[p] = LineSegment(players[p].position, nextPosition[p]);
-      if (nextPosition[p].x < 0 || course->width <= nextPosition[p].x ||
-	  course->collides(move[p])) {
+      if (course->collides(move[p])) {
 	res[p] = STOPPED;
       }
     }
   }
+  // Going through the opponent's position is not allowed even with precedence
+  for (int i = 0; i < 2; ++i) {
+    if (res[i] == FUNNY) {
+      continue;
+    }
+    if (move[i].goesThru(players[1 - i].position)) {
+      res[i] = STOPPED;
+    }
+  }
   if (!goaled[0] && !goaled[1]) {
     // Check collision
-    bool moveCollision = move[0].intersects(move[1]);
+    bool moveCollision = move[0].intersects(move[1]) && res[0] == NORMAL && res[1] == NORMAL;
     if (moveCollision) {
       bool prec0 =
 	(players[0].position.y < players[1].position.y) ||
@@ -46,24 +69,16 @@ bool RaceState::playOneStep(int c) {
 	 players[0].position.x < players[1].position.x);
       if (prec0) {
 	// Player 0 has the precedence
-	if (move[0].goesThru(players[1].position)) {
-	  // Going through the opponent's position is not allowed even with precedence
-	  res[0] = STOPPED;
-	} else {
-	  res[1] = STOPPED;
-	}
+	res[1] = STOPPED;
       } else {
-	// Player 1 has the precedence
-	if (move[1].goesThru(players[0].position)) {
-	  // Going through the opponent's position is not allowed even with precedence
-	  res[1] = STOPPED;
-	} else {
-	  res[0] = STOPPED;
-	}
+	res[0] = STOPPED;
       }
     }
   }
   for (int p = 0; p != 2; p++) {
+    if (!records[p].empty() && records[p].back().result == FUNNY) {
+      continue;
+    }
     if (!goaled[p]) {
       records[p].emplace_back
 	(c,
@@ -105,3 +120,4 @@ void StepRecord::writeJson(ostream &out) {
   out << endl
       << '}';
 }
+

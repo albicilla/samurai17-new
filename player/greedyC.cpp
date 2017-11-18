@@ -79,7 +79,7 @@ int enemy_calcCost(Candidate *now, Point nextPos, RaceState &rs) {
 
 //敵の次の候補を計算する関数、詳細は自機の関数のコメント参照
 vector<Candidate *> generate_next_enemy_status(Candidate *ca, const Course &course, RaceState &rs) {
-    cerr<<"runnning()... generate_next_enemy_Status"<<endl;
+    //cerr <<"runnning()... generate_next_enemy_Status"<<endl;
     //次にいける９^step個の候補を格納する配列
     vector<Candidate *> ret;
     //初期化
@@ -93,7 +93,7 @@ vector<Candidate *> generate_next_enemy_status(Candidate *ca, const Course &cour
 
     //reached[initial]はinitialに辿りつけることを保存するmap
     reached[ca->state]++;
-    //cerr<<"whileのまえ"<<endl;
+    //cerr <<"whileのまえ"<<endl;
     while (!candidates.empty()) {
         Candidate *enemy_now = candidates.front();
         candidates.pop();
@@ -103,10 +103,10 @@ vector<Candidate *> generate_next_enemy_status(Candidate *ca, const Course &cour
                 IntVec nextVelo = enemy_now->state.velocity + IntVec(cax, cay);
                 //次の一
                 Point nextPos = enemy_now->state.position + nextVelo;
-                //cerr<<"now->step:"<<enemy_now->step<<endl;
+                //cerr <<"now->step:"<<enemy_now->step<<endl;
                 //障害物に衝突しない
                 if ( nextPos.y < course.length &&!course.obstacled(enemy_now->state.position, nextPos) && enemy_now->step < 3) {
-                    //cerr<<"nextCand"<<endl;
+                    //cerr <<"nextCand"<<endl;
                     //次のプレイヤーの位置、速度を次の候補変数に格納
                     PlayerState next2(nextPos, nextVelo);
                     Candidate *nextCand =
@@ -128,19 +128,19 @@ vector<Candidate *> generate_next_enemy_status(Candidate *ca, const Course &cour
 
                     }
                 }
-                //cerr<<"if文の終わりを告げる"<<endl;
+                //cerr <<"if文の終わりを告げる"<<endl;
             }
         }
 
     }
-    //cerr<<"finish generate_next_enemy_status()"<<endl;
+    //cerr <<"finish generate_next_enemy_status()"<<endl;
 
     return ret;
 }
 
 
 void enemyPlay(RaceState &rs, const Course &course) {
-    cerr<<"runnning enemyPlay()..."<<endl;
+    //cerr <<"runnning enemyPlay()..."<<endl;
     //初期化
     while (!enemy_candidates.empty()) enemy_candidates.pop();
     for (int i = 0; i < 3; i++)enemy_assumption[i] = IntVec(0, 0);
@@ -172,19 +172,19 @@ void enemyPlay(RaceState &rs, const Course &course) {
             enemy_status[depth].erase(enemy_status[depth].begin() + BEAM_WIDTH, enemy_status[depth].end());
         //ここまで
 
-        cerr<<"enemy depth:"<<depth<<endl;
+        //cerr <<"enemy depth:"<<depth<<endl;
 
         //深さ depthの状態を列挙
         for (Candidate *state : enemy_status[depth]) {
-            //cerr<<"generate_next_status(state,course).size: "<<endl;
+            //cerr <<"generate_next_status(state,course).size: "<<endl;
             for (Candidate *next_state: generate_next_enemy_status(state, course, rs)) {
-                //cerr<<"next_State";
+                //cerr <<"next_State";
                 enemy_status[depth + 1].push_back(next_state);
             }
         }
     }
 
-    cerr<<"enemyの探索終了"<<endl;
+    //cerr <<"enemyの探索終了"<<endl;
 
     for(int i=0;i<3 && !Enemy_AllCandidates.empty();i++){
         Candidate* temp = Enemy_AllCandidates.top();
@@ -196,41 +196,40 @@ void enemyPlay(RaceState &rs, const Course &course) {
 //優先権判定 1なら自分2なら相手 0ならどちらにもない
 int judgePredominance(Candidate *now, Point nextPos, RaceState &rs,const Course &course) {
     int ret = NO_PREDOMINANCE;
+    bool prec0 = (rs.position.y < rs.oppPosition.y) ||
+            ((rs.position.y == rs.oppPosition.y) &&
+             rs.position.x < rs.oppPosition.x);
+    LineSegment Me = LineSegment(now->state.position, nextPos);
 
-    //step数が0であり　y方向が相手より下であるか　同じかつ相手のx方向が大きい時
-    if (now->step == 0 &&
-        (rs.position.y < rs.oppPosition.y || ((rs.position.y == rs.oppPosition.y) && rs.position.x < rs.oppPosition.x))) {
+    //step数が0であり　y方向が相手より下であるか　同じかつ相手のx方向が小さい時
+    if (now->step == 0 && prec0) {
         //優先権があるので相手の進路を妨害することの評価値をあげる
         //Point nextOppPosN = rs.oppPosition + rs.oppVelocity;
-        LineSegment Me = LineSegment(now->state.position, nextPos);
         //相手の行動で想定される行動上位1候補のループ
         for (int idx = 0; idx < 1; idx++) {
-            IntVec VeloCandidate = enemy_assumption[idx];
-            Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
-            LineSegment Enemy = LineSegment(rs.oppPosition, nextOppPosCandidate);
             //動線の一致　かつ　根元では一致しない
-            if (LineSegment(Me).intersects(Enemy) && nextPos != rs.oppPosition) {
-                ret = MY_PREDOMINANCE;
-            } else if (nextPos == rs.oppPosition) {
-                //根元一致だと衝突扱いで動けない
+            if (Me.goesThru(rs.oppPosition)){
+                // Going through the opponent's position is not allowed even with precedence
                 ret = ENEMY_PREDOMINANCE;
+            }else{
+                ret = MY_PREDOMINANCE;
             }
+
         }
 
     } else if (now->step == 0) {
         //そうでなければ逆に相手に動線を跨がれないように評価を逆転させる
-        LineSegment Me = LineSegment(now->state.position, nextPos);
         //相手の行動で想定される行動上位1候補のループ
         for (int idx = 0; idx < 1; idx++) {
             IntVec VeloCandidate = enemy_assumption[idx];
             Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + VeloCandidate;
             LineSegment Enemy = LineSegment(rs.oppPosition, nextOppPosCandidate);
-            //動線の一致　かつ　根元では一致しない
-            if (LineSegment(Me).intersects(Enemy) && nextPos != rs.oppPosition) {
-                ret = ENEMY_PREDOMINANCE;
-            }else if (nextPos == rs.oppPosition+rs.oppVelocity) {
-                //根元一致だと衝突扱いで動けない
+
+            if (Enemy.goesThru(rs.position)){
+                // Going through the opponent's position is not allowed even with precedence
                 ret = MY_PREDOMINANCE;
+            }else{
+                ret = ENEMY_PREDOMINANCE;
             }
         }
     }
@@ -262,7 +261,7 @@ int calcCost(Candidate *now, Point nextPos, RaceState &rs,const Course &course) 
                 ret -= 1000;
                 break;
             default:
-                cerr << "優先権の判定でエラーが出ています" << endl;
+                //cerr  << "優先権の判定でエラーが出ています" << endl;
                 break;
         }
     }
@@ -290,13 +289,13 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
         Candidate *now = candidates.front();
         //前の評価値を伝搬
         double pastCost = now->cost;
-        //cerr<<"here"<<endl;
+        //cerr <<"here"<<endl;
         candidates.pop();
         //行き先を9種類全てループ
         for (int cay = 1; cay != -2; cay--) {
             for (int cax = -1; cax != 2; cax++) {
-                //cerr<<"search: "<<cay<<" "<<cax<<endl;
-                //cerr<<"now->step: "<<now->step<<endl;
+                //cerr <<"search: "<<cay<<" "<<cax<<endl;
+                //cerr <<"now->step: "<<now->step<<endl;
                 //次の速度
                 IntVec nextVelo = now->state.velocity + IntVec(cax, cay);
                 //次の一
@@ -306,7 +305,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                 if (!course.obstacled(now->state.position, nextPos) && now->step < searchDepth) {
                     //次のプレイヤーの位置、速度を次の候補変数に格納
                     PlayerState next(nextPos, nextVelo);
-                    //cerr<<"nextCand"<<endl;
+                    //cerr <<"nextCand"<<endl;
                     Candidate *nextCand =
                             new Candidate(now->step + 1, next, now, IntVec(cax, cay));
                     if (reached.count(next) == 0) { //そこにたどり着くのが最初の候補であれば
@@ -315,13 +314,13 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                             nextPos.x <= course.width) {
                             //評価値の計算
                             nextCand->cost = calcCost(now, nextPos, rs,course) + pastCost;
-                            //cerr<<"cost:"<<nextCand->cost<<endl;
+                            //cerr <<"cost:"<<nextCand->cost<<endl;
                             //次の候補に追加
                             candidates.push(nextCand);
                             AllCandidates.push(nextCand);
                             //nextにたどり着けることを記録
                             reached[next]++;
-                            //cerr<<"statusにpush?"<<endl;
+                            //cerr <<"statusにpush?"<<endl;
                             //次行ける結果を格納
                             ret.push_back(nextCand);
                         }
@@ -339,11 +338,11 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
 // rs.positon 自機の現在地　rs.velocity 自機の現在の速度 course コースの情報
 IntVec play(RaceState &rs, const Course &course) {
 
-    cerr << "s" << endl;
+    //cerr  << "s" << endl;
     //初期化
     while (!candidates.empty()) candidates.pop();
 
-    cerr << "t" << endl;
+    //cerr  << "t" << endl;
     //initialはプレイヤーの状態 自機の位置、速度
     PlayerState initial(rs.position, rs.velocity);
 
@@ -375,32 +374,32 @@ IntVec play(RaceState &rs, const Course &course) {
             status[depth].erase(status[depth].begin() + BEAM_WIDTH, status[depth].end());
         //ここまで
 
-        cerr << "depth:" << depth << endl;
+        //cerr  << "depth:" << depth << endl;
 
         //深さ depthの状態を列挙
         for (Candidate *state : status[depth]) {
-            //cerr<<"generate_next_status(state,course).size: "<<endl;
+            //cerr <<"generate_next_status(state,course).size: "<<endl;
             for (Candidate *next_state: generate_next_status(state, course, rs)) {
-                //cerr<<"next_State";
+                //cerr <<"next_State";
                 status[depth + 1].push_back(next_state);
-                //cerr<<"push_Backした！"<<endl;
+                //cerr <<"push_Backした！"<<endl;
             }
-            //cerr<<"中のforループ終了";
+            //cerr <<"中のforループ終了";
         }
-        cerr << "depth search巡回中〜" << endl;
+        //cerr  << "depth search巡回中〜" << endl;
     }
 
-    cerr << "size計算するよ" << endl;
+    //cerr  << "size計算するよ" << endl;
 
     long long size = (long long) status[MAX_DEPTH].size();
-    cerr << "size=" << size << endl;
+    //cerr  << "size=" << size << endl;
     Candidate *best;
     best = &initialCand;
     if (!AllCandidates.empty())best = AllCandidates.top();
 
     while (!AllCandidates.empty())AllCandidates.pop();
 
-    cerr << "best?" << endl;
+    //cerr  << "best?" << endl;
 
     if (best == &initialCand) {
         // No good move found
@@ -426,9 +425,9 @@ int main(int argc, char *argv[]) {
         counter++;
         RaceState rs(cin, course);
         IntVec accel = play(rs, course);
-        cerr << "今のstep数" << counter << endl;
-        cerr << "x:" << rs.position.x << " y:" << rs.position.y << endl;
-        cerr << "accel.x" << accel.x << " " << "accel.y" << accel.y << endl;
+        //cerr  << "今のstep数" << counter << endl;
+        //cerr  << "x:" << rs.position.x << " y:" << rs.position.y << endl;
+        //cerr  << "accel.x" << accel.x << " " << "accel.y" << accel.y << endl;
         cout << accel.x << ' ' << accel.y << endl;
     }
 }
