@@ -87,12 +87,12 @@ int main(int argc,char* argv[]){
           repeat = atoi(optarg);
         case 'h':
             //printf("-hがオプションとして渡されました\n");
-            printf("-x [argument] argumentの幅 -y [argument] argumentの高さ -g [argument] argumentの確率で上方向を選択 既定値70 \n");
+            //printf("-x [argument] argumentの幅 -y [argument] argumentの高さ -g [argument] argumentの確率で上方向を選択 既定値70 \n");
             break;
 
         default: /* '?' */
             //指定していないオプションが渡された場合
-            printf("Usage: %s [-f arg] [-g arg] [-h] arg1 ...\n", argv[0]);
+            //printf("Usage: %s [-f arg] [-g arg] [-h] arg1 ...\n", argv[0]);
             break;
     }
  }
