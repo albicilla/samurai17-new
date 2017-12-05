@@ -58,7 +58,7 @@ queue<Candidate *> enemy_candidates;
 auto cmp = [](const Candidate *left, const Candidate *right) { return (left->cost) < (right->cost); };
 priority_queue<Candidate *, vector<Candidate *>, decltype(cmp)> AllCandidates(cmp);
 priority_queue<Candidate *, vector<Candidate *>, decltype(cmp)> Enemy_AllCandidates(cmp);
-array<IntVec, 3> enemy_assumption;
+array<IntVec,3> enemy_assumption;
 
 
 enum ECompare {
@@ -85,7 +85,7 @@ vector<Candidate *> generate_next_enemy_status(Candidate *ca, const Course &cour
     //初期化
     while (!candidates.empty()) candidates.pop();
     //たどり着けるかを記録するmap
-    map<PlayerState, int> reached;
+    map<PlayerState,int> reached;
     reached.clear();
 
 
@@ -113,7 +113,7 @@ vector<Candidate *> generate_next_enemy_status(Candidate *ca, const Course &cour
                             new Candidate(enemy_now->step + 1, next2, enemy_now, IntVec(cax, cay));
                     if (reached.count(next2) == 0) { //そこにたどり着くのが最初の候補であれば
                         //探索深さよりも浅く　かつ　コースをはみ出していなければ
-                        if (enemy_now->step < searchDepth && nextPos.y <= course.length && nextPos.x > 0 &&
+                        if (enemy_now->step < searchDepth  && nextPos.x > 0 &&
                             nextPos.x <= course.width) {
                             //評価値の計算
                             nextCand->cost = enemy_calcCost(enemy_now, nextPos, rs);
@@ -197,8 +197,8 @@ void enemyPlay(RaceState &rs, const Course &course) {
 int judgePredominance(Candidate *now, Point nextPos, RaceState &rs,const Course &course) {
     int ret = NO_PREDOMINANCE;
     bool prec0 = (rs.position.y < rs.oppPosition.y) ||
-            ((rs.position.y == rs.oppPosition.y) &&
-             rs.position.x < rs.oppPosition.x);
+                 ((rs.position.y == rs.oppPosition.y) &&
+                  rs.position.x < rs.oppPosition.x);
     LineSegment Me = LineSegment(now->state.position, nextPos);
 
     //step数が0であり　y方向が相手より下であるか　同じかつ相手のx方向が小さい時
@@ -254,11 +254,11 @@ int calcCost(Candidate *now, Point nextPos, RaceState &rs,const Course &course) 
                 break;
                 //こちらに優先権がある
             case MY_PREDOMINANCE:
-                ret += 1000;
+               // ret += 1000;
                 break;
                 //相手に優先権がある
             case ENEMY_PREDOMINANCE:
-                ret -= 1000;
+               // ret -= 1000;
                 break;
             default:
                 //cerr  << "優先権の判定でエラーが出ています" << endl;
@@ -313,7 +313,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                         if (now->step < searchDepth && nextPos.y <= course.length && nextPos.x > 0 &&
                             nextPos.x <= course.width) {
                             //評価値の計算
-                            nextCand->cost = calcCost(now, nextPos, rs,course) + pastCost;
+                            nextCand->cost = calcCost(now, nextPos, rs,course) ;
                             //cerr <<"cost:"<<nextCand->cost<<endl;
                             //次の候補に追加
                             candidates.push(nextCand);

@@ -20,6 +20,8 @@ int height=100,width=15;
 int choice_up=70;
 int thinkTime = 20000;
 int repeat=3;
+//視界
+int vision=6;
 int maze[1123456][1123456];
 string obstacle;
 
@@ -40,19 +42,14 @@ void dig(int x,int y,int len){
     else
     dig(x,y,len);
   }else{
-    if(x<=width-1)
+    if(x<width-1)
     dig(x+1,y,len);
     else
     dig(x,y,len);
 
   }
 }
-int ctoi(char c) {
-	if (c >= '0' && c <= '9') {
-		return c - '0';
-	}
-	return 0;
-}
+
 
 int main(int argc,char* argv[]){
 
@@ -62,7 +59,7 @@ int main(int argc,char* argv[]){
 
  opterr = 0; //getopt()のエラーメッセージを無効にする。
 
- while ((opt = getopt(argc, argv, "x:y:g:t:r:h")) != -1) {
+ while ((opt = getopt(argc, argv, "x:y:g:t:r:v:h")) != -1) {
     //コマンドライン引数のオプションがなくなるまで繰り返す
     switch (opt) {
         case 'x':
@@ -85,6 +82,9 @@ int main(int argc,char* argv[]){
           break;
         case 'r':
           repeat = atoi(optarg);
+        case 'v':
+          vision = atoi(optarg);
+          break;
         case 'h':
             //printf("-hがオプションとして渡されました\n");
             //printf("-x [argument] argumentの幅 -y [argument] argumentの高さ -g [argument] argumentの確率で上方向を選択 既定値70 \n");
@@ -137,7 +137,9 @@ int main(int argc,char* argv[]){
  cout<<width;
  cout<<",\"length\":";
  cout<<height;
- cout<<",\"vision\":20,\"thinkTime\":";
+ cout<<",\"vision\":";
+ cout<<vision;
+ cout<<",\"thinkTime\":";
  cout<<thinkTime;
  cout<<",\"stepLimit\":100,\"x0\":5,\"x1\":9,\"obstacles\":";
  cout<<"["<<obstacle<<"]}"<<endl;
