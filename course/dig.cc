@@ -107,8 +107,8 @@ int main(int argc,char* argv[]){
 
  //cout<<"初期化終了"<<endl;
 
- rep(i,repeat)dig(x0,height,0);
- rep(i,repeat)dig(x1,height,0);
+ // rep(i,repeat)dig(x0,height,0);
+ // rep(i,repeat)dig(x1,height,0);
  rep(i,repeat)dig(x0,0,height);
  rep(i,repeat)dig(x1,0,height);
 
