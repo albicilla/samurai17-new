@@ -1,13 +1,15 @@
 #include <map>
 #include <queue>
 #include <limits>
-#include <tuple>
 #include <iostream>
 #include <random>
 #include "raceState.hpp"
 
+#define FOR(i,a,b) for(int i=a;i<b;i++)
+#define rep(i,b) FOR(i,0,b)
 #define INF 1e9
-#define TEISU 7
+#define TEISU 100
+#define EPISODE_LOOP 100
 /*
  * 負の添え字を扱うためのマクロ
  * 参考:http://albicilla.hatenablog.com/
@@ -15,10 +17,10 @@
  * Q new_row,new_col,new_vv,new_vh,roop
  */
 
-double Q[110][110][40][40][10];
-double policy[110][110][40][40];
+int Q[110][110][40][40][10];
+int policy[110][110][40][40];
 //現在地
-int start_y,start_x;
+int start_x,start_y;
 
 #define QDP(i,j,k,l,m)  Q[(i)+(int)3][(j)+(int)3][(k)+(int)15][(l)+(int)15][(m)]
 #define policyDP(i,j,k,l) policy[(i)+(int)3][(j)+(int)3][(k)+(int)15][(l)+(int)15]
@@ -29,13 +31,13 @@ void show_debug(){
         for(int y=-1;y<100;y++){
 
             int temp=0;
-           // for(int roop=0;roop<9;roop++){
-                for(int j=-5;j<5;j++){
-                    for(int k=-5;k<5;k++){
-                        temp+=policyDP(y,x,j,k);
-                    }
+            for(int roop=0;roop<9;roop++){
+            for(int j=-2;j<2;j++){
+                for(int k=-2;k<2;k++){
+                    temp+=QDP(x,y,j,k,roop);
                 }
-           // }
+            }
+            }
 
             debug[x][y]=temp;
 
@@ -43,9 +45,9 @@ void show_debug(){
     }
 
 
-    for(int i=-1;i<20;i++){
-        for(int j=-1;j<40;j++){
-            cerr<<debug[i][j]<<" ";
+    for(int j=-1;j<20;j++){
+        for(int i=-1;i<40;i++){
+            cerr<<debug[j][i]<<" ";
         }
         cerr<<endl;
     }
@@ -67,30 +69,31 @@ int generate_action_e(int action,int eps){
 }
 
 //ゴール
-bool game_over(int final_r,int final_c,const RaceState &rs,const Course &rt){
-    if(rt.width <= final_c && 0<=final_r && final_r>=start_y+TEISU){
+bool game_over(int final_x,int final_y,const RaceState &rs,const Course &rt){
+    if(rt.width >= final_x && final_x>=0 && final_y>=start_y+TEISU){
         //cerr<<"gameover"<<endl;
         return 1;
     }
     else return false;
 }
 //場外
-bool outside(int final_r,int final_c,const Course &rt){
-    if(0>final_r || final_r>rt.length || 0>final_c || final_c>rt.width)return 1;
+bool outside(int final_x,int final_y,const Course &rt){
+    if(0>final_x || final_x>rt.width || 0>final_y)return 1;
     else {
         //cerr<<"not outside"<<endl;
         return false;
     }
 }
 //衝突
-bool collision(int r,int c,int final_r,int final_c,const RaceState &rs,const Course &course){
+bool collision(int x,int y,int final_x,int final_y,const RaceState &rs,const Course &course){
     //cerr << "r="<<r<<" c="<<c<<endl;
-    //cerr<<"final_r="<<final_r <<" final_c="<<final_c<<endl;
+    //cerr<<"final_x="<<final_x <<" final_y="<<final_y<<endl;
 
-    if(!course.obstacled(Point(c,r), Point(final_c,final_r))){
+    if(!course.obstacled(Point(x,y), Point(final_x,final_y))){
         //cerr<<"not collision"<<endl;
         return false;
     }else {
+        //cerr<<"collision"<<endl;
         return 1;
     }
 }
@@ -109,123 +112,140 @@ typedef struct {
     int y;
 } velo_set;
 
-velo_set change_velocity(int av, int ah, int action){
+velo_set change_velocity(int ax, int ay, int action){
 
     if(action==0){
-        av++;
-        ah--;
+        ay++;
+        ax--;
     }
     if(action==1){
-        av++;
+        ay++;
     }
     if(action==2){
-        av++;
-        ah++;
+        ay++;
+        ax++;
     }
     if(action==3){
-        ah--;
+        ax--;
     }
     if(action==5){
-        ah++;
+        ax++;
     }
     if(action==6){
-        av--;
-        ah--;
+        ay--;
+        ax--;
     }
     if(action==7){
-        av--;
+        ay--;
     }
     if(action==8){
-        av--;
-        ah++;
+        ay--;
+        ax++;
     }
 
-    velo_set ret={av,ah};
+    velo_set ret={ax,ay};
     return ret;
 }
 
 Point action_to_velocity(int action) {
 
-    int av=0,ah=0;
+    int ax=0,ay=0;
     if(action==0){
-        av++;
-        ah--;
+        ay++;
+        ax--;
     }
     if(action==1){
-        av++;
+        ay++;
     }
     if(action==2){
-        av++;
-        ah++;
+        ay++;
+        ax++;
     }
     if(action==3){
-        ah--;
+        ax--;
     }
     if(action==5){
-        ah++;
+        ax++;
     }
     if(action==6){
-        av--;
-        ah--;
+        ay--;
+        ax--;
     }
     if(action==7){
-        av--;
+        ay--;
     }
     if(action==8){
-        av--;
-        ah++;
+        ay--;
+        ax++;
     }
-    Point ret={av,ah};
+    Point ret={ax,ay};
     return ret;
 }
 
 //グローバルでやって良いか？
-int reward=0, new_row=0, new_col=0, new_vv=0, new_vh=0;
+int reward=0;
+int new_x=0, new_y=0, new_vx=0, new_vy=0;
 
 
 //とった行動によって得られる報酬と次の状態を
-void generate_reward_and_next_state(int row,int col,int vv,int vh,int action,const RaceState &rs,const Course &course){
+void generate_reward_and_next_state(int x,int y,int vx,int vy,int action,const RaceState &rs,const Course &course){
 
-    //vv,vhを更新
-    auto nv = change_velocity(vv,vh,action);
+    //vx,vyを更新
+    auto nv = change_velocity(vx,vy,action);
 
-    int final_r,final_c;
-    final_r = row + nv.y;
-    final_c = col + nv.x;
-   // cerr << course.length<<" "<<course.width<<endl;
-
-
-    if(game_over(final_r,final_c,rs,course)){
-        reward=1000;
-        new_row=final_r;
-        new_col=final_c;
-        new_vv=0;
-        new_vh=0;
-        return ;
-    }else if(outside(final_r,final_c,course)){
-        reward=-100;
-        new_row=row;
-        new_col=col;
-        new_vv=vv;
-        new_vh=vh;
-        //cerr<<"outside"<<endl;
-        return ;
-    }else if(collision(row,col,final_r,final_c,rs,course)){
+    //速度が大きすぎるのはあり得ないので除外
+    if(abs(nv.x)>14 ||abs(nv.y)>14 ) {
+        cerr<<"too large speed"<<endl;
         reward=-10;
-        new_row=row;
-        new_col=col;
-        new_vv=vv;
-        new_vh=vh;
+        new_x=x;
+        new_y=y;
+        new_vx=vx;
+        new_vy=vy;
         return ;
     }
 
-    //cerr<<"can go to"<<final_r<<" "<<final_c<<endl;
+    int final_x, final_y;
 
-    reward=-1;
-    new_row=final_r;
-    new_col=final_c;
-    new_vv=vv;
-    new_vh=vh;
+    final_x = x + nv.x;
+    final_y = y + nv.y;
+    // cerr << course.length<<" "<<course.width<<endl;
+
+
+
+    if(game_over(final_x,final_y,rs,course)){
+        reward=10;
+        new_x=final_x;
+        new_y=final_y;
+        new_vx=0;
+        new_vy=0;
+        return ;
+    }else if(outside(final_x,final_y,course)){
+        reward=-3;
+        new_x=x;
+        new_y=y;
+        new_vx=vx;
+        new_vy=vy;
+        //cerr<<"outside"<<endl;
+        return ;
+    }else if(collision(x,y,final_x,final_y,rs,course)){
+        reward=-3;
+        new_x=x;
+        new_y=y;
+        new_vx=vx;
+        new_vy=vy;
+        return ;
+    }
+
+    reward+=(new_y-start_y);
+
+
+    //cerr<<"can go to"<<final_x<<" "<<final_y<<endl;
+
+    reward+=-1;
+    new_x=final_x;
+    new_y=final_y;
+    new_vx=vx;
+    new_vy=vy;
 
 
 }
@@ -233,71 +253,65 @@ void generate_reward_and_next_state(int row,int col,int vv,int vh,int action,con
 
 
 //TODO
-
-//c++に書き換えないといけないpythonの関数たち
 /*
- *
- *np.amax() done
- *np.argmax() done
+ *x座標 y座標整理 done
  */
-/*
- * change_velocity() done
- */
-
 
 // rs.positon 駒の位置　rs.velocity 現在の速度 course コースの情報
 void q_learning(const RaceState &rs, const Course &course){
-    start_y=rs.position.y;
     start_x=rs.position.x;
-    cerr<<"start_x="<<start_x<<" start_y"<<start_y<<endl;
-    for(int i=0;i<10; i++ ) {
-        int row=rs.position.y,col=rs.position.x,vv=0,vh=0;
-        double eps = 40*pow(0.8,i);
+    start_y=rs.position.y;
 
+
+    cerr<<"start_x="<<start_x<<" start_y"<<start_y<<endl;
+    for(int epi=0;epi<EPISODE_LOOP; epi++ ) {
+        cerr<<"runnning episode... "<<epi<<endl;
+        int y=rs.position.y,x=rs.position.x,vx=0,vy=0;
+        double eps = 90*pow(0.99,epi);
+        if(eps<=40)eps=40;
+       // cerr<<"eps="<<eps<<endl;
         while(1){
-            //cerr<<"row="<<row<<" col="<<col<<endl;
+            //cerr<<"x="<<x<<" y="<<y<<endl;
             //行動決定
-            int action = generate_action_e(policyDP(row,col,vv,vh),eps);
+            int action = generate_action_e(policyDP(x,y,vx,vy),eps);
 
             //報酬と次の状態
-            //グローバルでやって良いか？
-            //int reward, new_row, new_col, new_vv, new_vh;
-            generate_reward_and_next_state(row,col,vv,vh,action,rs,course);
+            generate_reward_and_next_state(x,y,vx,vy,action,rs,course);
             //cerr<<"reward="<<reward<<endl;
             //9つのactionのうち最も大きな結果を求める
-            double np_amax = -1e9;
+            double np_amax = -INF;
             for(int roop=0;roop<9;roop++){
-                if(np_amax<Q[new_row][new_col][new_vv][new_vh][roop]){
-                    np_amax=Q[new_row][new_col][new_vv][new_vh][roop];
+                if(np_amax<Q[new_x][new_y][new_vx][new_vy][roop]){
+                    np_amax=Q[new_x][new_y][new_vx][new_vy][roop];
                 }
             }
 
             double alpha = 0.9;
             double gamma = 0.9;
             //Q関数の更新
-            QDP(new_row,new_col,new_vv,new_vh,action)+=alpha*(reward+gamma*np_amax)-Q[row][col][vv][vh][action];
+            QDP(x,y,vx,vy,action)+=alpha*(reward+gamma*np_amax-QDP(x,y,vx,vy,action));
 
             //9つのactionのうち最も大きな結果を出すものを求める
             double np_argmax_temp=-INF;
             int np_argmax=0;
             for(int roop=0;roop<9;roop++){
-                if(np_argmax_temp<QDP(new_row,new_col,new_vv,new_vh,roop)){
-                    np_argmax_temp=QDP(new_row,new_col,new_vv,new_vh,roop);
+                if(np_argmax_temp<QDP(new_x,new_y,new_vx,new_vy,roop)){
+                    np_argmax_temp=QDP(new_x,new_y,new_vx,new_vy,roop);
                     np_argmax=roop;
                 }
             }
 
             //更新したQ関数に基づいてpolicyを更新
-            policyDP(row,col,vv,vh)=np_argmax;
+            policyDP(x,y,vx,vy)=np_argmax;
 
             //位置座標の更新
-            row= new_row;
-            col= new_col;
-            vv = new_vv;
-            vh = new_vh;
+            x= new_x;
+            y= new_y;
+            vx = new_vx;
+            vy = new_vy;
 
-            //ゴールもしくはコース外に行ったらエピソード終了
-            if(game_over(row,col,rs,course))break;
+            //ゴールもしくは見てるコース外に行ったらエピソード終了
+            if(game_over(x,y,rs,course) || collision(x,y,x,y,rs,course) || outside(x,y,course))break;
         }
     }
 }
@@ -310,13 +324,13 @@ void q_learning(const RaceState &rs, const Course &course){
 // rs.positon 敵の現在地　rs.velocity 現在の速度 course コースの情報
 IntVec play(RaceState &rs, const Course &course) {
 
-    int row=rs.position.y;
-    int col=rs.position.x;
-    int vv=rs.velocity.y;
-    int vh=rs.velocity.x;
+    int y=rs.position.y;
+    int x=rs.position.x;
+    int vy=rs.velocity.y;
+    int vx=rs.velocity.x;
 
 
-    int action=policyDP(row,col,vv,vh);
+    int action=policyDP(x,y,vx,vy);
 
     Point ans=action_to_velocity(action);
     return Point(ans.x,ans.y);
@@ -329,6 +343,9 @@ int main(int argc, char *argv[]) {
     cout << 0 << endl;
     cout.flush();
     RaceState rs(cin, course);
+
+    //Qtableを初期化
+    //rep(i,110)rep(j,110)rep(k,40)rep(l,40)rep(m,10)Q[i][j][k][l][m]=-100;
     //Q学習(強化学習で政策テーブルを作成)
     q_learning(rs,course);
 
