@@ -8,27 +8,26 @@
 #define FOR(i,a,b) for(int i=a;i<b;i++)
 #define rep(i,b) FOR(i,0,b)
 #define INF 1e9
-#define TEISU 100
+#define TEISU 101
 #define EPISODE_LOOP 100
 /*
  * 負の添え字を扱うためのマクロ
  * 参考:http://albicilla.hatenablog.com/
  *
- * Q new_row,new_col,new_vv,new_vh,roop
+ * Q new_x,new_y,new_vx,new_vy,roop
  */
-
 int Q[110][110][40][40][10];
 int policy[110][110][40][40];
 //現在地
 int start_x,start_y;
 
-#define QDP(i,j,k,l,m)  Q[(i)+(int)3][(j)+(int)3][(k)+(int)15][(l)+(int)15][(m)]
-#define policyDP(i,j,k,l) policy[(i)+(int)3][(j)+(int)3][(k)+(int)15][(l)+(int)15]
+#define QDP(i,j,k,l,m)  Q[(i)][(j)][(k)+(int)15][(l)+(int)15][(m)]
+#define policyDP(i,j,k,l) policy[(i)][(j)][(k)+(int)15][(l)+(int)15]
 
 int debug[30][100];
 void show_debug(){
-    for(int x=-1;x<20;x++){
-        for(int y=-1;y<100;y++){
+    for(int x=0;x<20;x++){
+        for(int y=0;y<100;y++){
 
             int temp=0;
             for(int roop=0;roop<9;roop++){
@@ -45,8 +44,8 @@ void show_debug(){
     }
 
 
-    for(int j=-1;j<20;j++){
-        for(int i=-1;i<40;i++){
+    for(int j=0;j<20;j++){
+        for(int i=0;i<40;i++){
             cerr<<debug[j][i]<<" ";
         }
         cerr<<endl;
@@ -54,14 +53,62 @@ void show_debug(){
     cerr<<endl;
 }
 
+
+
+int debug_policy[30][100];
+void show_debug_policy(){
+    //初期値
+    rep(i,30)rep(j,100)debug_policy[i][j]=9;
+
+    for(int x=-1;x<20;x++){
+        for(int y=-1;y<100;y++){
+
+            //それぞれの速度のときにそのマスに来た時の行き先のカウントをする配列
+            int cnt[10];
+            rep(i,10)cnt[i]=0;
+
+            for(int j=-2;j<2;j++){
+                for(int k=-2;k<2;k++){
+                    cnt[policyDP(x,y,j,k)]++;
+                }
+            }
+            int temp=0;
+            rep(i,10){
+                if(i!=0 && cnt[i]>temp){
+                    debug_policy[x][y]=i;
+                }
+            }
+
+        }
+    }
+
+
+    for(int i=-1;i<20;i++){
+        for(int j=-1;j<40;j++){
+            cerr<<debug_policy[i][j]<<" ";
+        }
+        cerr<<endl;
+    }
+    cerr<<endl;
+}
+
+//episode内のターン数
+int turn = 0;
+
+
+int generate_seed(){
+    return turn;
+}
 //イプシロングリーディでランダムな結果か政策の結果を採用するかの決定
 /*
- * 参考 http://vivi.dyndns.org/tech/cpp/random.html
+ *  c++の乱数生成 　参考　http://qnighy.hatenablog.com/entry/2015/07/01/235907
  */
 int generate_action_e(int action,int eps){
-    std::random_device rnd;     // 非決定的な乱数生成器
-    if(rnd()%100<eps){
-        return rnd()%9;
+    //random_device rand_src;
+    int seed=generate_seed();
+    mt19937 rand_src(seed);
+    if(rand_src()%100<eps){
+        return rand_src()%9;
     }else{
         //cerr<<"takea ation from policy"<<action<<endl;
         return action;
@@ -228,7 +275,7 @@ void generate_reward_and_next_state(int x,int y,int vx,int vy,int action,const R
         //cerr<<"outside"<<endl;
         return ;
     }else if(collision(x,y,final_x,final_y,rs,course)){
-        reward=-3;
+        reward=-5;
         new_x=x;
         new_y=y;
         new_vx=vx;
@@ -265,6 +312,7 @@ void q_learning(const RaceState &rs, const Course &course){
 
     cerr<<"start_x="<<start_x<<" start_y"<<start_y<<endl;
     for(int epi=0;epi<EPISODE_LOOP; epi++ ) {
+        turn =0;
         cerr<<"runnning episode... "<<epi<<endl;
         int y=rs.position.y,x=rs.position.x,vx=0,vy=0;
         double eps = 90*pow(0.99,epi);
@@ -312,9 +360,12 @@ void q_learning(const RaceState &rs, const Course &course){
 
             //ゴールもしくは見てるコース外に行ったらエピソード終了
             if(game_over(x,y,rs,course) || collision(x,y,x,y,rs,course) || outside(x,y,course))break;
+
+            turn ++;
         }
     }
 }
+
 
 
 
@@ -328,6 +379,8 @@ IntVec play(RaceState &rs, const Course &course) {
     int x=rs.position.x;
     int vy=rs.velocity.y;
     int vx=rs.velocity.x;
+
+    cerr<<"x="<<x<<"y="<<y<<endl;
 
 
     int action=policyDP(x,y,vx,vy);
@@ -345,7 +398,9 @@ int main(int argc, char *argv[]) {
     RaceState rs(cin, course);
 
     //Qtableを初期化
-    //rep(i,110)rep(j,110)rep(k,40)rep(l,40)rep(m,10)Q[i][j][k][l][m]=-100;
+    //rep(i,2)rep(j,2)rep(k,40)rep(l,40)rep(m,10)Q[i][j][k][l][m]=-100;
+    //policyを初期化
+    rep(i,110)rep(j,110)rep(k,40)rep(l,40)policy[i][j][k][l]=1;
     //Q学習(強化学習で政策テーブルを作成)
     q_learning(rs,course);
 
@@ -360,10 +415,23 @@ int main(int argc, char *argv[]) {
      *  rep(roop,9)rep()
      */
 
+    IntVec accel = play(rs, course);
+    cout << accel.x << ' ' << accel.y << endl;
 
     while (true) {
+        RaceState rs(cin, course);
         IntVec accel = play(rs, course);
         cout << accel.x << ' ' << accel.y << endl;
-        RaceState rs(cin, course);
     }
 }
+
+//int main(int argc, char *argv[]) {
+//    Course course(cin);
+//    cout << 0 << endl;
+//    cout.flush();
+//    while (true) {
+//        RaceState rs(cin, course);
+//        IntVec accel = play(rs, course);
+//        cout << accel.x << ' ' << accel.y << endl;
+//    }
+//}
