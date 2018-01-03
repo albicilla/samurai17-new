@@ -123,33 +123,6 @@ player/fast:
 	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/build
 .PHONY : player/fast
 
-greedyC.o: greedyC.cpp.o
-
-.PHONY : greedyC.o
-
-# target to build an object file
-greedyC.cpp.o:
-	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedyC.cpp.o
-.PHONY : greedyC.cpp.o
-
-greedyC.i: greedyC.cpp.i
-
-.PHONY : greedyC.i
-
-# target to preprocess a source file
-greedyC.cpp.i:
-	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedyC.cpp.i
-.PHONY : greedyC.cpp.i
-
-greedyC.s: greedyC.cpp.s
-
-.PHONY : greedyC.s
-
-# target to generate assembly for a file
-greedyC.cpp.s:
-	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/greedyC.cpp.s
-.PHONY : greedyC.cpp.s
-
 raceState.o: raceState.cpp.o
 
 .PHONY : raceState.o
@@ -177,6 +150,33 @@ raceState.cpp.s:
 	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/raceState.cpp.s
 .PHONY : raceState.cpp.s
 
+reinforce.o: reinforce.cc.o
+
+.PHONY : reinforce.o
+
+# target to build an object file
+reinforce.cc.o:
+	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/reinforce.cc.o
+.PHONY : reinforce.cc.o
+
+reinforce.i: reinforce.cc.i
+
+.PHONY : reinforce.i
+
+# target to preprocess a source file
+reinforce.cc.i:
+	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/reinforce.cc.i
+.PHONY : reinforce.cc.i
+
+reinforce.s: reinforce.cc.s
+
+.PHONY : reinforce.s
+
+# target to generate assembly for a file
+reinforce.cc.s:
+	$(MAKE) -f CMakeFiles/player.dir/build.make CMakeFiles/player.dir/reinforce.cc.s
+.PHONY : reinforce.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +186,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... player"
-	@echo "... greedyC.o"
-	@echo "... greedyC.i"
-	@echo "... greedyC.s"
 	@echo "... raceState.o"
 	@echo "... raceState.i"
 	@echo "... raceState.s"
+	@echo "... reinforce.o"
+	@echo "... reinforce.i"
+	@echo "... reinforce.s"
 .PHONY : help
 
 

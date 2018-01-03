@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/player.dir/greedyC.cpp.o"
   "CMakeFiles/player.dir/raceState.cpp.o"
-  "../beamZ/player.pdb"
-  "../beamZ/player"
+  "CMakeFiles/player.dir/reinforce.cc.o"
+  "../rein/player.pdb"
+  "../rein/player"
 )
 
 # Per-language clean rules from dependency scanning.

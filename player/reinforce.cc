@@ -31,11 +31,11 @@ void show_debug(){
 
             int temp=0;
             for(int roop=0;roop<9;roop++){
-            for(int j=-2;j<2;j++){
-                for(int k=-2;k<2;k++){
-                    temp+=QDP(x,y,j,k,roop);
+                for(int j=-2;j<2;j++){
+                    for(int k=-2;k<2;k++){
+                        temp+=QDP(x,y,j,k,roop);
+                    }
                 }
-            }
             }
 
             debug[x][y]=temp;
@@ -322,7 +322,7 @@ void q_learning(const RaceState &rs, const Course &course){
         int y=rs.position.y,x=rs.position.x,vx=0,vy=0;
         double eps = 90*pow(0.999,epi);
         if(eps<=20)eps=20;
-       // cerr<<"eps="<<eps<<endl;
+        // cerr<<"eps="<<eps<<endl;
         while(1){
             //cerr<<"x="<<x<<" y="<<y<<endl;
             //行動決定
@@ -395,7 +395,7 @@ IntVec play(RaceState &rs, const Course &course) {
             for(int roop=0;roop<9;roop++){
                 for(int j=-2;j<2;j++){
                     for(int k=-2;k<4;k++){
-                       // cerr<<"QDP("<<x<<","<<y<<","<<j<<","<<k<<","<<roop<<")="<<QDP(x,y,j,k,roop)<<endl;
+                        // cerr<<"QDP("<<x<<","<<y<<","<<j<<","<<k<<","<<roop<<")="<<QDP(x,y,j,k,roop)<<endl;
                     }
                 }
             }

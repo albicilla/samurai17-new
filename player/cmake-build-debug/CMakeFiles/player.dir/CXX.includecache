@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/Users/albicilla/programming/samurAI/samurai17/player/greedyC.cpp
-map
--
-queue
--
-limits
--
-raceState.hpp
-/Users/albicilla/programming/samurAI/samurai17/player/raceState.hpp
-
 /Users/albicilla/programming/samurAI/samurai17/player/raceState.cpp
 raceState.hpp
 /Users/albicilla/programming/samurAI/samurai17/player/raceState.hpp
@@ -27,4 +17,22 @@ vector
 -
 algorithm
 -
+memory
+-
+map
+-
+
+/Users/albicilla/programming/samurAI/samurai17/player/reinforce.cc
+map
+-
+queue
+-
+limits
+-
+iostream
+-
+random
+-
+raceState.hpp
+/Users/albicilla/programming/samurAI/samurai17/player/raceState.hpp
 
