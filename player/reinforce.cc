@@ -9,7 +9,7 @@
 #define rep(i,b) FOR(i,0,b)
 #define INF 1e9
 #define TEISU 101
-#define EPISODE_LOOP 100
+#define EPISODE_LOOP 600
 /*
  * 負の添え字を扱うためのマクロ
  * 参考:http://albicilla.hatenablog.com/
@@ -110,7 +110,7 @@ int generate_action_e(int action,int eps){
     if(rand_src()%100<eps){
         return rand_src()%9;
     }else{
-        //cerr<<"takea ation from policy"<<action<<endl;
+        //cerr<<"take ation from policy"<<action<<endl;
         return action;
     }
 }
@@ -242,12 +242,12 @@ void generate_reward_and_next_state(int x,int y,int vx,int vy,int action,const R
 
     //速度が大きすぎるのはあり得ないので除外
     if(abs(nv.x)>14 ||abs(nv.y)>14 ) {
-        cerr<<"too large speed"<<endl;
-        reward=-10;
+        //cerr<<"too large speed"<<endl;
+        reward=-100;
         new_x=x;
         new_y=y;
-        new_vx=vx;
-        new_vy=vy;
+        new_vx=0;
+        new_vy=0;
         return ;
     }
 
@@ -260,39 +260,39 @@ void generate_reward_and_next_state(int x,int y,int vx,int vy,int action,const R
 
 
     if(game_over(final_x,final_y,rs,course)){
-        reward=10;
+        reward=10000;
         new_x=final_x;
         new_y=final_y;
         new_vx=0;
         new_vy=0;
         return ;
     }else if(outside(final_x,final_y,course)){
-        reward=-3;
+        reward=-10;
         new_x=x;
         new_y=y;
-        new_vx=vx;
-        new_vy=vy;
+        new_vx=nv.x;
+        new_vy=nv.y;
         //cerr<<"outside"<<endl;
         return ;
     }else if(collision(x,y,final_x,final_y,rs,course)){
-        reward=-5;
+        reward=-10;
         new_x=x;
         new_y=y;
-        new_vx=vx;
-        new_vy=vy;
+        new_vx=nv.x;
+        new_vy=nv.y;
         return ;
     }
 
-    reward+=(new_y-start_y);
+    reward+=(new_y-start_y)*100;
 
 
     //cerr<<"can go to"<<final_x<<" "<<final_y<<endl;
 
-    reward+=-1;
+    reward+=-100;
     new_x=final_x;
     new_y=final_y;
-    new_vx=vx;
-    new_vy=vy;
+    new_vx=nv.x;
+    new_vy=nv.y;
 
 
 }
@@ -302,6 +302,11 @@ void generate_reward_and_next_state(int x,int y,int vx,int vy,int action,const R
 //TODO
 /*
  *x座標 y座標整理 done
+ *
+ * generate_reward_and_next_state()
+で返す変数int reward=0;
+int new_x=0, new_y=0, new_vx=0, new_vy=0;
+を構造体で返すようにする
  */
 
 // rs.positon 駒の位置　rs.velocity 現在の速度 course コースの情報
@@ -315,8 +320,8 @@ void q_learning(const RaceState &rs, const Course &course){
         turn =0;
         cerr<<"runnning episode... "<<epi<<endl;
         int y=rs.position.y,x=rs.position.x,vx=0,vy=0;
-        double eps = 90*pow(0.99,epi);
-        if(eps<=40)eps=40;
+        double eps = 90*pow(0.999,epi);
+        if(eps<=20)eps=20;
        // cerr<<"eps="<<eps<<endl;
         while(1){
             //cerr<<"x="<<x<<" y="<<y<<endl;
@@ -326,25 +331,28 @@ void q_learning(const RaceState &rs, const Course &course){
             //報酬と次の状態
             generate_reward_and_next_state(x,y,vx,vy,action,rs,course);
             //cerr<<"reward="<<reward<<endl;
+            //cerr<<"new_vx="<<new_vx<<" new_vy="<<new_vy<<endl;
+
+
             //9つのactionのうち最も大きな結果を求める
-            double np_amax = -INF;
+            int np_amax = -INF;
             for(int roop=0;roop<9;roop++){
-                if(np_amax<Q[new_x][new_y][new_vx][new_vy][roop]){
-                    np_amax=Q[new_x][new_y][new_vx][new_vy][roop];
+                if(np_amax<QDP(new_x,new_y,new_vx,new_vy,roop)){
+                    np_amax=QDP(new_x,new_y,new_vx,new_vy,roop);
                 }
             }
 
-            double alpha = 0.9;
+            double alpha = 0.5;
             double gamma = 0.9;
             //Q関数の更新
             QDP(x,y,vx,vy,action)+=alpha*(reward+gamma*np_amax-QDP(x,y,vx,vy,action));
 
             //9つのactionのうち最も大きな結果を出すものを求める
-            double np_argmax_temp=-INF;
+            int np_argmax_temp=-INF;
             int np_argmax=0;
             for(int roop=0;roop<9;roop++){
-                if(np_argmax_temp<QDP(new_x,new_y,new_vx,new_vy,roop)){
-                    np_argmax_temp=QDP(new_x,new_y,new_vx,new_vy,roop);
+                if(np_argmax_temp<QDP(x,y,vx,vy,roop)){
+                    np_argmax_temp=QDP(x,y,vx,vy,roop);
                     np_argmax=roop;
                 }
             }
@@ -366,12 +374,6 @@ void q_learning(const RaceState &rs, const Course &course){
     }
 }
 
-
-
-
-
-
-
 // rs.positon 敵の現在地　rs.velocity 現在の速度 course コースの情報
 IntVec play(RaceState &rs, const Course &course) {
 
@@ -379,13 +381,31 @@ IntVec play(RaceState &rs, const Course &course) {
     int x=rs.position.x;
     int vy=rs.velocity.y;
     int vx=rs.velocity.x;
-
-    cerr<<"x="<<x<<"y="<<y<<endl;
+    //cerr<<"vx="<<vx<<" vy="<<vy<<endl;
+    //cerr<<"x="<<x<<"y="<<y<<endl;
 
 
     int action=policyDP(x,y,vx,vy);
-
     Point ans=action_to_velocity(action);
+
+    for(int x=0;x<20;x++){
+        for(int y=0;y<100;y++){
+
+            int temp=0;
+            for(int roop=0;roop<9;roop++){
+                for(int j=-2;j<2;j++){
+                    for(int k=-2;k<4;k++){
+                       // cerr<<"QDP("<<x<<","<<y<<","<<j<<","<<k<<","<<roop<<")="<<QDP(x,y,j,k,roop)<<endl;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    cerr<<"bestQ-point"<<"QDP("<<x<<","<<y<<","<<vx<<","<<vy<<","<<action<<")="<<QDP(x,y,vx,vy,action)<<endl;
+
     return Point(ans.x,ans.y);
 }
 
