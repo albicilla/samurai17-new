@@ -1,7 +1,6 @@
-CXXFLAGS= -pthread -std=c++11 -W -g -ggdb -I/usr/local/Cellar/boost/1.65.1/include -L/usr/local/Cellar/boost/1.65.1/lib
-BOOST_LIB_SUFFIX=-mt
+CXXFLAGS= -pthread -std=c++11 -W -Wall -g -ggdb
 AM_LDFLAGS= -lboost_system$(BOOST_LIB_SUFFIX) -lboost_filesystem$(BOOST_LIB_SUFFIX) -lboost_program_options$(BOOST_LIB_SUFFIX)
-CXX= clang++
+CXX= c++
 
 OBJECTS= main.o course.o raceState.o player.o
 SOURCES= *.cpp *.hpp
