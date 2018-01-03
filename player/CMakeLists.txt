@@ -8,9 +8,9 @@ project(player)
 set(CMAKE_CXX_FLAGS "-std=c++14")
 
 set(SOURCE_FILES
-        greedyC.cpp
         raceState.hpp
-        raceState.cpp reinforce.cc.cpp)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/Users/albicilla/programming/samurAI/samurai17/player/beamZ/")
+        raceState.cpp
+        reinforce.cc)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/Users/albicilla/programming/samurAI/samurai17/player/rein/")
 
 add_executable(player ${SOURCE_FILES})
