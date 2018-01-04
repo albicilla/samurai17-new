@@ -8,7 +8,6 @@
 #define FOR(i,a,b) for(int i=a;i<b;i++)
 #define rep(i,b) FOR(i,0,b)
 #define INF 1e9
-#define TEISU 99
 #define EPISODE_LOOP 1000
 /*
  * 負の添え字を扱うためのマクロ
@@ -22,6 +21,8 @@ int policy[110][110][40][40];
 int start_x,start_y;
 //各エピソード時点での開始時の地点
 int episode_starty;
+//視界を持つグローバル変数
+int vision=99;
 
 #define QDP(i,j,k,l,m)  Q[(i)][(j)][(k)+(int)15][(l)+(int)15][(m)]
 #define policyDP(i,j,k,l) policy[(i)][(j)][(k)+(int)15][(l)+(int)15]
@@ -119,7 +120,7 @@ int generate_action_e(int action,int eps){
 
 //ゴール
 bool game_over(int final_x,int final_y,const RaceState &rs,const Course &rt){
-    if(rt.width >= final_x && final_x>=0 && final_y>=start_y+TEISU){
+    if(rt.width >= final_x && final_x>=0 && final_y>=start_y + vision){
         //cerr<<"gameover"<<endl;
         return 1;
     }
@@ -287,7 +288,7 @@ reward_and_next_state_set generate_reward_and_next_state(int x,int y,int vx,int 
     }else {
         //cerr<<"can go to"<<final_x<<" "<<final_y<<endl;
 
-        //reward+=-10;
+        reward-=5;
         new_x=final_x;
         new_y=final_y;
         new_vx=nv.x;
@@ -316,6 +317,9 @@ int new_x=0, new_y=0, new_vx=0, new_vy=0;
 void q_learning(const RaceState &rs, const Course &course){
     start_x=rs.position.x;
     start_y=rs.position.y;
+    //とりあえず100で
+    vision = 100;
+    cerr<<"vision="<<vision<<endl;
 
 
     cerr<<"start_x="<<start_x<<" start_y"<<start_y<<endl;
@@ -426,7 +430,6 @@ int main(int argc, char *argv[]) {
     cout << 0 << endl;
     cout.flush();
     RaceState rs(cin, course);
-
     //Qtableを初期化
     //rep(i,2)rep(j,2)rep(k,40)rep(l,40)rep(m,10)Q[i][j][k][l][m]=-100;
     //policyを初期化
@@ -452,16 +455,6 @@ int main(int argc, char *argv[]) {
         RaceState rs(cin, course);
         IntVec accel = play(rs, course);
         cout << accel.x << ' ' << accel.y << endl;
+
     }
 }
-
-//int main(int argc, char *argv[]) {
-//    Course course(cin);
-//    cout << 0 << endl;
-//    cout.flush();
-//    while (true) {
-//        RaceState rs(cin, course);
-//        IntVec accel = play(rs, course);
-//        cout << accel.x << ' ' << accel.y << endl;
-//    }
-//}
