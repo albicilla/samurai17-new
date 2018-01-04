@@ -259,7 +259,7 @@ reward_and_next_state_set generate_reward_and_next_state(int x,int y,int vx,int 
     //速度が大きすぎるのはあり得ないので除外
     if(abs(nv.x)>14 ||abs(nv.y)>14 ) {
         //cerr<<"too large speed"<<endl;
-     //   reward-=100;
+        reward-=100;
         new_x=x;
         new_y=y;
         new_vx=0;
@@ -279,13 +279,12 @@ reward_and_next_state_set generate_reward_and_next_state(int x,int y,int vx,int 
         new_vy=nv.y;
         //cerr<<"outside"<<endl;
     }else if(collision(x,y,final_x,final_y,rs,course)){
-        reward-=10;
+        reward-=120;
         new_x=x;
         new_y=y;
         new_vx=nv.x;
         new_vy=nv.y;
     }else {
-     //   reward+=(new_y-y)*10;
         //cerr<<"can go to"<<final_x<<" "<<final_y<<endl;
 
         //reward+=-10;
@@ -293,6 +292,8 @@ reward_and_next_state_set generate_reward_and_next_state(int x,int y,int vx,int 
         new_y=final_y;
         new_vx=nv.x;
         new_vy=nv.y;
+        reward+=(new_y-y)*1;
+
     }
     reward_and_next_state_set ret={reward,new_x,new_y,new_vx,new_vy};
     return ret;
