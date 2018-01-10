@@ -219,7 +219,7 @@ int calcCost(Candidate *now, Point nextPos, RaceState &rs,const Course &course,i
                 break;
                 //こちらに優先権がある
             case MY_PREDOMINANCE:
-                 ret += 1;
+                 ret += 3;
                 break;
                 //相手に優先権がある
             case ENEMY_PREDOMINANCE:
@@ -302,7 +302,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                             //cerr <<"statusにpush?"<<endl;
 
                             //nextのy座標が現在のbestのy座標より大きいならbestを更新
-                            if (nextPos.y > BestCandidate->state.position.y) {
+                            if (nextPos.y >= BestCandidate->state.position.y) {
                                 //BestCandidate = nextCand;
                                 //次行ける結果を格納
                                 AllCandidates.push(nextCand);
