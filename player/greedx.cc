@@ -4,7 +4,7 @@
 #include "raceState.hpp"
 
 const int searchDepth = 1;
-const int MAX_DEPTH = 8;
+const int MAX_DEPTH = 9;
 const int MAX_ENEMY_DEPTH = 1;
 
 struct PlayerState {
@@ -62,7 +62,7 @@ Candidate *BestCandidate;
 //goaltime初期化
 double goalTime = numeric_limits<double>::max();
 array<IntVec,3> enemy_assumption;
-
+IntVec befo_rs=IntVec(-1,-1);
 
 enum ECompare {
     NO_PREDOMINANCE = 0,
@@ -72,54 +72,132 @@ enum ECompare {
 
 int temp_y=0;
 
+IntVec enemyPlay(RaceState &rs, const Course &course) {
+    //候補を格納するqueue
+    queue<Candidate *> candidates;
+    //たどり着けるかを記録するmap
+    map<PlayerState, Candidate*> reached;
+    //initialはプレイヤーの状態
+    PlayerState initial(rs.position, rs.velocity);
+    //step 初期のプレイヤーの状態　次のプレイヤーの状態　速度
+    Candidate initialCand(0, initial, nullptr, IntVec(0, 0));
+    //reached[initial]はinitialに辿りつけることを保存するmap
+    reached[initial] = &initialCand;
+    //最も良い候補を保存する変数
+    Candidate *best = &initialCand;
+    double goalTime = numeric_limits<double>::max();
+    candidates.push(&initialCand);
 
+    //幅優先探索
+    do {
+        Candidate *c = candidates.front();
+        candidates.pop();
+        //速度を9種類全てループ
+        for (int cay = 1; cay != -2; cay--) {
+            for (int cax = -1; cax != 2; cax++) {
+                //次の速度
+                IntVec nextVelo = c->state.velocity + IntVec(cax, cay);
+                //次の位置
+                Point nextPos = c->state.position + nextVelo;
+                //step数が0　|| ライバルと衝突しない &&　コース状の障害物に衝突しない
+                if ((c->step != 0 ||
+                     !LineSegment(c->state.position, nextPos).goesThru(rs.oppPosition)) &&
+                    !course.obstacled(c->state.position, nextPos)) {
+                    //次のプレイヤーの位置、速度を次の候補変数に格納
+                    PlayerState next(nextPos, nextVelo);
+                    Candidate *nextCand =
+                            new Candidate(c->step + 1, next, c, IntVec(cax, cay));
+
+                    //次の候補でゴールが可能ならば
+                    if (nextPos.y >= course.length) {
+                        //tに今回の候補でゴールに着くまでの時間を記録
+                        double t = c->step +
+                                   (double) (course.length - c->state.position.y) / nextVelo.y;
+                        //暫定goalTimeより小さければそれに決定
+                        if (t < goalTime) {
+                            best = nextCand;
+                            goalTime = t;
+                        }
+                    } else if (reached.count(next) == 0) { //そこにたどり着くのが最初の候補であれば
+                        //探索深さよりも浅く　かつ　コースをはみ出していなければ
+                        if (nextPos.y < course.length) {
+                            //次の候補に追加
+                            candidates.push(nextCand);
+                        }
+                        //nextにたどり着けることを記録
+                        reached[next] = nextCand;
+                        //nextのy座標が現在のbestのy座標より大きいならbestを更新
+                        if (nextPos.y > best->state.position.y) {
+                            best = nextCand;
+                        }
+                    }
+                }
+            }
+        }
+    } while (!candidates.empty());
+
+
+
+    if (best == &initialCand) {
+        // 良い動きが見つからなかったよ！
+        // Slowing down for a while might be a good strategy
+        int ax = 0, ay = 0;
+        if (rs.velocity.x < 0) ax += 1;
+        else if (rs.velocity.x > 0) ax -= 1;
+        if (rs.velocity.y < 0) ay += 1;
+        else if (rs.velocity.y > 0) ay -= 1;
+        return IntVec(ax, ay);
+    }
+    Candidate *c = best;
+    while (c->from != &initialCand) c = c->from;
+    return c->how;
+}
 
 //優先権判定 1なら自分2なら相手 0ならどちらにもない
-//int judgePredominance(Candidate *now, Point nextPos, RaceState &rs,const Course &course) {
-//    int ret = NO_PREDOMINANCE;
-//
-//    //相手の行動を予測　想定される行動の上位1つかえす IntVecで
-//    //IntVec enemy_accel=enemyPlay(rs,course);
-//
-//    bool prec0 = (rs.position.y < rs.oppPosition.y) ||
-//                 ((rs.position.y == rs.oppPosition.y) &&
-//                  rs.position.x < rs.oppPosition.x);
-//    LineSegment Me = LineSegment(now->state.position, nextPos);
-//
-//    //y方向が相手より下であるか　同じかつ相手のx方向が小さい時
-//    if (prec0) {
-//        //優先権があるので相手の進路を妨害することの評価値をあげる
-//        Point nextOppPosN = rs.oppPosition + rs.oppVelocity + enemy_accel;
-//        //相手の行動で想定される行動上位1候補のループ
-//        for (int idx = 0; idx < 1; idx++) {
-//            //動線の一致　かつ　根元では一致しない
-//            if (Me.goesThru(nextOppPosN)){
-//                // Going through the opponent's position is not allowed even with precedence
-//                ret = ENEMY_PREDOMINANCE;
-//            }else{
-//                ret = MY_PREDOMINANCE;
-//            }
-//
-//        }
-//
-//    } else {
-//        //そうでなければ逆に相手に動線を跨がれないように評価を逆転させる
-//        //相手の行動で想定される行動上位1候補のループ
-//        for (int idx = 0; idx < 1; idx++) {
-//            Point nextOppPosCandidate = rs.oppPosition + rs.oppVelocity + enemy_accel;
-//            LineSegment Enemy = LineSegment(rs.oppPosition, nextOppPosCandidate);
-//
-//            if (Enemy.goesThru(rs.position)){
-//                // Going through the opponent's position is not allowed even with precedence
-//                ret = MY_PREDOMINANCE;
-//            }else{
-//                ret = ENEMY_PREDOMINANCE;
-//            }
-//        }
-//    }
-//    return ret;
-//}
+int judgePredominance(Candidate *now, Point nextPos, RaceState &rs,const Course &course) {
+    int ret = NO_PREDOMINANCE;
 
+    //相手の行動を予測　想定される行動の上位1つかえす IntVecで
+    IntVec enemy_accel=enemyPlay(rs,course);
+
+    bool prec0 = (rs.position.y < rs.oppPosition.y) ||
+                 ((rs.position.y == rs.oppPosition.y) &&
+                  rs.position.x < rs.oppPosition.x);
+    LineSegment Me = LineSegment(now->state.position, nextPos);
+
+    //y方向が相手より下であるか　同じかつ相手のx方向が小さい時
+    if (prec0) {
+        //優先権があるので相手の進路を妨害することの評価値をあげる
+        Point nextOppPosN = rs.oppPosition + rs.oppVelocity + enemy_accel;
+        //相手の行動で想定される行動上位1候補のループ
+        for (int idx = 0; idx < 1; idx++) {
+            //動線の一致　かつ　根元では一致しない
+            if (Me.goesThru(nextOppPosN)){
+                // Going through the opponent's position is not allowed even with precedence
+                ret = ENEMY_PREDOMINANCE;
+            }else{
+                ret = MY_PREDOMINANCE;
+            }
+
+        }
+
+    } else {
+        //そうでなければ逆に相手に動線を跨がれないように評価を逆転させる
+        //相手の行動で想定される行動上位1候補のループ
+        for (int idx = 0; idx < 1; idx++) {
+            Point nextOppPosN = rs.oppPosition + rs.oppVelocity + enemy_accel;
+            LineSegment Enemy = LineSegment(rs.oppPosition, nextOppPosN);
+
+            if (Enemy.goesThru(nextOppPosN)){
+                // Going through the opponent's position is not allowed even with precedence
+                ret = MY_PREDOMINANCE;
+            }else{
+                ret = ENEMY_PREDOMINANCE;
+            }
+        }
+    }
+    return ret;
+}
 //評価関数 今と次の行く場所、盤面の状態
 int calcCost(Candidate *now, Point nextPos, RaceState &rs,const Course &course,int depth) {
     int ret = 0;
@@ -139,11 +217,11 @@ int calcCost(Candidate *now, Point nextPos, RaceState &rs,const Course &course,i
 //                break;
 //                //こちらに優先権がある
 //            case MY_PREDOMINANCE:
-//                ret += 3;
+//                ret += 10;
 //                break;
 //                //相手に優先権がある
 //            case ENEMY_PREDOMINANCE:
-//                ret -= 1;
+//                ret -= 10;
 //                break;
 //            default:
 //                cerr  << "優先権の判定でエラーが出ています" << endl;
@@ -158,7 +236,7 @@ int calcCost(Candidate *now, Point nextPos, RaceState &rs,const Course &course,i
 
 //次の候補
 //次の9方向に行った時のstateが配列として返される
-vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, RaceState &rs,int depth) {
+vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, RaceState &rs,int depth,IntVec enemy_accel) {
     //次にいける９^step個の候補を格納する配列
     vector<Candidate *> ret;
     //初期化
@@ -168,12 +246,13 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
     map<PlayerState, int> reached;
     reached.clear();
 
-
-
     candidates.push(ca);
 
     //reached[initial]はinitialに辿りつけることを保存するmap
     reached[ca->state]++;
+
+
+
     while (!candidates.empty()) {
         Candidate *now = candidates.front();
         //前の評価値を伝搬
@@ -190,13 +269,22 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                 //次の位置
                 Point nextPos = now->state.position + nextVelo;
 
+                bool coli=LineSegment(now->state.position, nextPos).goesThru(rs.oppPosition);
+                //cerr<<"ber"
+                //bool same_pos=(befo_rs.x==now->state.position.x && befo_rs.y==now->state.position.y);
+
                 //障害物に衝突しない
                 if (!course.obstacled(now->state.position, nextPos)) {
+                    //もしdepth=0で相手の駒との接触があれば速度のみ変化
+                    if(depth == 0 && LineSegment(now->state.position, nextPos).goesThru(rs.oppPosition)){
+                        //足しておいたのを打ち消す
+                        nextPos=Point(nextPos.x-nextVelo.x,nextPos.y-nextVelo.y);
+                    }
                     //次のプレイヤーの位置、速度を次の候補変数に格納
                     PlayerState next(nextPos, nextVelo);
                     // cerr <<"nextCand"<<endl;
                     Candidate *nextCand =
-                            new Candidate(depth+1 , next, now, IntVec(cax, cay));
+                            new Candidate(now->step+1 , next, now, IntVec(cax, cay));
 
                     //次の候補でゴールが可能ならば
                     if (nextPos.y >= course.length) {
@@ -205,6 +293,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                         double t = (double)nextCand->step + (double) (course.length - now->state.position.y) / (double)nextVelo.y;
                         //暫定goalTimeより小さければそれに決定
                         if (t < goalTime) {
+                            cerr<<"goalTime="<<t<<endl;
                             BestCandidate=nextCand;
                             goalTime = t;
                         }
@@ -266,6 +355,9 @@ IntVec play(RaceState &rs, const Course &course) {
     vector<Candidate *> status[MAX_DEPTH + 10];
     status[0].push_back(&initialCand);
 
+    //相手の行動を予測　想定される行動の上位1つかえす IntVecで
+    IntVec enemy_accel=enemyPlay(rs,course);
+
 
     for (int depth = 0; depth < MAX_DEPTH; depth++) {
         //ビームサーチの切り捨て部分
@@ -285,7 +377,7 @@ IntVec play(RaceState &rs, const Course &course) {
         for (Candidate *state : status[depth]) {
             //cerr<<"depthのところ"<<endl;
             //cerr <<"generate_next_status(state,course).size: "<<endl;
-            for (Candidate *next_state: generate_next_status(state, course, rs,depth)) {
+            for (Candidate *next_state: generate_next_status(state, course, rs,depth,enemy_accel)) {
                 //cerr <<"next_State";
                 status[depth + 1].push_back(next_state);
                 //cerr <<"push_Backした！"<<endl;
@@ -335,6 +427,9 @@ IntVec play(RaceState &rs, const Course &course) {
     vector<Candidate *> status_2[MAX_DEPTH + 10];
     status_2[0].push_back(&initialCand);
 
+    //相手の行動を予測　想定される行動の上位1つかえす IntVecで 最初のビームの時やった
+    //IntVec enemy_accel=enemyPlay(rs,course);
+
 
     for (int depth = 0; depth < MAX_DEPTH; depth++) {
 
@@ -348,13 +443,14 @@ IntVec play(RaceState &rs, const Course &course) {
             //cerr <<"generate_next_status(state,course).size: "<<endl;
 
             //最低速度狩り
-            int leftSteps=8-depth;
+            int leftSteps=9-depth;
             if(state->state.velocity.y<((temp_y-state->state.position.y)-(((leftSteps+1)*leftSteps)/2))/(leftSteps*2)){
                 if(temp_y>state->state.position.y && temp_y< course.length) {
                     continue;
                 }
             }
-            for (Candidate *next_state: generate_next_status(state, course, rs,depth)) {
+
+            for (Candidate *next_state: generate_next_status(state, course, rs,depth,enemy_accel)) {
                 status_2[depth + 1].push_back(next_state);
                 //cerr <<"push_Backした！"<<endl;
             }
@@ -398,6 +494,7 @@ int main(int argc, char *argv[]) {
         counter++;
         RaceState rs(cin, course);
         IntVec accel = play(rs, course);
+        befo_rs=IntVec(rs.position.x+accel.x,rs.position.y+accel.y);
         //cerr  << "今のstep数" << counter << endl;
         //cerr  << "x:" << rs.position.x << " y:" << rs.position.y << endl;
         cerr  << "accel.x" << accel.x << " " << "accel.y" << accel.y << endl;
