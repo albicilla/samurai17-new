@@ -7,7 +7,7 @@ import gym.spaces
 from builtins import input
 
 
-class MyEnv(gym.Env):
+class SamuraiEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
     MAX_STEPS = 100
 
