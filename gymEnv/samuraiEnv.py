@@ -4,30 +4,11 @@ import gym
 import numpy as np
 import gym.spaces
 
-# import map
 from builtins import input
 
 
 class MyEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
-        # FIELD_TYPES = [
-        #     'S',  # 0: スタート
-        #     'G',  # 1: ゴール
-        #     '~',  # 2: 芝生(敵の現れる確率1/10)
-        #     'w',  # 3: 森(敵の現れる確率1/2)
-        #     '=',  # 4: 毒沼(1step毎に1のダメージ, 敵の現れる確率1/2)
-        #     'A',  # 5: 山(歩けない)
-        #     'Y',  # 6: 勇者
-        # ]
-        # MAP = np.array([
-        #     [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],  # "AAAAAAAAAAAA"
-        #     [5, 5, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],  # "AA~~~~~~~~~~"
-        #     [5, 5, 2, 0, 2, 2, 5, 2, 2, 4, 2, 2],  # "AA~S~~A~~=~~"
-        #     [5, 2, 2, 2, 2, 2, 5, 5, 4, 4, 2, 2],  # "A~~~~~AA==~~"
-        #     [2, 2, 3, 3, 3, 3, 5, 5, 2, 2, 3, 3],  # "~~wwwwAA~~ww"
-        #     [2, 3, 3, 3, 3, 5, 2, 2, 1, 2, 2, 3],  # "~wwwwA~~G~~w"
-        #     [2, 2, 2, 2, 2, 2, 4, 4, 2, 2, 2, 2],  # "~~~~~~==~~~~"
-        # ])
     MAX_STEPS = 100
 
     def __init__(self):
@@ -42,55 +23,28 @@ class MyEnv(gym.Env):
         self.reward_range = [-1., 100.]
         self._reset()
 
+    # 必須
     def _reset(self):
-        # map.init()
+        # 諸々の変数を初期化する
+        self.done = False
+        self.step = 0
         self.total_time = int(self.readline())
         self.max_step = int(self.readline())
         width, height = [int(x) for x in self.readline().split()]
         self.view = int(self.readline())
         # 初期化終了
         print(0)
-        self.map = Map(width, height, self.view)
-        self.done = False
-        return map.observe()
-        # # 諸々の変数を初期化する
-        # self.pos = self._find_pos('S')[0]
-        # self.goal = self._find_pos('G')[0]
-        # self.damage = 0
-        # self.steps = 0
-        # return self._observe()
+        self.state = State(width, height, self.view)
+        # ２つ目は速度、ここは曖昧、reward, doneはなくて良い
+        return self.state.observe(), (0,0)
 
-
-    def readline(self):
-        x = input()
-        print(str(x), file=sys.stderr)
-        return x
-    
-
-    def observe(self):                                
-        # while True:
-        step = int(self.readline())
-        time = int(self.readline())
-        ps = []
-        for j in range(2):
-            xs = [int(x) for x in self.readline().split()]
-            # x,y, vx,vy
-            p = [np.array([xs[0], xs[1]]), np.array([xs[2], xs[3]])]
-            ps.append(tuple(p))
-        map.initPosMap()
-        map.playerMap[ps[0][0][0], ps[0][0][1]] = 1
-        map.enemyMap[ps[1][0][0], ps[1][0][1]] = 1
-        for y in range(ps[0][0][1] - self.view, ps[0][0][1] + self.view + 1, 1):
-            ls = [int(v) for v in self.readline().split()]
-            if y > 0:
-                map.setline(y, ls)
-        return map.observe
-
-
+    # 必須
     def _step(self, action):
         # 1ステップ進める処理を記述。戻り値は observation, reward, done(ゲーム終了したか), info(追加の情報の辞書)
         print(action)
-        return map.observe() # TODO
+        observation, info = self.state.observe() # TODO
+        reward = self._get_reward()
+        return observation, reward, self.done, info
         # if action == 0:
         #     next_pos = self.pos + [1, 1]
         # elif action == 1:
@@ -100,17 +54,10 @@ class MyEnv(gym.Env):
         # elif action == 3:
         #     next_pos = self.pos + [-1, 0]
 
-        # if self._is_movable(next_pos):
-        #     self.pos = next_pos
-        #     moved = True
-        # else:
-        #     moved = False
 
-        # observation = self._observe()
-        # reward = self._get_reward(self.pos, moved)
-        # self.damage += self._get_damage(self.pos)
-        # self.done = self._is_done()
-        # return observation, reward, self.done, {}
+    # 必須
+    def _render(self):
+        pass
 
     # def _render(self, mode='human', close=False):
     #     # human の場合はコンソールに出力。ansiの場合は StringIO を返す
@@ -122,40 +69,62 @@ class MyEnv(gym.Env):
     #     )
     #     return outfile
 
+    # 継承
     def _close(self):
         pass
 
+    # 継承
     def _seed(self, seed=None):
         pass
 
-    def _get_reward(self, pos, moved):
-        # 報酬を返す。報酬の与え方が難しいが、ここでは
-        # - ゴールにたどり着くと 100 ポイント
-        # - ダメージはゴール時にまとめて計算
-        # - 1ステップごとに-1ポイント(できるだけ短いステップでゴールにたどり着きたい)
-        # とした
-        if moved and (self.goal == pos).all():
-            return max(100 - self.damage, 0)
-        else:
-            return -1
+    def readline(self):
+        x = input()
+        print(str(x), file=sys.stderr)
+        return x
+    
+    def observe(self):
+        # while True:
+        self.step = int(self.readline())
+        time = int(self.readline())
+        ps = []
+        for j in range(2):
+            xs = [int(x) for x in self.readline().split()]
+            # x,y,(index) vx,vy
+            p = [np.array([xs[0], xs[1]]), np.array([xs[2], xs[3]])]
+            ps.append(tuple(p))
+        # TODO: ゴールした時にその場で実行が終わってしまうと、ゴールしたかどうか知ることができない
+        if ps[0][0][1] > self.state.h-1:
+            self.done = True
+
+        self.state.initPosMap()
+        self.state.playerMap[ps[0][0][0], ps[0][0][1]] = 1
+        self.state.enemyMap[ps[1][0][0], ps[1][0][1]] = 1
+        for y in range(ps[0][0][1] - self.view, ps[0][0][1] + self.view + 1, 1):
+            ls = [int(v) for v in self.readline().split()]
+            if y > 0:
+                self.state.setline(y, ls)
+        info = {"playerSpeed:" (ps[0][1], ps[1][1])}
+        return self.state.observe(), info
+
+    # 前に進んだ量を報酬にしても良いかも
+    def _get_reward(self):
+        if self.done:
+            return max(1000 - self.step, 100)
+        return 0
+
+    # def _get_reward(self, pos, moved):
+    #     # 報酬を返す。報酬の与え方が難しいが、ここでは
+    #     # - ゴールにたどり着くと 100 ポイント
+    #     # - ダメージはゴール時にまとめて計算
+    #     # - 1ステップごとに-1ポイント(できるだけ短いステップでゴールにたどり着きたい)
+    #     # とした
+    #     if moved and (self.goal == pos).all():
+    #         return max(100 - self.damage, 0)
+    #     else:
+    #         return -1
 
 
-    def _is_done(self):
-        # 今回は最大で self.MAX_STEPS までとした
-        if (self.pos == self.goal).all():
-            return True
-        elif self.steps > self.MAX_STEPS:
-            return True
-        else:
-            return False
-
-    def _find_pos(self, field_type):
-        return np.array(list(zip(*np.where(
-        self.MAP == self.FIELD_TYPES.index(field_type)
-    ))))
-
-
-class Map:
+class State:
     def __init__(self, width, height, view):
         self.maxw = 20
         self.maxh = 140
