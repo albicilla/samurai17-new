@@ -4,6 +4,8 @@ import gym
 import numpy as np
 import gym.spaces
 
+import map
+
 
 class MyEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
@@ -30,7 +32,7 @@ class MyEnv(gym.Env):
     def __init__(self):
         super().__init__()
         # action_space, observation_space, reward_range を設定する
-        self.action_space = gym.spaces.Discrete(4)  # 東西南北
+        self.action_space = gym.spaces.Discrete(9)  # 東西南北
         self.observation_space = gym.spaces.Box(
             low=0,
             high=len(self.FIELD_TYPES),
