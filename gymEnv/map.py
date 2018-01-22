@@ -1,147 +1,100 @@
-#!/usr/bin/env python
-from __future__ import print_function
-from builtins import input
+
 import numpy as np
-import sys
-import itertools
-import random
-import math
+from py3_linesegment import LineSegment
 
-# class Map:
-#     def __init__(self, width, height, view):
-#         self.maxw = 20
-#         self.maxh = 140
-#         self.shape = (self.maxh, self.maxw)
-#         self.w = width
-#         self.h = height
-#         # 障害物マップ
-#         self.m = np.zeros(self.shape)
-#         # 左寄せ、右壁は障害物にしておく
-#         self.m[:, width-1:] = 1
-#         # 0: unknown, 1: known
-#         self.unknownMap = np.zeros(self.shape)
-#         self.unknownMap[:, width-1:] = 1
-#         # self.m = [[0] * width for y in range(height + view + 1)]
-#         self.playerMap = np.zeros(self.shape)
-#         self.enemyMap = np.zeros(self.shape)
-#         self.maxy = 0
-
-#     def setline(self, y, l):
-#         self.m[y, 0:self.w] = l
-#         self.unknownMap[y, 0:self.w] = 1
-#         self.maxy = max(self.maxy, y)
-
-#     def getXY(self, x, y):
-#         if x < 0 or x >= self.w or y < 0 or y > self.maxy:
-#             return 1
-#         return self.m[y][x]
-
-#     def getP(self, p):
-#         return self.getXY(p[0], p[1])
-
-#     def initPosMap(self):
-#         self.playerMap = np.zeros(self.shape)
-#         self.enemyMap = np.zeros(self.shape)
-
-#     def observe(self):
-#         return np.vstack(self.m, self.unknownMap, self.playerMap, self.unknownMap)
+class Jockey:
+    def __init__(self, x, y, vx, vy):
+        self.pos = np.array((x, y))
+        self.speed = np.array((vx, vy))
 
 
-# def readline():
-#     x = input()
-#     print(str(x), file=sys.stderr)
-#     return x
+class Map:
+    def __init__(self, smrjky, default=0, out_of_bound=1):
+        self.w = smrjky["width"]
+        self.h = smrjky["length"]
+        self.m = smrjky["obstacles"]
+        self.vision = smrjky["vision"]
+        # self.enemy = Jockey(smrjky["x1"], 0, 0, 0)
+        self.player = Jockey(smrjky["x0"], 0, 0, 0)
+        self.maxy = 0
+        self.dv = default
+        self.ob = out_of_bound
 
+    def setline(self, y, l):
+        if y < 0:
+            return
+        while len(self.m) <= y:
+            self.m.append([self.dv] * self.w)
+        self.m[y] = l
+        self.maxy = max(self.maxy, y)
 
-# def has_collision(p, next_p, m, view):
-#     if m.getP(p) > 0 or m.getP(next_p) > 0:
-#         return True
-#     dp = next_p - p
-#     xlen, ylen = abs(dp[0]), abs(dp[1])
-#     dx, dy = np.sign(dp[0]), np.sign(dp[1])
-#     for i in range(1, xlen + 1, 1):
-#         x = int(p[0] + dx * i)
-#         y = p[1] + (ylen * dy * i) / xlen
-#         y0 = int(math.floor(y))
-#         y1 = int(math.ceil(y))
-#         if m.getXY(x, y0) > 0:
-#             for k in range(-1, 2, 1):
-#                 if m.getXY(x + k, y1) > 0:
-#                     return True
-#         if m.getXY(x, y1) > 0:
-#             for k in range(-1, 2, 1):
-#                 if m.getXY(x + k, y0) > 0:
-#                     return True
-#     for i in range(1, ylen + 1, 1):
-#         y = int(p[1] + dy * i)
-#         x = p[0] + (xlen * dx * i) / ylen
-#         x0 = int(math.floor(x))
-#         x1 = int(math.ceil(x))
-#         if m.getXY(x0, y) > 0:
-#             for k in range(-1, 2, 1):
-#                 if m.getXY(x1, y + k) > 0:
-#                     return True
-#         if m.getXY(x1, y) > 0:
-#             for k in range(-1, 2, 1):
-#                 if m.getXY(x0, y + k) > 0:
-#                     return True
-#     return False
+    def getXY(self, x, y):
+        if x < 0 or x >= self.w or y < 0:
+            return self.ob
+        if y > self.maxy:
+            return self.dv
+        return self.m[y][x]
 
+    def getP(self, p):
+        return self.getXY(p[0], p[1])
 
-# def next_state(p, ac, m, view):
-#     next_v = p[1] + ac
-#     next_p = p[0] + next_v
-#     if has_collision(p[0], next_p, m, view):
-#         return (p[0], next_v)
-#     return (next_p, next_v)
+    def setXY(self, x, y, v):
+        if x < 0 or x >= self.w or y < 0:
+            return self.ob
+        while self.maxy < y:
+            self.maxy += 1
+            self.m.append([self.dv] * self.w)
+        self.m[y][x] = v
 
+    def has_collision(self, p, next_p):
+        if self.getP(p) > 0 or self.getP(next_p) > 0:
+            return True
+        move = LineSegment(p, next_p)
+        dp = next_p - p
+        xlen, ylen = abs(dp[0]), abs(dp[1])
+        dx, dy = np.sign(dp[0]), np.sign(dp[1])
+        if xlen == 0:
+            for i in range(1, ylen, 1):
+                if self.getXY(p[0], p[1] + dy * i) > 0:
+                    return True
+            return False
+        if ylen == 0:
+            for i in range(1, xlen, 1):
+                if self.getXY(p[0] + dx * i, p[1]) > 0:
+                    return True
+            return False
+        for i in range(0, xlen, 1):
+            for j in range(0, ylen, 1):
+                x = int(p[0] + dx * i)
+                y = int(p[1] + dy * j)
+                if self.getXY(x, y) > 0 and move.internal(([x, y])):
+                    return True
+                nx = x + dx
+                ny = y + dy
+                if self.getXY(x, y) > 0 and self.getXY(nx, ny) > 0 and move.intersects(LineSegment([x, y], [nx, ny])):
+                    return True
+                if self.getXY(x, y) > 0 and self.getXY(nx, y) > 0 and move.intersects(LineSegment([x, y], [nx, y])):
+                    return True
+                if self.getXY(x, y) > 0 and self.getXY(x, ny) > 0 and move.intersects(LineSegment([x, y], [x, ny])):
+                    return True
+                if self.getXY(x, ny) > 0 and self.getXY(nx, y) > 0 and move.intersects(LineSegment([x, ny], [nx, y])):
+                    return True
+        return False
 
-# def evaluate(ps, m):
-#     return ps[0][1]
+    def __str__(self):
+        return str(self.m)
 
+    def move_jockey(self, jockey, acc):
+        ''' ゴールしたかどうかを返す '''
+        jockey.speed = jockey.speed + acc
+        next_p = jockey.pos + jockey.speed
+        # 衝突した場合は位置は変えない
+        if self.map.has_collision(jockey.pos, next_p):
+            pass
+        else:
+            jockey.pos = next_p
+            if next_p >= self.h:
+                return True
+        return False
+                
 
-
-
-# def init():
-#     total_time = int(readline())
-#     max_step = int(readline())
-#     width, height = [int(x) for x in readline().split()]
-#     view = int(readline())
-#     # 初期化終了
-#     print(0)
-#     map = Map(width, height, view)
-
-
-# def observe():                                
-#     # while True:
-
-#     step = int(readline())
-#     time = int(readline())
-#     ps = []
-#     for j in range(2):
-#         xs = [int(x) for x in readline().split()]
-#         # x,y, vx,vy
-#         p = [np.array([xs[0], xs[1]]), np.array([xs[2], xs[3]])]
-#         ps.append(tuple(p))
-#     map.initPosMap()
-#     map.playerMap[ps[0][0][0], ps[0][0][1]] = 1
-#     map.enemyMap[ps[1][0][0], ps[1][0][1]] = 1
-#     for y in range(ps[0][0][1] - view, ps[0][0][1] + view + 1, 1):
-#         ls = [int(v) for v in readline().split()]
-#         if y > 0:
-#             map.setline(y, ls)
-#     return map.observe
-
-    # moves = []
-    # for ax, ay in itertools.product(range(-1, 2), range(-1, 2)):
-    #     next_ps = next_state(ps[0], np.array([ax, ay]), map, view)
-    #     if (next_ps[0] == ps[0][0]).all() or next_ps[0][1] < ps[0][0][1]:
-    #         continue
-    #     moves.append((ax, ay))
-    # if len(moves) > 0:
-    #     acs = moves[random.randrange(0, len(moves))]
-    # else:
-    #     acs = (-np.sign(ps[0][1][0]), -np.sign(ps[0][1][1]))
-    # cmd = ' '.join(str(x) for x in acs)
-    # print('cmd = %s' % cmd, file=sys.stderr)
-    # print(cmd)
