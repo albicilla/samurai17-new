@@ -1,4 +1,7 @@
 import sys
+import itertools
+import random
+import math
 
 import gym
 import numpy as np
@@ -6,6 +9,7 @@ import gym.spaces
 
 from builtins import input
 import json
+from py3_linesegment import LineSegment
 
 class SamuraiEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
@@ -21,8 +25,8 @@ class SamuraiEnv(gym.Env):
             shape=self.MAP.shape
         )
         self.reward_range = [-1., 100.]
-        smrjky = open('../samples/course01.smrjky', 'r')
-        map = json.load(smrjky)
+        mapFile = open('../samples/course01.smrjky', 'r')
+        self.map = Map(json.load(mapFile))
         self._reset()
 
     # 必須
@@ -30,12 +34,6 @@ class SamuraiEnv(gym.Env):
         # 諸々の変数を初期化する
         self.done = False
         self.step = 0
-        self.total_time = int(self.readline())
-        self.max_step = int(self.readline())
-        width, height = [int(x) for x in self.readline().split()]
-        self.view = int(self.readline())
-        # 初期化終了
-        print(0)
         self.state = State(width, height, self.view)
         # ２つ目は速度、ここは曖昧、reward, doneはなくて良い
         return self.state.observe(), (0,0)
@@ -43,18 +41,29 @@ class SamuraiEnv(gym.Env):
     # 必須
     def _step(self, action):
         # 1ステップ進める処理を記述。戻り値は observation, reward, done(ゲーム終了したか), info(追加の情報の辞書)
-        print(action)
+        if action == 0:
+            acc = (-1, 1)
+        elif action == 1:
+            acc = (0, 1)
+        elif action == 2:
+            acc = (1, 1)
+        elif action == 3:
+            acc = (-1, 0)
+        elif action == 4:
+            acc = (0, 0)
+        elif action == 5:
+            acc = (1, 0)
+        elif action == 6:
+            acc = (-1, -1)
+        elif action == 7:
+            acc = (0, -1)
+        elif action == 8:
+            acc = (1, -1)
+        self.map.move_jockey(self.map.player, acc)
         observation, info = self.state.observe() # TODO
         reward = self._get_reward()
         return observation, reward, self.done, info
-        # if action == 0:
-        #     next_pos = self.pos + [1, 1]
-        # elif action == 1:
-        #     next_pos = self.pos + [0, -1]
-        # elif action == 2:
-        #     next_pos = self.pos + [1, 0]
-        # elif action == 3:
-        #     next_pos = self.pos + [-1, 0]
+
 
 
     # 必須
@@ -85,27 +94,10 @@ class SamuraiEnv(gym.Env):
         return x
     
     def observe(self):
-        # while True:
-        self.step = int(self.readline())
-        time = int(self.readline())
-        ps = []
-        for j in range(2):
-            xs = [int(x) for x in self.readline().split()]
-            # x,y,(index) vx,vy
-            p = [np.array([xs[0], xs[1]]), np.array([xs[2], xs[3]])]
-            ps.append(tuple(p))
         # TODO: ゴールした時にその場で実行が終わってしまうと、ゴールしたかどうか知ることができない
         if ps[0][0][1] > self.state.h-1:
             self.done = True
 
-        self.state.initPosMap()
-        self.state.playerMap[ps[0][0][0], ps[0][0][1]] = 1
-        self.state.enemyMap[ps[1][0][0], ps[1][0][1]] = 1
-        for y in range(ps[0][0][1] - self.view, ps[0][0][1] + self.view + 1, 1):
-            ls = [int(v) for v in self.readline().split()]
-            if y > 0:
-                self.state.setline(y, ls)
-        info = {"playerSpeed:" (ps[0][1], ps[1][1])}
         return self.state.observe(), info
 
     # 前に進んだ量を報酬にしても良いかも
@@ -127,22 +119,28 @@ class SamuraiEnv(gym.Env):
 
 
 class State:
-    def __init__(self, width, height, view):
+    def __init__(self, map):
         self.maxw = 20
-        self.maxh = 140
-        self.shape = (self.maxh, self.maxw)
-        self.w = width
-        self.h = height
+        # 最大視野の想定 予選は視野>= 5
+        self.maxVision = 40
+        self.maxh = 100
+        self.shape = (self.maxh+self.maxVision*2, self.maxw)
+        self.w = map.w
+        self.h = map.h
+        self.player = map.player
+        self.vision = map.vision
         # 障害物マップ
-        self.m = np.zeros(self.shape)
-        # 左寄せ、右壁は障害物にしておく
-        self.m[:, width-1:] = 1
+        self.m = np.ones(self.shape)
+        # 左寄せ、右壁は障害物にしておく, 上下は空白
+        self.m[:, :self.w] = 0
+        self.m[self.maxVision:-self.maxVision, :] = np.array(map.m)
+        
         # 0: unknown, 1: known
         self.unknownMap = np.zeros(self.shape)
-        self.unknownMap[:, width-1:] = 1
-        # self.m = [[0] * width for y in range(height + view + 1)]
         self.playerMap = np.zeros(self.shape)
         self.enemyMap = np.zeros(self.shape)
+        self.goalMap = np.zeros(self.shape)
+        self.goalMap[self.h-1:] = 1
         self.maxy = 0
 
     def setline(self, y, l):
@@ -163,87 +161,107 @@ class State:
         self.enemyMap = np.zeros(self.shape)
 
     def observe(self):
-        return np.vstack(self.m, self.unknownMap, self.playerMap, self.unknownMap)
-
+        self.initPosMap()
+        # y, xの順で指定
+        self.playerMap[tuple(self.player.pos[::-1])] = 1
+        # EnemyMap追加予定地
+        known_range = (self.player.pos[1]-self.vision, self.player.pos[1]+self.vision)
+        self.unknownMap[known_range[0]:known_range[1], :] = 1
+        return np.vstack(self.m, self.unknownMap, self.goalMap, self.playerMap, self.playerSpeed, self.enemyMap, self.enemySpeed)
 
 
 class Jockey:
     def __init__(self, x, y, vx, vy):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-
-class RaceState:
-    def __init__(self, smrjky):
-        self.map = smrjky["obstacles"]
-        self.player = Jockey(smrjky["x0"], 0, 0, 0)
-        # self.enemy = Jockey(smrjky["x1"], 0, 0, 0)
-
-    def move(ax, ay):
-        self.player
+        self.pos = np.array((x, y))
+        self.speed = np.array((vx, vy))
 
 
 class Map:
-    def __init__(self, smrjky):
+    def __init__(self, smrjky, default=0, out_of_bound=1):
         self.w = smrjky["width"]
         self.h = smrjky["length"]
         self.m = smrjky["obstacles"]
         self.vision = smrjky["vision"]
-        # self.m = [[0] * width for y in range(height + view + 1)]
+        self.player = Jockey(smrjky["x0"], 0, 0, 0)
         self.maxy = 0
+        self.dv = default
+        self.ob = out_of_bound
 
     def setline(self, y, l):
+        if y < 0:
+            return
+        while len(self.m) <= y:
+            self.m.append([self.dv] * self.w)
         self.m[y] = l
         self.maxy = max(self.maxy, y)
 
     def getXY(self, x, y):
-        if x < 0 or x >= self.w or y < 0 or y > self.maxy:
-            return 1
+        if x < 0 or x >= self.w or y < 0:
+            return self.ob
+        if y > self.maxy:
+            return self.dv
         return self.m[y][x]
 
     def getP(self, p):
         return self.getXY(p[0], p[1])
 
+    def setXY(self, x, y, v):
+        if x < 0 or x >= self.w or y < 0:
+            return self.ob
+        while self.maxy < y:
+            self.maxy += 1
+            self.m.append([self.dv] * self.w)
+        self.m[y][x] = v
 
-def has_collision(p, next_p, m, view):
-    if m.getP(p) > 0 or m.getP(next_p) > 0:
-        return True
-    dp = next_p - p
-    xlen, ylen = abs(dp[0]), abs(dp[1])
-    dx, dy = np.sign(dp[0]), np.sign(dp[1])
-    for i in range(1, xlen + 1, 1):
-        x = int(p[0] + dx * i)
-        y = p[1] + (ylen * dy * i) / xlen
-        y0 = int(math.floor(y))
-        y1 = int(math.ceil(y))
-        if m.getXY(x, y0) > 0:
-            for k in range(-1, 2, 1):
-                if m.getXY(x + k, y1) > 0:
+    def has_collision(self, p, next_p):
+        if self.getP(p) > 0 or self.getP(next_p) > 0:
+            return True
+        move = LineSegment(p, next_p)
+        dp = next_p - p
+        xlen, ylen = abs(dp[0]), abs(dp[1])
+        dx, dy = np.sign(dp[0]), np.sign(dp[1])
+        if xlen == 0:
+            for i in range(1, ylen, 1):
+                if self.getXY(p[0], p[1] + dy * i) > 0:
                     return True
-        if m.getXY(x, y1) > 0:
-            for k in range(-1, 2, 1):
-                if m.getXY(x + k, y0) > 0:
+            return False
+        if ylen == 0:
+            for i in range(1, xlen, 1):
+                if self.getXY(p[0] + dx * i, p[1]) > 0:
                     return True
-    for i in range(1, ylen + 1, 1):
-        y = int(p[1] + dy * i)
-        x = p[0] + (xlen * dx * i) / ylen
-        x0 = int(math.floor(x))
-        x1 = int(math.ceil(x))
-        if m.getXY(x0, y) > 0:
-            for k in range(-1, 2, 1):
-                if m.getXY(x1, y + k) > 0:
+            return False
+        for i in range(0, xlen, 1):
+            for j in range(0, ylen, 1):
+                x = int(p[0] + dx * i)
+                y = int(p[1] + dy * j)
+                if self.getXY(x, y) > 0 and move.internal(([x, y])):
                     return True
-        if m.getXY(x1, y) > 0:
-            for k in range(-1, 2, 1):
-                if m.getXY(x0, y + k) > 0:
+                nx = x + dx
+                ny = y + dy
+                if self.getXY(x, y) > 0 and self.getXY(nx, ny) > 0 and move.intersects(LineSegment([x, y], [nx, ny])):
                     return True
-    return False
+                if self.getXY(x, y) > 0 and self.getXY(nx, y) > 0 and move.intersects(LineSegment([x, y], [nx, y])):
+                    return True
+                if self.getXY(x, y) > 0 and self.getXY(x, ny) > 0 and move.intersects(LineSegment([x, y], [x, ny])):
+                    return True
+                if self.getXY(x, ny) > 0 and self.getXY(nx, y) > 0 and move.intersects(LineSegment([x, ny], [nx, y])):
+                    return True
+        return False
+
+    def __str__(self):
+        return str(self.m)
+
+    def move_jockey(self, jockey, acc):
+        jockey.speed = jockey.speed + acc
+        next_p = jockey.pos + jockey.speed
+        # 衝突した場合は位置は変えない
+        if self.map.has_collision(jockey.pos, next_p):
+            pass
+        else:
+            jockey.pos = next_p
 
 
-def next_state(p, ac, m, view):
-    next_v = p[1] + ac
-    next_p = p[0] + next_v
-    if has_collision(p[0], next_p, m, view):
-        return (p[0], next_v)
-    return (next_p, next_v)
+class RaceState:
+    def __init__(self, smrjky):
+        # self.enemy = Jockey(smrjky["x1"], 0, 0, 0)
+
