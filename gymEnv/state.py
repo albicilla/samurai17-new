@@ -34,19 +34,6 @@ class State:
         self.enemySpeedY = np.zeros(self.shape)
         self.maxy = 0
 
-    def setline(self, y, l):
-        self.m[y, 0:self.w] = l
-        self.unknownMap[y, 0:self.w] = 1
-        self.maxy = max(self.maxy, y)
-
-    def getXY(self, x, y):
-        if x < 0 or x >= self.w or y < 0 or y > self.maxy:
-            return 1
-        return self.m[y][x]
-
-    def getP(self, p):
-        return self.getXY(p[0], p[1])
-
     def initPosMap(self):
         self.playerMap = np.zeros(self.shape)
         self.playerSpeedX = np.zeros(self.shape)
@@ -55,6 +42,7 @@ class State:
         self.enemySpeedX = np.zeros(self.shape)
         self.enemySpeedY = np.zeros(self.shape)
 
+    # TODO: 相対距離にスクロール
     def observe(self):
         self.initPosMap()
         # y, xの順で指定
@@ -63,5 +51,8 @@ class State:
         self.playerSpeedY[tuple(self.player.pos[::-1])] = self.player.speed[1]
         # EnemyMap追加予定地
         known_range = (self.player.pos[1]-self.vision, self.player.pos[1]+self.vision)
+
         self.unknownMap[known_range[0]:known_range[1], :] = 1
+        # TODO: numpy.rollでshiftして、視界制限かければＯＫ
+
         return np.vstack(self.m, self.unknownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY)
