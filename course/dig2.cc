@@ -1,6 +1,4 @@
-#include <string>
-#include <random>
-#include <iostream>
+#include <bits/stdc++.h>
 #include <unistd.h>
 using namespace std;
 #define FOR(i,a,b) for(int i=a;i<b;i++)
@@ -19,7 +17,7 @@ const ll mod = LLONG_MAX;
 //高さ　横
 int height=100,width=15;
 //上を選ぶ確率
-int choice_up=70;
+int choice_up=50;
 int thinkTime = 20000;
 int repeat=2;
 //視界
@@ -29,6 +27,7 @@ string obstacle;
 
 void dig(int x,int y,int len){
   maze[y][x]=0;
+  maze[y][x-1]=0;
   if(y==len)return;
   //srand((unsigned int)time(NULL));
   //choice_upの確率で上に低いとエラーが出るので注意
