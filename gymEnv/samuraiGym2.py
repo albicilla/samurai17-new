@@ -5,6 +5,7 @@ import numpy as np
 import gym.spaces
 
 from builtins import input
+import json
 
 class SamuraiEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
@@ -20,6 +21,8 @@ class SamuraiEnv(gym.Env):
             shape=self.MAP.shape
         )
         self.reward_range = [-1., 100.]
+        smrjky = open('../samples/course01.smrjky', 'r')
+        map = json.load(smrjky)
         self._reset()
 
     # 必須
@@ -161,3 +164,86 @@ class State:
 
     def observe(self):
         return np.vstack(self.m, self.unknownMap, self.playerMap, self.unknownMap)
+
+
+
+class Jockey:
+    def __init__(self, x, y, vx, vy):
+        self.x = x
+        self.y = y
+        self.vx = vx
+        self.vy = vy
+
+class RaceState:
+    def __init__(self, smrjky):
+        self.map = smrjky["obstacles"]
+        self.player = Jockey(smrjky["x0"], 0, 0, 0)
+        # self.enemy = Jockey(smrjky["x1"], 0, 0, 0)
+
+    def move(ax, ay):
+        self.player
+
+
+class Map:
+    def __init__(self, smrjky):
+        self.w = smrjky["width"]
+        self.h = smrjky["length"]
+        self.m = smrjky["obstacles"]
+        self.vision = smrjky["vision"]
+        # self.m = [[0] * width for y in range(height + view + 1)]
+        self.maxy = 0
+
+    def setline(self, y, l):
+        self.m[y] = l
+        self.maxy = max(self.maxy, y)
+
+    def getXY(self, x, y):
+        if x < 0 or x >= self.w or y < 0 or y > self.maxy:
+            return 1
+        return self.m[y][x]
+
+    def getP(self, p):
+        return self.getXY(p[0], p[1])
+
+
+def has_collision(p, next_p, m, view):
+    if m.getP(p) > 0 or m.getP(next_p) > 0:
+        return True
+    dp = next_p - p
+    xlen, ylen = abs(dp[0]), abs(dp[1])
+    dx, dy = np.sign(dp[0]), np.sign(dp[1])
+    for i in range(1, xlen + 1, 1):
+        x = int(p[0] + dx * i)
+        y = p[1] + (ylen * dy * i) / xlen
+        y0 = int(math.floor(y))
+        y1 = int(math.ceil(y))
+        if m.getXY(x, y0) > 0:
+            for k in range(-1, 2, 1):
+                if m.getXY(x + k, y1) > 0:
+                    return True
+        if m.getXY(x, y1) > 0:
+            for k in range(-1, 2, 1):
+                if m.getXY(x + k, y0) > 0:
+                    return True
+    for i in range(1, ylen + 1, 1):
+        y = int(p[1] + dy * i)
+        x = p[0] + (xlen * dx * i) / ylen
+        x0 = int(math.floor(x))
+        x1 = int(math.ceil(x))
+        if m.getXY(x0, y) > 0:
+            for k in range(-1, 2, 1):
+                if m.getXY(x1, y + k) > 0:
+                    return True
+        if m.getXY(x1, y) > 0:
+            for k in range(-1, 2, 1):
+                if m.getXY(x0, y + k) > 0:
+                    return True
+    return False
+
+
+def next_state(p, ac, m, view):
+    next_v = p[1] + ac
+    next_p = p[0] + next_v
+    if has_collision(p[0], next_p, m, view):
+        return (p[0], next_v)
+    return (next_p, next_v)
