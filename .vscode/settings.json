@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "iostream": "cpp"
-    }
+    },
+    "python.pythonPath": "C:\\Users\\motonari\\Anaconda3\\envs\\tensorflow\\python.exe"
 }
