@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <string>
+#include <random>
+#include <iostream>
 #include <unistd.h>
 using namespace std;
 #define FOR(i,a,b) for(int i=a;i<b;i++)
@@ -19,7 +21,7 @@ int height=100,width=15;
 //上を選ぶ確率
 int choice_up=70;
 int thinkTime = 20000;
-int repeat=3;
+int repeat=2;
 //視界
 int vision=6;
 int maze[1123456][1123456];
@@ -96,7 +98,9 @@ int main(int argc,char* argv[]){
             break;
     }
  }
- for(int i=0;i<height;i++){
+
+ //heightをなんか多めにしないといけないっぽい
+ for(int i=0;i<height+1;i++){
    for(int j=0;j<width;j++){
      maze[i][j]=1;
    }
@@ -109,12 +113,13 @@ int main(int argc,char* argv[]){
 
  // rep(i,repeat)dig(x0,height,0);
  // rep(i,repeat)dig(x1,height,0);
- rep(i,repeat)dig(x0,0,height);
- rep(i,repeat)dig(x1,0,height);
+ rep(i,repeat)dig(x0,0,height+1);
+ rep(i,repeat)dig(x1,0,height+1);
 
  //cout<<"生成終了"<<endl;
 
- for(int i=0;i<height-1;i++){
+//heightは-1だったのを+-0にしてる
+ for(int i=0;i<height;i++){
    obstacle+='[';
    for(int j=0;j<width-1;j++){
      //cerr<<maze[i][j];
