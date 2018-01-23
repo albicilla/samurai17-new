@@ -6,6 +6,9 @@ import gymEnv2
 '''
 ReadMe
 
+> cd here
+> python human_palyer.py
+
 毎ターンactionを数字で入力してください
 例: 2 => speed+(1,1)
 
