@@ -30,8 +30,8 @@ class SamuraiGym2(gym.Env):
         )
         self.reward_range = [-1., 1000.]
         # course01はlength+visionが110あるので避けるvision
-        self.maxVision = 40
-        mapFile = open('../samples/course03.smrjky', 'r')
+        self.maxVision = 70
+        mapFile = open('../samples/course02.smrjky', 'r')
         self.map = Map(json.load(mapFile), self.maxVision)
         self._reset()
 
@@ -39,7 +39,7 @@ class SamuraiGym2(gym.Env):
     def _reset(self):
         # 諸々の変数を初期化する
         self.isDone = False
-        self.step = 0
+        self.step_num = 0
         self.state = State(self.map, self.maxVision)
         self.map.state = self.state
         # self.map.resetState()
@@ -68,7 +68,7 @@ class SamuraiGym2(gym.Env):
         elif action == 8:
             acc = (1, -1)
         # move_jockeyはゴールしたかどうかを返す
-        self.step += 1
+        self.step_num += 1
         self.isDone = self.map.move_jockey(self.map.player, acc)
         observation = self.state.observe()
         reward = self.get_reward2()
@@ -79,21 +79,34 @@ class SamuraiGym2(gym.Env):
         print("renderWasCalled")
         if mode == 'human':
             outfile = sys.stdout
-            sumMap = self.state.to_string()
-            shape = sumMap.shape
+            maps = self.state.to_string()
+            shape = maps.shape
             # print(sumMap)
-            sumMap = sumMap.tolist()[::-1]
             # print(sumMap)
-            outfile.write(
-                    '\n'.join(
-                        [' '.join(
-                            [' ' if elem==0 else str(int(elem)) for elem in row]
-                        ) for row in sumMap]
-                    ) + '\n'
-                )
+            for i, map1 in enumerate(maps):
+                print()
+                print("map" + str(i))
+                self.printMap(map1, outfile)
+            # outfile.write(
+            #         '\n'.join(
+            #             [' '.join(
+            #                 ['-' if int(elem)==0 else str(int(elem)) for elem in row]
+            #             ) for row in sumMap]
+            #         ) + '\n'
+            #     )
             print(self.state.shape)
             print("printShape: " + str(shape))
-        return outfile
+        # return outfile
+
+    def printMap(self, map1, outfile):
+        map1 = map1.tolist()[::1]
+        outfile.write(
+                '\n'.join(
+                    [' '.join(
+                        ['-' if int(elem)==0 else str(int(elem)) for elem in row]
+                    ) for row in map1]
+                ) + '\n'
+            )
 
 
     # def _render(self, mode='human', close=False):
@@ -123,7 +136,7 @@ class SamuraiGym2(gym.Env):
     def get_reward(self):
         if self.isDone:
             # TODO: GoalTimeでスコアが変わるように
-            return max(1000 - self.step, 100)
+            return max(1000 - self.step_num, 100)
         return 0
 
     def get_reward2(self):

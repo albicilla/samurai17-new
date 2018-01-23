@@ -36,3 +36,4 @@
 # 侍のコースファイル smrjky レース形状 out レース結果
 *.smrjky
 *.out
+*.pyc

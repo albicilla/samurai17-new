@@ -73,10 +73,26 @@ class State:
         self.limitedM = self.m * self.knownMap
 
         # stacked = np.array((self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY))
+        # self.ndarrayは変更しないように
         stacked = np.array((self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY))
-        rolled_stacked = np.roll(stacked, -self.player.pos[1], axis=0)
-        self._observationCache = rolled_stacked
-        return rolled_stacked
+
+        # map0,1,2はrollすると先頭が末尾に来てしまってまずい
+        # map3,4,5は値がひとつしかないのでrollしてもＯＫ
+        # rolled_stacked = np.roll(stacked, -self.player.pos[1], axis=1)
+        # 障害物: 追加はなし
+        # rolled_stacked[0][-1, :] = 0
+        # known_map: unknownで追加
+        # rolled_stacked[1][-1, :] = 0
+
+        ## rollに頭を悩ませるなら、任意の範囲を切り取るようにしたほうがよさげ
+        ## 例えば(pos-40..pos+40)など
+        shiftedMap = stacked[:, mapPos[1]-50:mapPos[1]+50+1, :].copy()
+
+        # TODO: ゴールを通り過ぎた時に端っこが切れないにするコード
+
+        print('shiftedMap: ' + str(shiftedMap.shape))
+        self._observationCache = shiftedMap
+        return shiftedMap
 
     def to_string(self):
         cache = self._observationCache.copy()
@@ -93,8 +109,9 @@ class State:
         # playerSpeedX, playerSpeedYはそのまま
 
         # mapの各位置を合計 shape=self.shape
-        sumMap = np.sum(cache, axis=0)
-        return sumMap
+        # sumMap = np.sum(cache, axis=0)
+        # return sumMap
+        return cache
 
 
 

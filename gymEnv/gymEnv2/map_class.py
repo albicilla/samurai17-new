@@ -104,11 +104,11 @@ class Map:
         jockey.speed = jockey.speed + acc
         next_p = jockey.pos + jockey.speed
         # 衝突した場合は位置は変えない
-        if self.map.has_collision(jockey.pos, next_p):
+        if self.has_collision(jockey.pos, next_p):
             pass
         else:
             jockey.pos = next_p
-            if next_p >= self.h:
+            if next_p[1] >= self.h:
                 return True
         return False
                 
