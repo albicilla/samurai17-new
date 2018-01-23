@@ -15,7 +15,7 @@ import json
 #参考: OpenAI Gym で自前の環境をつくる - Qiita: https://qiita.com/ohtaman/items/edcb3b0a2ff9d48a7def
 
 # 単体動作するversion
-class SamuraiEnv(gym.Env):
+class SamuraiEnv2(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
     # MAX_STEPS = 100
 
@@ -25,10 +25,10 @@ class SamuraiEnv(gym.Env):
         self.action_space = gym.spaces.Discrete(9) 
         self.observation_space = gym.spaces.Box(
             low=0,
-            high=len(self.FIELD_TYPES),
-            shape=self.MAP.shape
+            high=1,
+            shape=(6, 180, 20)
         )
-        self.reward_range = [-1., 100.]
+        self.reward_range = [-1., 1000.]
         mapFile = open('../samples/course01.smrjky', 'r')
         self.map = Map(json.load(mapFile))
         self._reset()
@@ -85,7 +85,6 @@ class SamuraiEnv(gym.Env):
                 )
         return outfile
 
-        
 
     # def _render(self, mode='human', close=False):
     #     # human の場合はコンソールに出力。ansiの場合は StringIO を返す
