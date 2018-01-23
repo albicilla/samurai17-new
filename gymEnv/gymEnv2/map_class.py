@@ -1,6 +1,6 @@
 
 import numpy as np
-from py3_linesegment import LineSegment
+from .py3_linesegment import LineSegment
 
 class Jockey:
     def __init__(self, x, y, vx, vy):

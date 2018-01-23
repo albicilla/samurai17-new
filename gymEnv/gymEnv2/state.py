@@ -15,7 +15,8 @@ class State:
         self.maxh = 100
         self.shape = (self.maxh+self.maxVision*2, self.maxw)
         self.w = map.w
-        self.h = map.h
+        self.h = map.h + map.vision
+        self.goalH = map.h
         self.player = map.player
         self.vision = map.vision
 
@@ -23,7 +24,7 @@ class State:
         self.m = np.ones(self.shape)
         # 左寄せ、右壁は障害物にしておく, 上下は空白
         self.m[:, :self.w] = 0
-        self.m[self.maxVision:-self.maxVision, :] = np.array(map.m)
+        self.m[self.maxVision:self.maxVision+self.h, :map.w] = np.array(map.m)
         
         # 0: unknown, 1: known
         self.knownMap = np.zeros(self.shape)
@@ -59,11 +60,11 @@ class State:
         # 1のとこだけそのまま、0のとこは0になる
         self.limitedM = self.m * self.knownMap
 
-        # stacked = np.vstack(self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY)
-        stacked = np.vstack(self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY)
+        # stacked = np.array((self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY))
+        stacked = np.array((self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY))
         rolled_stacked = np.roll(stacked, -self.player.pos[1], axis=0)
         self._observationCache = rolled_stacked
-        return stacked
+        return rolled_stacked
 
     def to_string(self):
         cache = self._observationCache.copy()
@@ -72,9 +73,9 @@ class State:
         # knownMap known:1, unknown: 0
         #  => known: 0, unknown: 3
         cache[1] -= 1
-        cache[1] *= 3
+        cache[1] *= -3
         # goalMap
-        cache[2] *= 9
+        cache[2] *= 6
         # playerMap
         cache[3] *= 100
         # playerSpeedX, playerSpeedYはそのまま

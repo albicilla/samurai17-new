@@ -8,14 +8,14 @@ import numpy as np
 import gym.spaces
 
 from builtins import input
-from map import Map
-from state import State
+from .map_class import Map
+from .state import State
 import json
 
 #参考: OpenAI Gym で自前の環境をつくる - Qiita: https://qiita.com/ohtaman/items/edcb3b0a2ff9d48a7def
 
 # 単体動作するversion
-class SamuraiEnv2(gym.Env):
+class SamuraiGym2(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
     # MAX_STEPS = 100
 
@@ -29,7 +29,8 @@ class SamuraiEnv2(gym.Env):
             shape=(6, 180, 20)
         )
         self.reward_range = [-1., 1000.]
-        mapFile = open('../samples/course01.smrjky', 'r')
+        # course01はlength+visionが110あるので避ける
+        mapFile = open('../samples/course02.smrjky', 'r')
         self.map = Map(json.load(mapFile))
         self._reset()
 
@@ -72,17 +73,23 @@ class SamuraiEnv2(gym.Env):
 
     # 必須
     def _render(self, mode='human', close=False):
+        print("renderWasCalled")
         if mode == 'human':
             outfile = sys.stdout
             sumMap = self.state.to_string()
-            sumMap = list(sumMap)
+            shape = sumMap.shape
+            # print(sumMap)
+            sumMap = sumMap.tolist()[::-1]
+            # print(sumMap)
             outfile.write(
                     '\n'.join(
                         [' '.join(
-                            [' ' if elem==0 else str(elem) for elem in row]
+                            [' ' if elem==0 else str(int(elem)) for elem in row]
                         ) for row in sumMap]
                     ) + '\n'
                 )
+            print(self.state.shape)
+            print("printShape: " + str(shape))
         return outfile
 
 
