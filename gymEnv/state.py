@@ -7,6 +7,8 @@ class State:
         # 直近の4layerを重ねてる
         # Samurai
         # (9, 180, 20) = 32400
+        # enemyMapを除いた場合
+        # (6, 180, 20) = 21600
         self.maxw = 20
         # 最大視野の想定 予選は視野>= 5
         self.maxVision = 40
@@ -16,6 +18,7 @@ class State:
         self.h = map.h
         self.player = map.player
         self.vision = map.vision
+
         # 障害物マップ
         self.m = np.ones(self.shape)
         # 左寄せ、右壁は障害物にしておく, 上下は空白
@@ -23,7 +26,7 @@ class State:
         self.m[self.maxVision:-self.maxVision, :] = np.array(map.m)
         
         # 0: unknown, 1: known
-        self.unknownMap = np.zeros(self.shape)
+        self.knownMap = np.zeros(self.shape)
         self.goalMap = np.zeros(self.shape)
         self.goalMap[self.h-1:] = 1
         self.playerMap = np.zeros(self.shape)
@@ -42,7 +45,6 @@ class State:
         self.enemySpeedX = np.zeros(self.shape)
         self.enemySpeedY = np.zeros(self.shape)
 
-    # TODO: 相対距離にスクロール
     def observe(self):
         self.initPosMap()
         # y, xの順で指定
@@ -50,9 +52,18 @@ class State:
         self.playerSpeedX[tuple(self.player.pos[::-1])] = self.player.speed[0]
         self.playerSpeedY[tuple(self.player.pos[::-1])] = self.player.speed[1]
         # EnemyMap追加予定地
-        known_range = (self.player.pos[1]-self.vision, self.player.pos[1]+self.vision)
+        known_range = (self.player.pos[1]-self.vision, self.player.pos[1]+self.vision+1)
+        self.knownMap = np.zeros(self.shape)
+        self.knownMap[known_range[0]:known_range[1], :] = 1
+        # 要素ごとの積, ipythonで確認済み
+        # 1のとこだけそのまま、0のとこは0になる
+        self.limitedM = self.m * self.knownMap
 
-        self.unknownMap[known_range[0]:known_range[1], :] = 1
-        # TODO: numpy.rollでshiftして、視界制限かければＯＫ
+        # stacked = np.vstack(self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY)
+        stacked = np.vstack(self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY)
+        rolled_stacked = np.roll(stacked, -self.player.pos[1], axis=0)
+        self.observationCache = rolled_stacked
+        return stacked
 
-        return np.vstack(self.m, self.unknownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY)
+
+

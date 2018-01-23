@@ -7,6 +7,7 @@ import gym.spaces
 from builtins import input
 
 
+# 公式のOfficialと組み合わせることを想定して書いたversion
 class SamuraiEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
     MAX_STEPS = 100

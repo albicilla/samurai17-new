@@ -14,6 +14,7 @@ import json
 
 #参考: OpenAI Gym で自前の環境をつくる - Qiita: https://qiita.com/ohtaman/items/edcb3b0a2ff9d48a7def
 
+# 単体動作するversion
 class SamuraiEnv(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
     # MAX_STEPS = 100
@@ -70,18 +71,28 @@ class SamuraiEnv(gym.Env):
         return observation, reward, self.isDone, {}
 
     # 必須
-    def _render(self):
-        pass
+    def _render(self, mode='human', close=False):
+        cache = self.state.observationCache
+        if mode == 'human':
+            outfile = sys.stdout
+            outfile.write('\n'.join(' '.join(
+                    self.FIELD_TYPES[elem] for elem in row
+                    ) for row in self._observe()
+                ) + '\n'
+            )
+        return outfile
 
-    # def _render(self, mode='human', close=False):
-    #     # human の場合はコンソールに出力。ansiの場合は StringIO を返す
-    #     outfile = StringIO() if mode == 'ansi' else sys.stdout
-    #     outfile.write('\n'.join(' '.join(
-    #             self.FIELD_TYPES[elem] for elem in row
-    #             ) for row in self._observe()
-    #         ) + '\n'
-    #     )
-    #     return outfile
+        
+
+    def _render(self, mode='human', close=False):
+        # human の場合はコンソールに出力。ansiの場合は StringIO を返す
+        outfile = StringIO() if mode == 'ansi' else sys.stdout
+        outfile.write('\n'.join(' '.join(
+                self.FIELD_TYPES[elem] for elem in row
+                ) for row in self._observe()
+            ) + '\n'
+        )
+        return outfile
 
     # 継承
     def _close(self):
