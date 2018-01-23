@@ -72,27 +72,30 @@ class SamuraiEnv(gym.Env):
 
     # 必須
     def _render(self, mode='human', close=False):
-        cache = self.state.observationCache
         if mode == 'human':
             outfile = sys.stdout
-            outfile.write('\n'.join(' '.join(
-                    self.FIELD_TYPES[elem] for elem in row
-                    ) for row in self._observe()
-                ) + '\n'
-            )
+            sumMap = self.state.to_string()
+            sumMap = list(sumMap)
+            outfile.write(
+                    '\n'.join(
+                        [' '.join(
+                            [' ' if elem==0 else str(elem) for elem in row]
+                        ) for row in sumMap]
+                    ) + '\n'
+                )
         return outfile
 
         
 
-    def _render(self, mode='human', close=False):
-        # human の場合はコンソールに出力。ansiの場合は StringIO を返す
-        outfile = StringIO() if mode == 'ansi' else sys.stdout
-        outfile.write('\n'.join(' '.join(
-                self.FIELD_TYPES[elem] for elem in row
-                ) for row in self._observe()
-            ) + '\n'
-        )
-        return outfile
+    # def _render(self, mode='human', close=False):
+    #     # human の場合はコンソールに出力。ansiの場合は StringIO を返す
+    #     outfile = StringIO() if mode == 'ansi' else sys.stdout
+    #     outfile.write('\n'.join(' '.join(
+    #             self.FIELD_TYPES[elem] for elem in row
+    #             ) for row in self._observe()
+    #         ) + '\n'
+    #     )
+    #     return outfile
 
     # 継承
     def _close(self):

@@ -62,8 +62,26 @@ class State:
         # stacked = np.vstack(self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY)
         stacked = np.vstack(self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY)
         rolled_stacked = np.roll(stacked, -self.player.pos[1], axis=0)
-        self.observationCache = rolled_stacked
+        self._observationCache = rolled_stacked
         return stacked
+
+    def to_string(self):
+        cache = self._observationCache.copy()
+        # MapObject
+        cache[0] *= 1
+        # knownMap known:1, unknown: 0
+        #  => known: 0, unknown: 3
+        cache[1] -= 1
+        cache[1] *= 3
+        # goalMap
+        cache[2] *= 9
+        # playerMap
+        cache[3] *= 100
+        # playerSpeedX, playerSpeedYはそのまま
+
+        # mapの各位置を合計 shape=self.shape
+        sumMap = np.sum(cache, axis=0)
+        return sumMap
 
 
 
