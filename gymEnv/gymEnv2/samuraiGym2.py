@@ -29,9 +29,10 @@ class SamuraiGym2(gym.Env):
             shape=(6, 180, 20)
         )
         self.reward_range = [-1., 1000.]
-        # course01はlength+visionが110あるので避ける
+        # course01はlength+visionが110あるので避けるvision
+        self.maxVision = 40
         mapFile = open('../samples/course02.smrjky', 'r')
-        self.map = Map(json.load(mapFile))
+        self.map = Map(json.load(mapFile), self.maxVision)
         self._reset()
 
     # 必須
@@ -39,7 +40,9 @@ class SamuraiGym2(gym.Env):
         # 諸々の変数を初期化する
         self.isDone = False
         self.step = 0
-        self.state = State(self.map)
+        self.state = State(self.map, self.maxVision)
+        self.map.state = self.state
+        # self.map.resetState()
         # ２つ目は速度、ここは曖昧、reward, doneはなくて良い
         return self.state.observe()
 

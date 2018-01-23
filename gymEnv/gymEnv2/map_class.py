@@ -2,23 +2,38 @@
 import numpy as np
 from .py3_linesegment import LineSegment
 
+
+# class Pos:
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
+
+
 class Jockey:
-    def __init__(self, x, y, vx, vy):
+    def __init__(self, x, y, vx, vy, maxVision):
+        self.maxVision = maxVision
         self.pos = np.array((x, y))
         self.speed = np.array((vx, vy))
 
+    def map_pos(self):
+        ''' return (x, y) '''
+        pos = (self.pos[0], self.pos[1] + self.maxVision)
+        # pos = Pos(self.pos[0] + self.vision, self.pos[1])
+        return pos
+
 
 class Map:
-    def __init__(self, smrjky, default=0, out_of_bound=1):
+    def __init__(self, smrjky, maxVision, default=0, out_of_bound=1):
         self.w = smrjky["width"]
         self.h = smrjky["length"]
         self.m = smrjky["obstacles"]
         self.vision = smrjky["vision"]
         # self.enemy = Jockey(smrjky["x1"], 0, 0, 0)
-        self.player = Jockey(smrjky["x0"], 0, 0, 0)
+        self.player = Jockey(smrjky["x0"], 0, 0, 0, maxVision)
         self.maxy = 0
         self.dv = default
         self.ob = out_of_bound
+        self.state = None
 
     def setline(self, y, l):
         if y < 0:
