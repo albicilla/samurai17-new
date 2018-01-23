@@ -20,7 +20,7 @@ action =
 入力待ち時にCtrl-Dで終了します
 
 
-記号:
+Mapの記号:
 @: 自機
 1: 障害物
 3: unknown(まだ見えていない場所)
@@ -28,6 +28,9 @@ action =
 
 重なった場合は和を表示します
 例: 7は1と6が重なっている場所です。
+
+
+Mapの変更やreward定義は./gymEnv2/samuraiGym2.pyにあります
 '''
 
 ENV_NAME = 'Samurai-v0'

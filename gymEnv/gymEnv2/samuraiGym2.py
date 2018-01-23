@@ -21,19 +21,19 @@ class SamuraiGym2(gym.Env):
 
     def __init__(self):
         super().__init__()
-        # action_space, observation_space, reward_range を設定する
-        self.action_space = gym.spaces.Discrete(9) 
-        self.observation_space = gym.spaces.Box(
-            low=0,
-            high=1,
-            shape=(6, 10+1+50, 20)
-        )
-        self.reward_range = [-10., 10000.]
         # max(forwardView, backView)+10必要
         # +10はバグよけ
         self.maxVision = 30
         self.forwardView = 20
         self.backView = 10
+        # action_space, observation_space, reward_range を設定する
+        self.action_space = gym.spaces.Discrete(9) 
+        self.observation_space = gym.spaces.Box(
+            low=0,
+            high=1,
+            shape=(6, self.backView+1+self.forwardView, 20)
+        )
+        self.reward_range = [-10., 10000.]
         # course01はlength+visionが110あるので避ける
         mapFile = open('../samples/course07.smrjky', 'r')
         self.map = Map(json.load(mapFile), self.maxVision)
@@ -166,7 +166,7 @@ class SamuraiGym2(gym.Env):
             # 初期も意味のある報酬がもらえるように大きめに設定
             return max(9000 - self.step_num, 300)
         elif self.isClashed:
-            return -0.1
+            return -0.2
         else:
             # ぶつからずに進めた時はy座標に進んだ距離 * 0.1
             # y座標のマイナス方向に進んだ時はマイナス
