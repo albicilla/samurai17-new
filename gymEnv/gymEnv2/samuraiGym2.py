@@ -28,7 +28,7 @@ class SamuraiGym2(gym.Env):
             high=1,
             shape=(6, 10+1+50, 20)
         )
-        self.reward_range = [-1., 1000.]
+        self.reward_range = [-10., 10000.]
         # max(forwardView, backView)+10必要
         # +10はバグよけ
         self.maxVision = 30
@@ -43,6 +43,7 @@ class SamuraiGym2(gym.Env):
     def _reset(self):
         # 諸々の変数を初期化する
         self.isDone = False
+        self.isClashed = False
         self.step_num = 0
         self.state = State(self.map, self.maxVision, self.forwardView, self.backView)
         self.map.state = self.state
@@ -73,9 +74,9 @@ class SamuraiGym2(gym.Env):
             acc = (1, -1)
         # move_jockeyはゴールしたかどうかを返す
         self.step_num += 1
-        self.isDone = self.map.move_jockey(self.map.player, acc)
+        self.isDone, self.isClashed = self.map.move_jockey(self.map.player, acc)
         observation = self.state.observe()
-        reward = self.get_reward2()
+        reward = self.get_reward3()
         return observation, reward, self.isDone, {}
 
     # 必須
@@ -96,6 +97,10 @@ class SamuraiGym2(gym.Env):
             speed = "speed: " + str(tuple(self.map.player.speed))
             print(pos)
             print(speed)
+            if self.isClashed:
+                print("CLASED!")
+            if self.isDone:
+                print("GOAL!!!")
             # print(self.state.shape)
             # print("printShape: " + str(shape))
         # return outfile
@@ -155,6 +160,17 @@ class SamuraiGym2(gym.Env):
         if self.isDone:
             return 1000
         return -1
+
+    def get_reward3(self):
+        if self.isDone:
+            # 初期も意味のある報酬がもらえるように大きめに設定
+            return max(9000 - self.step_num, 300)
+        elif self.isClashed:
+            return -0.1
+        else:
+            # ぶつからずに進めた時はy座標に進んだ距離 * 0.1
+            # y座標のマイナス方向に進んだ時はマイナス
+            return self.map.player.speed[1] * 0.1
 
     # def _get_reward(self, pos, moved):
     #     # 報酬を返す。報酬の与え方が難しいが、ここでは

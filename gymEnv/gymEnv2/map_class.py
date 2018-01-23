@@ -25,12 +25,17 @@ class Jockey:
 class Map:
     def __init__(self, smrjky, maxVision, default=0, out_of_bound=1):
         self.w = smrjky["width"]
-        self.h = smrjky["length"]
+        # スタートからゴールまでの距離L
+        self.h = smrjky["length"] 
+        # len(m)がhと一緒とは限らない
+        # ゴールより後の情報も含む
+        # 基本的にはlen(self.m) <= self.h + self.visionのはず 
+        # それ以上は切り捨てでもよい
         self.m = smrjky["obstacles"]
         self.vision = smrjky["vision"]
         # self.enemy = Jockey(smrjky["x1"], 0, 0, 0)
         self.player = Jockey(smrjky["x0"], 0, 0, 0, maxVision)
-        self.maxy = 0
+        self.maxy = len(self.m)
         self.dv = default
         self.ob = out_of_bound
         self.state = None
@@ -100,16 +105,18 @@ class Map:
         return str(self.m)
 
     def move_jockey(self, jockey, acc):
-        ''' ゴールしたかどうかを返す '''
+        ''' return (ゴールしたかどうか, ぶつかったかどうか) '''
         jockey.speed = jockey.speed + acc
         next_p = jockey.pos + jockey.speed
+        clashed = False
         # 衝突した場合は位置は変えない
         if self.has_collision(jockey.pos, next_p):
-            pass
+            clashed = True
         else:
             jockey.pos = next_p
+            # 移動した場合のみゴール判定
             if next_p[1] >= self.h:
-                return True
-        return False
+                return True, clashed
+        return False, clashed
                 
 

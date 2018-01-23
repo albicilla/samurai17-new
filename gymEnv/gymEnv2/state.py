@@ -20,7 +20,8 @@ class State:
         self.goalLength = map.h
         # map.mの大きさ
         self.w = map.w
-        self.h = map.h + map.vision
+        # self.h = map.h + map.vision # map+visionの大きさに統一
+        self.h = len(map.m) 
 
         self.player = map.player
         self.vision = map.vision
@@ -41,18 +42,18 @@ class State:
         self.playerMap = np.zeros(self.shape)
         self.playerSpeedX = np.zeros(self.shape)
         self.playerSpeedY = np.zeros(self.shape)
-        self.enemyMap = np.zeros(self.shape)
-        self.enemySpeedX = np.zeros(self.shape)
-        self.enemySpeedY = np.zeros(self.shape)
+        # self.enemyMap = np.zeros(self.shape)
+        # self.enemySpeedX = np.zeros(self.shape)
+        # self.enemySpeedY = np.zeros(self.shape)
         self.maxy = 0
 
     def initPosMap(self):
         self.playerMap = np.zeros(self.shape)
         self.playerSpeedX = np.zeros(self.shape)
         self.playerSpeedY = np.zeros(self.shape)
-        self.enemyMap = np.zeros(self.shape)
-        self.enemySpeedX = np.zeros(self.shape)
-        self.enemySpeedY = np.zeros(self.shape)
+        # self.enemyMap = np.zeros(self.shape)
+        # self.enemySpeedX = np.zeros(self.shape)
+        # self.enemySpeedY = np.zeros(self.shape)
 
     def observe(self):
         self.initPosMap()
@@ -62,7 +63,6 @@ class State:
         self.playerMap[mapPos[::-1]] = 1
         self.playerSpeedX[mapPos[::-1]] = self.player.speed[0]
         self.playerSpeedY[mapPos[::-1]] = self.player.speed[1]
-        # EnemyMap追加予定地
         # known_range = (self.player.pos[1]-self.vision, self.player.pos[1]+self.vision+1)
         self.knownMap = np.zeros(self.shape)
         # self.knownMap[mapPos[1]-self.vision:mapPos[1]+self.vision+1, :] = 1
@@ -76,6 +76,9 @@ class State:
         self.limitedM = self.m * self.knownMap
 
         # stacked = np.array((self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY, self.enemyMap, self.enemySpeedX, self.enemySpeedY))
+        
+        # self.mとself.goalMap以外は毎ターン生成
+        # self.mとself.goalMapは最初に生成されてずっと使い回し
         # self.ndarrayは変更しないように
         stacked = np.array((self.limitedM, self.knownMap, self.goalMap, self.playerMap, self.playerSpeedX, self.playerSpeedY))
 
