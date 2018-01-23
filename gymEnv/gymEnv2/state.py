@@ -1,7 +1,7 @@
 import numpy as np
 
 class State:
-    def __init__(self, map, maxVision):
+    def __init__(self, map, maxVision, forwardView, backView):
         # DQNのatari
         # (4, 84, 84) = 28224
         # 直近の4layerを重ねてる
@@ -12,8 +12,11 @@ class State:
         self.maxw = 20
         # 最大視野の想定 予選は視野>= 5
         self.maxVision = maxVision
+        self.forwardView = forwardView
+        self.backView = backView
         self.maxh = 100
         self.shape = (self.maxh+self.maxVision*2, self.maxw)
+        print(self.shape)
         self.goalLength = map.h
         # map.mの大きさ
         self.w = map.w
@@ -26,7 +29,7 @@ class State:
         self.m = np.ones(self.shape)
         # 左寄せ、右壁は障害物にしておく, 上下は空白
         # maxVisionより下、つまり初期位置より下は1
-        self.m[maxVision+1:, :self.w] = 0
+        self.m[maxVision:, :self.w] = 0
         self.m[self.maxVision:self.maxVision+self.h, :map.w] = np.array(map.m)
         
         # 0: unknown, 1: known
@@ -86,9 +89,8 @@ class State:
 
         ## rollに頭を悩ませるなら、任意の範囲を切り取るようにしたほうがよさげ
         ## 例えば(pos-40..pos+40)など
-        shiftedMap = stacked[:, mapPos[1]-50:mapPos[1]+50+1, :].copy()
+        shiftedMap = stacked[:, mapPos[1]-self.backView:mapPos[1]+self.forwardView+1, :].copy()
 
-        # TODO: ゴールを通り過ぎた時に端っこが切れないにするコード
 
         print('shiftedMap: ' + str(shiftedMap.shape))
         self._observationCache = shiftedMap
@@ -105,7 +107,7 @@ class State:
         # goalMap
         cache[2] *= 6
         # playerMap
-        cache[3] *= 100
+        cache[3] *= 1000
         # playerSpeedX, playerSpeedYはそのまま
 
         # mapの各位置を合計 shape=self.shape

@@ -26,12 +26,16 @@ class SamuraiGym2(gym.Env):
         self.observation_space = gym.spaces.Box(
             low=0,
             high=1,
-            shape=(6, 180, 20)
+            shape=(6, 10+1+50, 20)
         )
         self.reward_range = [-1., 1000.]
-        # course01はlength+visionが110あるので避けるvision
-        self.maxVision = 70
-        mapFile = open('../samples/course02.smrjky', 'r')
+        # max(forwardView, backView)+10必要
+        # +10はバグよけ
+        self.maxVision = 30
+        self.forwardView = 20
+        self.backView = 10
+        # course01はlength+visionが110あるので避ける
+        mapFile = open('../samples/course07.smrjky', 'r')
         self.map = Map(json.load(mapFile), self.maxVision)
         self._reset()
 
@@ -40,7 +44,7 @@ class SamuraiGym2(gym.Env):
         # 諸々の変数を初期化する
         self.isDone = False
         self.step_num = 0
-        self.state = State(self.map, self.maxVision)
+        self.state = State(self.map, self.maxVision, self.forwardView, self.backView)
         self.map.state = self.state
         # self.map.resetState()
         # ２つ目は速度、ここは曖昧、reward, doneはなくて良い
@@ -76,37 +80,45 @@ class SamuraiGym2(gym.Env):
 
     # 必須
     def _render(self, mode='human', close=False):
-        print("renderWasCalled")
+        # print("renderWasCalled")
         if mode == 'human':
             outfile = sys.stdout
             maps = self.state.to_string()
             shape = maps.shape
-            # print(sumMap)
-            # print(sumMap)
-            for i, map1 in enumerate(maps):
-                print()
-                print("map" + str(i))
-                self.printMap(map1, outfile)
-            # outfile.write(
-            #         '\n'.join(
-            #             [' '.join(
-            #                 ['-' if int(elem)==0 else str(int(elem)) for elem in row]
-            #             ) for row in sumMap]
-            #         ) + '\n'
-            #     )
-            print(self.state.shape)
-            print("printShape: " + str(shape))
+            # mapの各位置を合計 shape=self.shape
+            maps = np.sum(maps, axis=0)[::-1]
+            self.printMap(maps, outfile)
+            # for i, map1 in enumerate(maps):
+            #     print()
+            #     print("map" + str(i))
+            #     self.printMap(map1, outfile)
+            pos = "pos: " + str(tuple(self.map.player.pos))
+            speed = "speed: " + str(tuple(self.map.player.speed))
+            print(pos)
+            print(speed)
+            # print(self.state.shape)
+            # print("printShape: " + str(shape))
         # return outfile
 
     def printMap(self, map1, outfile):
-        map1 = map1.tolist()[::1]
+        map1 = map1.tolist()
         outfile.write(
                 '\n'.join(
                     [' '.join(
-                        ['-' if int(elem)==0 else str(int(elem)) for elem in row]
+                        [self.change(num) for num in row]
                     ) for row in map1]
                 ) + '\n'
             )
+
+    def change(self, num):
+        if num == 0:
+            return '-'
+        elif 100 < num < 10000:
+            return '@'
+        else:
+            # floatだと見難いのでintにする
+            return str(int(num))
+
 
 
     # def _render(self, mode='human', close=False):
