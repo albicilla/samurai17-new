@@ -32,8 +32,9 @@ class State:
         # 0: unknown, 1: known
         self.knownMap = np.zeros(self.shape)
         self.goalMap = np.zeros(self.shape)
-        # -1はindexに直すよう
-        self.goalMap[self.maxVision+self.goalLength-1:] = 1
+        # goalLengthがindexなので修正無しでOK
+        # index + 大きさ = index
+        self.goalMap[self.maxVision+self.goalLength:] = 1
         self.playerMap = np.zeros(self.shape)
         self.playerSpeedX = np.zeros(self.shape)
         self.playerSpeedY = np.zeros(self.shape)
@@ -62,6 +63,8 @@ class State:
         # known_range = (self.player.pos[1]-self.vision, self.player.pos[1]+self.vision+1)
         self.knownMap = np.zeros(self.shape)
         # self.knownMap[mapPos[1]-self.vision:mapPos[1]+self.vision+1, :] = 1
+        # 右側の範囲外はすべてknown
+        self.knownMap[:, self.w:] = 1
         # 現在地より下はすべてknown
         # 自分の位置 + visionの座標が見え、範囲選択用に+1
         self.knownMap[:mapPos[1]+self.vision+1, :] = 1

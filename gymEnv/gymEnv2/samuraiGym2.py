@@ -31,7 +31,7 @@ class SamuraiGym2(gym.Env):
         self.reward_range = [-1., 1000.]
         # course01はlength+visionが110あるので避けるvision
         self.maxVision = 40
-        mapFile = open('../samples/course02.smrjky', 'r')
+        mapFile = open('../samples/course03.smrjky', 'r')
         self.map = Map(json.load(mapFile), self.maxVision)
         self._reset()
 
