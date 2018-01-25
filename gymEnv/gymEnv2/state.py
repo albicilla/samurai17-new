@@ -95,7 +95,7 @@ class State:
         shiftedMap = stacked[:, mapPos[1]-self.backView:mapPos[1]+self.forwardView+1, :].copy()
 
 
-        print('shiftedMap: ' + str(shiftedMap.shape))
+        # print('shiftedMap: ' + str(shiftedMap.shape))
         self._observationCache = shiftedMap
         return shiftedMap
 
