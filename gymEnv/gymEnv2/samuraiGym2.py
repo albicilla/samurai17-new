@@ -8,7 +8,7 @@ import numpy as np
 import gym.spaces
 
 from builtins import input
-from .map_class import Map
+from .map import Map
 from .state import State
 import json
 import copy
