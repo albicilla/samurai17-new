@@ -16,7 +16,7 @@ class State:
         self.backView = backView
         self.maxh = 100
         self.shape = (self.maxh+self.maxVision*2, self.maxw)
-        print(self.shape)
+        # print(self.shape)
         self.goalLength = map.h
         # map.mの大きさ
         self.w = map.w

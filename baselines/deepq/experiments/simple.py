@@ -90,6 +90,7 @@ def learn(env,
           train_freq=1,
           batch_size=32,
           print_freq=100,
+          output_for_viewer=100,
           checkpoint_freq=10000,
           learning_starts=1000,
           gamma=1.0,
@@ -280,6 +281,9 @@ def learn(env,
                 logger.record_tabular("mean 100 episode reward", mean_100ep_reward)
                 logger.record_tabular("% time spent exploring", int(100 * exploration.value(t)))
                 logger.dump_tabular()
+
+            if done and num_episodes % output_for_viewer == 0:
+                env.render(mode='viewer')
 
             if (checkpoint_freq is not None and t > learning_starts and
                     num_episodes > 100 and t % checkpoint_freq == 0):

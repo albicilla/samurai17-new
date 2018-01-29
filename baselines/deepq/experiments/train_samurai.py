@@ -2,9 +2,10 @@ import gym
 import gymEnv2
 
 from baselines import deepq
-from model import model, duelingCustom_model 
+from model import model, duelingCustom_model, dueling_model 
 
 from baselines.common.schedules import LinearSchedule
+import simple
 
 # def callback(lcl, glb):
 #     # stop training if reward exceeds 199
@@ -45,16 +46,16 @@ exploration = LinearSchedule(schedule_timesteps=int(exploration_fraction * max_t
 
 def main():
     env = gym.make("Samurai-v0")
-    q_func = deepq.models.mlp([64])
-    # ()実行で良いはず
     # def model_wrapper(img_in, num_actions, scope, **kwargs):
     #     actual_model = duelingCustom_model
     #     return actual_model(img_in, num_actions, scope, layer_norm=False, **kwargs)
+    # q_func = deepq.models.mlp([64])
     # q_func = model_wrapper
-    q_func = duelingCustom_model
+    q_func = dueling_model
+    # q_func = duelingCustom_model
 
     # double-qはデフォルトで有効
-    act = deepq.learn(
+    act = simple.learn(
         env,
         q_func,
         # lr=5e-4,
