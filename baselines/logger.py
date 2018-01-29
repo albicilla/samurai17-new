@@ -8,7 +8,7 @@ import datetime
 import tempfile
 from mpi4py import MPI
 
-LOG_OUTPUT_FORMATS = ['stdout', 'log', 'csv']
+LOG_OUTPUT_FORMATS = ['stdout', 'log', 'csv', 'json', 'tensorboard']
 # Also valid: json, tensorboard
 
 DEBUG = 10
@@ -305,7 +305,6 @@ class Logger(object):
             if isinstance(fmt, SeqWriter):
                 fmt.writeseq(map(str, args))
 
-Logger.DEFAULT = Logger.CURRENT = Logger(dir=None, output_formats=[HumanOutputFormat(sys.stdout)])
 
 def configure(dir=None, format_strs=None):
     if dir is None:
@@ -323,6 +322,9 @@ def configure(dir=None, format_strs=None):
 
     Logger.CURRENT = Logger(dir=dir, output_formats=output_formats)
     log('Logging to %s'%dir)
+
+# Logger.DEFAULT = Logger.CURRENT = Logger(dir=None, output_formats=[HumanOutputFormat(sys.stdout)])
+configure()
 
 def reset():
     if Logger.CURRENT is not Logger.DEFAULT:

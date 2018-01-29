@@ -75,14 +75,18 @@ def load(path):
     """
     return ActWrapper.load(path)
 
+exploration = LinearSchedule(schedule_timesteps=int(0.1 * 100000),
+                                initial_p=1.0,
+                                final_p=0.02)
+
+
 
 def learn(env,
           q_func,
           lr=5e-4,
           max_timesteps=100000,
           buffer_size=50000,
-          exploration_fraction=0.1,
-          exploration_final_eps=0.02,
+          exploration=exploration,
           train_freq=1,
           batch_size=32,
           print_freq=100,
@@ -202,10 +206,10 @@ def learn(env,
     else:
         replay_buffer = ReplayBuffer(buffer_size)
         beta_schedule = None
-    # Create the schedule for exploration starting from 1.
-    exploration = LinearSchedule(schedule_timesteps=int(exploration_fraction * max_timesteps),
-                                 initial_p=1.0,
-                                 final_p=exploration_final_eps)
+    # create the schedule for exploration starting from 1.
+    # exploration = linearschedule(schedule_timesteps=int(exploration_fraction * max_timesteps),
+    #                              initial_p=1.0,
+    #                              final_p=exploration_final_eps)
 
     # Initialize the parameters and copy them to the target network.
     U.initialize()

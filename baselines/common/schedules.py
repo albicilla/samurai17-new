@@ -78,6 +78,8 @@ class LinearSchedule(object):
         """Linear interpolation between initial_p and final_p over
         schedule_timesteps. After this many timesteps pass final_p is
         returned.
+        t=schedule_timestepsまででfinal_pに落ちる
+        その間はinitial_pとfina_pの線形補間
 
         Parameters
         ----------
