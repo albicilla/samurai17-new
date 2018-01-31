@@ -1,0 +1,553 @@
+commit 5c00f401afc66d8bca1dcd6e523cc855d01460f4
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Sun Jan 28 20:04:09 2018 +0900
+
+    fix y_range bug and refactor
+
+commit f63ce3a2f70411169e88c8e3d6274ffd46ef2aa2
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Sun Jan 28 11:49:36 2018 +0900
+
+    sampleと生成コースをgym内に移動
+
+commit 155b34404bdbf461b53f3889efff2060d07b16c0
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Fri Jan 26 00:43:48 2018 +0900
+
+    viewerで再生できるlogの完成
+
+commit 81d26b6345c44d158a7473cb72103d61c50308e8
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Wed Jan 24 01:39:57 2018 +0900
+
+    itiji
+
+commit 0291988c6caf24cd6e03b91344dcf5f67042cc38
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Wed Jan 24 01:05:04 2018 +0900
+
+    解説追加
+
+commit c3365903bc339b296a5197cb0e5c7ac5432e1590
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Wed Jan 24 00:59:54 2018 +0900
+
+    解説の追加
+
+commit e78ef8c5f16d1423a81943b2b823cd156c71923d
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Wed Jan 24 00:53:55 2018 +0900
+
+    人間用エミュレータの完成
+
+commit fdd589bd4ae1187cd3d867bc3f9d511563bd879e
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 22:03:27 2018 +0900
+
+    itiji
+
+commit d37b708af990d2af7d83105543255a5b36a9dbad
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 19:59:50 2018 +0900
+
+    gitignoreの反映とstateをshiftしていく方向性を目指し始めた
+
+commit 17eccfbe841ef88883cde8c07c935de17b498ef5
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 18:11:40 2018 +0900
+
+    initializeのデバック終了
+
+commit ef25bde5bb8d6fb15ae3d6364b9e167d489f10d9
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 17:26:25 2018 +0900
+
+    width以外のdebug終わり
+
+commit f521b5b579011c1a2aba9b06548b11d32420f0a6
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 16:07:30 2018 +0900
+
+    デバック途中
+
+commit aa435ff721649f6068547bd6c8b8a013ccd28def
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 14:18:41 2018 +0900
+
+    とりあえず完成
+
+commit 4d4e7d971d5911b8fdbe4090d69e9941e3d42cdd
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 13:59:10 2018 +0900
+
+    人間用の_renderを定義
+
+commit 13f949872bc2d18f352adefa2d26d229fff420f6
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 13:00:06 2018 +0900
+
+    相対距離に書き換え
+
+commit 1c08c8e0f768cc98445f70fcd2bcf0c7e6ff2f00
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 07:14:26 2018 +0900
+
+    test
+
+commit e55d051d522020f16209327a5e8c1bf744434186
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 06:32:03 2018 +0900
+
+    残りはlogのためのrender
+
+commit 50f7529d33202b03946fbd4a71759be4364ded8e
+Merge: fac4bb5 55b69e5
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 05:37:31 2018 +0900
+
+    Merge branch 'albranch' of https://github.com/hhlab/samurai17 into tsuzuki
+
+commit fac4bb5fe5a0fa71b7397c287c1cbcfaafc1fba8
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 05:34:19 2018 +0900
+
+    一時
+
+commit 55b69e578177ac2e4af263fb5db3b971c7f18e9e
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Jan 23 02:56:16 2018 +0900
+
+    digのinclude変更
+
+commit b381f433733c6087f24c6499d46f8fe25906cd00
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Tue Jan 23 01:38:09 2018 +0900
+
+    途中
+
+commit b96b693cb1868c52ac4399d3632368780f36ec27
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Mon Jan 22 23:33:48 2018 +0900
+
+    名前変更
+
+commit 4365f0dfe9503bb0e7acbe8c75dd8f06d7f7b660
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Jan 19 12:08:42 2018 +0900
+
+    75%
+
+commit 124565a02d175479e58d1d5bbf530fc4789ea6b4
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Jan 19 09:16:54 2018 +0900
+
+    対戦結果を出してくれるやつpython版
+
+commit 733f3adba3eaa14d4aa8b2296e488f0ec02b44d3
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Jan 19 09:13:39 2018 +0900
+
+    generalを吸収した
+
+commit 657347e587dfdf51c2525f996ed5357f7d9f3848
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Fri Jan 19 05:37:01 2018 +0900
+
+    init.pyの変更
+
+commit d0532af5cc32327850afd930b89d564af0e90008
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Fri Jan 19 05:34:23 2018 +0900
+
+    reward設定とrefactor
+
+commit 21b6052a47ae7c85eb50030a694836888bb8f9a6
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Fri Jan 19 04:47:30 2018 +0900
+
+    stateの設計まで
+
+commit 48b9d68ec4d86a716577540a1c5257fea624bccb
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Fri Jan 19 03:45:13 2018 +0900
+
+    itiji
+
+commit ac5937188a4b26dd734204e91fe4e89637f86918
+Author: Motonari Tsuzuki <motonari728@gmail.com>
+Date:   Fri Jan 19 01:45:17 2018 +0900
+
+    copy from gym samples
+
+commit a0340553ad2bd7742b0a730f616d81a174c946f2
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Jan 16 16:44:40 2018 +0900
+
+    コース生成general対応版
+
+commit d7a818f74215fd4b8016750458a140132cc11b9b
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Mon Jan 15 12:22:07 2018 +0900
+
+    yosasou
+
+commit 95e58b51c856ed48788804e5aea352c0c69e9481
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Mon Jan 15 01:53:36 2018 +0900
+
+    x
+
+commit a1ca0c20bf028c8182a54022e538e1b030a30fd0
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Jan 11 06:17:49 2018 +0900
+
+    勝ち越し
+
+commit d51c6c96b97cff87b5ba905d3b767e0250e4d9b0
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Jan 11 05:24:08 2018 +0900
+
+    ごぶ
+
+commit d2091641342a1b2b32d363684247e9c5214f53a8
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Jan 10 02:09:25 2018 +0900
+
+    対戦機能関連のシェル追加
+
+commit dc12a23e883c95c651be78bff37dd904d19c2b02
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Jan 5 01:06:11 2018 +0900
+
+    Q-learning 1.0
+
+commit 1e8b5f71e9ea105bd0e709bc9bdbbeb33c3f29c9
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Jan 4 22:58:42 2018 +0900
+
+    今までのパラメタノウハウを投入して微高速化
+
+commit 23629216dc063e20565e0f0985c0917f3e63bbc1
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Jan 4 20:18:49 2018 +0900
+
+    初期値ハイパーパラメタ構造体調整
+
+commit 53286c5daae250058253acb4fca7b8d40b06a43f
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Jan 3 19:53:41 2018 +0900
+
+    playerヘッダ
+
+commit d1b0d095e0246f258e558bef5f656dade67b2c69
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Jan 3 19:44:08 2018 +0900
+
+    Cmakeヲコミットタイショウニツイカ
+
+commit 982d946cc83e733020f1f32c878b98ea84fb11bc
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Jan 3 19:08:43 2018 +0900
+
+    古くなってたファイルを更新
+
+commit 3d3aa8dfe8ebd6f0881ff275d998a2a8a33715f0
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Jan 3 09:54:11 2018 +0900
+
+    then you just need more episode?
+
+commit da288deebcdb36e5c77326cf3ee976f5425f535d
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Jan 2 22:47:59 2018 +0900
+
+    一番うまく行った（）時
+
+commit e76958c9c0eed75f02888247295f7e9d6c4c8375
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Jan 2 00:53:27 2018 +0900
+
+    再コミット
+
+commit f5a4418b12c5e07fcbcaf94c3ab7b38e044c15df
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Jan 2 00:19:39 2018 +0900
+
+    fix bugs q-learning
+
+commit e73750f9e11a3cd3bdb7db0f3677d40a8e78bab8
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Mon Jan 1 13:42:08 2018 +0900
+
+    q-learning
+
+commit b268fd14ce0c1da570a0e477590ec0ed6e132ef4
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Dec 27 22:58:57 2017 +0900
+
+    viewer更新
+
+commit 066c442cd9915afe94828f7833689f228619758b
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Sun Dec 10 17:41:50 2017 +0900
+
+    submoduleを正しく修正
+
+commit 65d04b2f7c8a217c0c3e99d3c88195d87a60caae
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Dec 8 17:08:00 2017 +0900
+
+    コース生成関係を更新 結果出力に.outを追加
+
+commit bc9dbe8fdef3b920e565d90dc4a4f71b875163ea
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Dec 5 15:52:23 2017 +0900
+
+    整理整頓
+
+commit 3bed034ee475b6ed40e5b4a51f914dae3fa7314e
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Dec 5 15:48:51 2017 +0900
+
+    kirei
+
+commit ddfc05b0a22cc76fa08b2a0bebae3a3d256ddd9c
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Dec 5 15:46:14 2017 +0900
+
+    結構整理
+
+commit 8040c2659b295bd1956f040374221ead36e7ab7d
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Dec 5 15:40:00 2017 +0900
+
+    test3 4の追跡解除
+
+commit 20e4ce085d27794ccb7e9fadac3d443f269ed072
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Dec 5 15:38:10 2017 +0900
+
+    testの追跡解除
+
+commit adce146ccc7ffc995bd3ad26d021e6cc256ff2f1
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Dec 5 11:29:26 2017 +0900
+
+    git reset
+
+commit b631904dc7aff6465ab66d1d99fc4455efd57fd8
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Tue Dec 5 11:23:04 2017 +0900
+
+    整理
+
+commit 8dab36b466803445bd01ad1b953fc6d1f7a01455
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 30 16:57:27 2017 +0900
+
+    READMEの更新
+
+commit efa5b2287217c504537232d1a14694c1c9e59b86
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 30 16:52:51 2017 +0900
+
+    README.mdの追加
+
+commit 56812235be9d9a8cdd38ccaafc42a0bac6f616a3
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 30 13:51:46 2017 +0900
+
+    コース自動生成系更新
+
+commit 54f2c6052cbb3890ad1b89c7074c0699bcbfda5f
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 30 10:56:41 2017 +0900
+
+    .shファイル書いた
+
+commit 1f9dd140ce59c7d7b30b23c4814259bfc435d8e5
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 30 10:45:52 2017 +0900
+
+    dig.cc にコマンドライン引数オプション追加
+
+commit aa66440628a5ef2ce4b4236009004fbf702a2b4f
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 30 01:49:33 2017 +0900
+
+    dig.cc(コース自動生成)追加
+
+commit 516c28430ab8a8f6263c111e9eba57d0820142d6
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Mon Nov 27 19:40:39 2017 +0900
+
+    submodule update
+
+commit 3a30829e0d55b18984e1bc6b319020f99e8ed3ab
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Sun Nov 19 00:35:40 2017 +0900
+
+    落ち着いたのでcommit変更はofficialを最新版に、greedyC.cppの衝突部分を正しく直した
+
+commit d170cbf23a2f682232b023ecf75b6e7e802001d1
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Nov 17 23:41:02 2017 +0900
+
+    bug fix
+
+commit 02e0ebf308d2cbaa83ffcdd9f4485b63e0489c17
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Nov 17 12:24:22 2017 +0900
+
+    バグがあったので修正 enemyassumption にstate.positionを渡していたのをstate.velocityに
+
+commit b1c7ecefea2c2dea3520364d8bf67abc749edd8c
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Fri Nov 17 12:09:28 2017 +0900
+
+    相手側の探索を実装評価関数は要検証
+
+commit 3098dd9e94591fd70d1c2928fcbba556bb16f399
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 16 14:33:17 2017 +0900
+
+    評価関数の優先権判定部分のswitch文化
+
+commit 5371284ead7c9b532692d5b3bcb371e894d5c8dc
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 16 14:16:01 2017 +0900
+
+    伝搬の調整前に戻した(pastCost,評価値の見直し)
+
+commit d6fc365061b59066cfe32b022ed4cca3ae8635e8
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 16 11:06:54 2017 +0900
+
+    動線の交わりに関する評価関数の更新
+
+commit 8faded965498d0a17c2324203a2a7df9cd7bdb52
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 16 02:03:28 2017 +0900
+
+    sampleを超えたぜ
+
+commit 5155eddd288792a60557f7e54b1fda63a79128f9
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Thu Nov 16 00:19:16 2017 +0900
+
+    beamSearch実装
+
+commit a864546b17db46bb36bd67bf6db694887ce8ed52
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Nov 15 02:18:15 2017 +0900
+
+    hubの連携確認commit
+
+commit dface4a156121c7f660ce55b54b2fc50cfdc7f58
+Author: albicilla <t.albicilla@gmail.com>
+Date:   Wed Nov 15 02:12:00 2017 +0900
+
+    hub連携確認commit
+
+commit eed575a0919b1a1fc32c5004ab8b15f62e77e6d0
+Author: albicilla <albic@sfc.wide.ad.jp>
+Date:   Wed Nov 15 02:03:06 2017 +0900
+
+    sampleに辛勝
+
+commit be20ac70e22417382a7d1ecbec5de10f6c2b35d1
+Author: albicilla <albic@sfc.wide.ad.jp>
+Date:   Fri Nov 10 13:59:35 2017 +0900
+
+    ビームサーチ(評価関数なし)β
+
+commit 636f6498ee86656683362e44bfce7803be94f2d4
+Author: albicilla <albic@sfc.wide.ad.jp>
+Date:   Fri Nov 10 11:44:27 2017 +0900
+
+    sortのための-演算子定義
+
+commit e68c208117b11c62396dfede4fa52668feed45ee
+Author: albicilla <albic@sfc.wide.ad.jp>
+Date:   Thu Nov 9 20:41:08 2017 +0900
+
+    一応動く探索木(バグあり)
+
+commit 89ddc34f051705936d469657048421e1ddb24360
+Author: albicilla <albic@sfc.wide.ad.jp>
+Date:   Tue Nov 7 11:53:40 2017 +0900
+
+    albranchのfirst commit
+
+commit f53eac4a8c5c898ebf2c1091cae26bf75117566e
+Author: albicilla <albic@sfc.wide.ad.jp>
+Date:   Tue Nov 7 11:46:45 2017 +0900
+
+    sampleにコメントを追加
+
+commit e4cbe16ba07402180354eaee34458f5bf5588bfc
+Author: albicilla <albic@sfc.wide.ad.jp>
+Date:   Thu Nov 2 16:13:46 2017 +0900
+
+    albicilla からのfirst commit
+
+commit 1ccc2f36cc3a0db322f919d6322457ba7b0dd985
+Merge: ca86edd ca29c8d
+Author: albic <albic@sfc.wide.ad.jp>
+Date:   Thu Nov 2 14:04:38 2017 +0900
+
+    message
+
+commit ca86edda441b44db3439094024d7c20349f829ee
+Author: albic <albic@sfc.wide.ad.jp>
+Date:   Thu Nov 2 14:01:38 2017 +0900
+
+    Initial albic commit
+
+commit ca29c8d6e56ff10615745ace98a464b231ec0e8f
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Thu Nov 2 13:59:10 2017 +0900
+
+    samplesを移動
+
+commit 3b4f401dbd03505749e349f5f4993338a3b003ba
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Thu Nov 2 13:55:55 2017 +0900
+
+    racestateにコメントを追加
+
+commit a586842e445812edbdbcd44291d67d4028678897
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Thu Nov 2 13:54:04 2017 +0900
+
+    いくつかのフォルダ追加
+
+commit 8d4b33327ef17f01476489026898eed47aa1b5ee
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Wed Nov 1 22:48:48 2017 +0900
+
+    fix .gitignore
+
+commit 4e26c709a13444cf198e4d971a5f12a4a0876308
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Wed Nov 1 22:41:14 2017 +0900
+
+    add .gitignore
+
+commit 4d62e51ae3108a6bc03b073012176effa4e6f734
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Wed Nov 1 22:34:35 2017 +0900
+
+    本家の一部を取り込んだ
+
+commit ac3a1a6ab993a49b15b1eba99f3355e9e0190b5a
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Wed Nov 1 21:44:04 2017 +0900
+
+    submoduleに公式ソフトウェアを追加
+
+commit 49ee9f29dd5cc8a8a7d5251ec29c94969cc34420
+Author: Shunta Watanabe <wshun0327@gmail.com>
+Date:   Wed Nov 1 21:40:01 2017 +0900
+
+    init
