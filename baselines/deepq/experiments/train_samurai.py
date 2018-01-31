@@ -65,7 +65,7 @@ def main():
         exploration=exploration,
         train_freq=1,
         batch_size=32,
-        print_freq=100,
+        print_freq=10,
         # このiterごとにviewer用のlogを出力
         output_for_viewer=100,
         checkpoint_freq=10000,
