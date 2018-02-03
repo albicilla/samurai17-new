@@ -1,0 +1,184 @@
+import sys
+import itertools
+import random
+import math
+
+import gym
+import numpy as np
+import gym.spaces
+
+from builtins import input
+from .map_class import Map
+from .state import State
+import json
+
+#参考: OpenAI Gym で自前の環境をつくる - Qiita: https://qiita.com/ohtaman/items/edcb3b0a2ff9d48a7def
+
+# 単体動作するversion
+class SamuraiGym2(gym.Env):
+    metadata = {'render.modes': ['human', 'ansi']}
+    # MAX_STEPS = 100
+
+    def __init__(self):
+        super().__init__()
+        # action_space, observation_space, reward_range を設定する
+        self.action_space = gym.spaces.Discrete(9) 
+        self.observation_space = gym.spaces.Box(
+            low=0,
+            high=1,
+            shape=(6, 10+1+50, 20)
+        )
+        self.reward_range = [-10., 10000.]
+        # max(forwardView, backView)+10必要
+        # +10はバグよけ
+        self.maxVision = 30
+        self.forwardView = 20
+        self.backView = 10
+        # course01はlength+visionが110あるので避ける
+        mapFile = open('../samples/course07.smrjky', 'r')
+        self.map = Map(json.load(mapFile), self.maxVision)
+        self._reset()
+
+    # 必須
+    def _reset(self):
+        # 諸々の変数を初期化する
+        self.isDone = False
+        self.isClashed = False
+        self.step_num = 0
+        self.state = State(self.map, self.maxVision, self.forwardView, self.backView)
+        self.map.state = self.state
+        # self.map.resetState()
+        # ２つ目は速度、ここは曖昧、reward, doneはなくて良い
+        return self.state.observe()
+
+    # 必須
+    def _step(self, action):
+        # 1ステップ進める処理を記述。戻り値は observation, reward, done(ゲーム終了したか), info(追加の情報の辞書)
+        if action == 0:
+            acc = (-1, 1)
+        elif action == 1:
+            acc = (0, 1)
+        elif action == 2:
+            acc = (1, 1)
+        elif action == 3:
+            acc = (-1, 0)
+        elif action == 4:
+            acc = (0, 0)
+        elif action == 5:
+            acc = (1, 0)
+        elif action == 6:
+            acc = (-1, -1)
+        elif action == 7:
+            acc = (0, -1)
+        elif action == 8:
+            acc = (1, -1)
+        # move_jockeyはゴールしたかどうかを返す
+        self.step_num += 1
+        self.isDone, self.isClashed = self.map.move_jockey(self.map.player, acc)
+        observation = self.state.observe()
+        reward = self.get_reward3()
+        return observation, reward, self.isDone, {}
+
+    # 必須
+    def _render(self, mode='human', close=False):
+        # print("renderWasCalled")
+        if mode == 'human':
+            outfile = sys.stdout
+            maps = self.state.to_string()
+            shape = maps.shape
+            # mapの各位置を合計 shape=self.shape
+            maps = np.sum(maps, axis=0)[::-1]
+            self.printMap(maps, outfile)
+            # for i, map1 in enumerate(maps):
+            #     print()
+            #     print("map" + str(i))
+            #     self.printMap(map1, outfile)
+            pos = "pos: " + str(tuple(self.map.player.pos))
+            speed = "speed: " + str(tuple(self.map.player.speed))
+            print(pos)
+            print(speed)
+            if self.isClashed:
+                print("CLASED!")
+            if self.isDone:
+                print("GOAL!!!")
+            # print(self.state.shape)
+            # print("printShape: " + str(shape))
+        # return outfile
+
+    def printMap(self, map1, outfile):
+        map1 = map1.tolist()
+        outfile.write(
+                '\n'.join(
+                    [' '.join(
+                        [self.change(num) for num in row]
+                    ) for row in map1]
+                ) + '\n'
+            )
+
+    def change(self, num):
+        if num == 0:
+            return '-'
+        elif 100 < num < 10000:
+            return '@'
+        else:
+            # floatだと見難いのでintにする
+            return str(int(num))
+
+
+
+    # def _render(self, mode='human', close=False):
+    #     # human の場合はコンソールに出力。ansiの場合は StringIO を返す
+    #     outfile = StringIO() if mode == 'ansi' else sys.stdout
+    #     outfile.write('\n'.join(' '.join(
+    #             self.FIELD_TYPES[elem] for elem in row
+    #             ) for row in self._observe()
+    #         ) + '\n'
+    #     )
+    #     return outfile
+
+    # 継承
+    def _close(self):
+        pass
+
+    # 継承
+    def _seed(self, seed=None):
+        pass
+
+    def readline(self):
+        x = input()
+        print(str(x), file=sys.stderr)
+        return x
+    
+    # 前に進んだ量を報酬にしても良いかも
+    def get_reward(self):
+        if self.isDone:
+            # TODO: GoalTimeでスコアが変わるように
+            return max(1000 - self.step_num, 100)
+        return 0
+
+    def get_reward2(self):
+        if self.isDone:
+            return 1000
+        return -1
+
+    def get_reward3(self):
+        if self.isDone:
+            # 初期も意味のある報酬がもらえるように大きめに設定
+            return max(9000 - self.step_num, 300)
+        elif self.isClashed:
+            return -0.1
+        else:
+            # ぶつからずに進めた時はy座標に進んだ距離 * 0.1
+            # y座標のマイナス方向に進んだ時はマイナス
+            return self.map.player.speed[1] * 0.1
+
+    # def _get_reward(self, pos, moved):
+    #     # 報酬を返す。報酬の与え方が難しいが、ここでは
+    #     # - ゴールにたどり着くと 100 ポイント
+    #     # - ダメージはゴール時にまとめて計算
+    #     # - 1ステップごとに-1ポイント(できるだけ短いステップでゴールにたどり着きたい)
+    #     # とした
+    #     if moved and (self.goal == pos).all():
+    #         return max(100 - self.damage, 0)
+    #     else:
+    #         return -1
