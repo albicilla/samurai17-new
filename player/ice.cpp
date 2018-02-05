@@ -65,6 +65,7 @@ queue<Candidate *> enemy_candidates;
 auto cmp = [](const Candidate *left, const Candidate *right) { return (left->cost) != (right->cost) ? (left->cost) < (right->cost):-(left->state.velocity.y) < -(right->state.velocity.y); };
 priority_queue<Candidate *, vector<Candidate *>, decltype(cmp)> AllCandidates(cmp);
 priority_queue<Candidate *, vector<Candidate *>, decltype(cmp)> Enemy_AllCandidates(cmp);
+Candidate nullCand(0, PlayerState(0,0), nullptr, IntVec(0, 0),0);
 Candidate *BestCandidate;
 //goaltime初期化
 double goalTime = numeric_limits<double>::max();
@@ -282,19 +283,24 @@ double calcCostInher(RaceState &rs,int depth,int dominance,Point nextoppPos,Poin
     int cc2=CCW(rs.oppPosition,nextoppPos,rs.position);
     //相手の予告線のちょうど上に行けるなら評価+ 逆なら- 相手と同じベクトルの時
     //今の相手の座標、次の相手の座標、次の自分の座標
-    if(cc==ON_SEGMENT && dominance==1 && depth==0){
-        ret+=1.6;
+    if(cc==ON_SEGMENT && dominance==1 && depth==0 && cc2!=ONLINE_BACK){
+       // cerr<<"ONSEG1"<<endl;
+        ret+=0.2;
     }
 
-    if(cc==ON_SEGMENT && dominance==2 && depth==0){
-        ret=-1.6;
+    if(cc==ON_SEGMENT && dominance==2 && depth==0 && cc2!=ONLINE_BACK){
+       // cerr<<"ONSEG2"<<endl;
+        ret=-0.2;
     }
 
     //
     if(LineSegment(rs.oppPosition,nextoppPos).intersects(LineSegment(rs.position,nextPos)) && dominance==1&&depth==0 &&!LineSegment(rs.position, nextPos).goesThru(rs.oppPosition)){
+      //  cerr<<"insec1"<<endl;
         ret+=0.1;
     }
     if(LineSegment(rs.oppPosition,nextoppPos).intersects(LineSegment(rs.position,nextPos)) && dominance==2&&depth==0){
+       // cerr<<"insec2"<<endl;
+
         ret-=0.1;
     }
 
@@ -375,7 +381,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                 bool same_pos=(befo_rs.x==now->state.position.x && befo_rs.y==now->state.position.y);
 
                 //障害物に衝突しない　異動先が(視界外+次の速度)<-キモ！にするとcourse09で行けるようになるがそれはそれ他のコースがダメになる　への移動は弾く
-                if (!course.obstacled(now->state.position, nextPos) && (nextPos.y<=(ini_y+course.vision)) ) {
+                if (!course.obstacled(now->state.position, nextPos) && (nextPos.y<=((ini_y+course.vision)))  ) {
                     //もしdepth=0で相手の駒との接触があれば速度のみ変化
                     if(depth == 0 && LineSegment(now->state.position, nextPos).goesThru(rs.oppPosition)){
                         //足しておいたのを打ち消す
@@ -418,7 +424,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
 
                     }
                 }
-                else if(flag_general&&(nextPos.y<=(ini_y+course.vision)) ){
+                else if(flag_general&&(nextPos.y<=(ini_y+course.vision) ) ){
                     //足しておいたのを打ち消す
                     nextPos=now->state.position;
                     //次のプレイヤーの位置、速度を次の候補変数に格納
@@ -428,7 +434,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, const Course &course, Ra
                             new Candidate(now->step+1 , next, now, IntVec(cax, cay),special_cost-0.5);
 
 
-                    if (reached.count(next) == 0 && abs(nextVelo.x)+abs(nextVelo.y)>-1) { //そこにたどり着くのが最初の候補であれば 速度の加減
+                    if (reached.count(next) == 0 ) { //そこにたどり着くのが最初の候補であれば 速度の加減
                         //コースをはみ出していなければ
                         if (nextPos.y+nextVelo.y < course.length && nextPos.x >= 0 &&
                             nextPos.x < course.width) {
@@ -489,9 +495,10 @@ IntVec play(RaceState &rs, const Course &course) {
 
     //step 初期のプレイヤーの状態　次のプレイヤーの状態　速度
     Candidate initialCand(rs.step, initial, nullptr, IntVec(0, 0),0);
+
 //
 //    //最も良い候補を保存する変数
-    BestCandidate=&initialCand;
+    BestCandidate=&nullCand;
 
     Candidate *best;
     best = &initialCand;
@@ -502,7 +509,7 @@ IntVec play(RaceState &rs, const Course &course) {
 
 
     //最も良い候補を保存する変数
-    BestCandidate=&initialCand;
+    BestCandidate=&nullCand;
 
     candidates.push(&initialCand);
 
@@ -534,15 +541,15 @@ IntVec play(RaceState &rs, const Course &course) {
         if(depth==0)ans_depth1=AllCandidates.top()->cost;
     }
 
-    best = &initialCand;
+    best = &nullCand;
 
-    if(BestCandidate!=&initialCand){
+    if(BestCandidate!=&nullCand){
         best=BestCandidate;
-        cerr<<"choose bestCand"<<endl;
+       // cerr<<"choose bestCand"<<endl;
     }
     else if (!AllCandidates.empty())best = AllCandidates.top();
-    cerr<<"apple boy"<<endl;
-    cerr<<"best->cost"<<best->cost<<endl;
+    //cerr<<"apple boy"<<endl;
+   // cerr<<"best->cost"<<best->cost<<endl;
 
     while (!AllCandidates.empty())AllCandidates.pop();
 
@@ -553,14 +560,16 @@ IntVec play(RaceState &rs, const Course &course) {
     //flag_general=true;
 
     //得られた評価がきの浅いところ かつ　ベストが得られない　だったらgeneralモードoff
-    if((best->cost<=ans_depth1+3)&& BestCandidate==&initialCand){
+    if((best->cost<=ans_depth1+3)&& BestCandidate==&nullCand){
         flag_general=false;
 
     }
 
-    if (best == &initialCand) {
+    if (best == &nullCand) {
         // No good move found
         // Slowing down for a while might be a good strategy
+
+        cerr<<"speed down"<<endl;
         int ax = 0, ay = 0;
         if (rs.velocity.x < 0) ax += 1;
         else if (rs.velocity.x > 0) ax -= 1;
