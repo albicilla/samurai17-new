@@ -35,10 +35,10 @@ import simple
 #           param_noise=False,
 #           callback=None):
 
-max_timesteps=100000
-exploration_fraction=0.1
-exploration_start_eps=0.5
-exploration_final_eps=0.05
+max_timesteps=int(1e6)
+exploration_fraction=0.5
+exploration_start_eps=0.9
+exploration_final_eps=0.1
 
 exploration = LinearSchedule(schedule_timesteps=int(exploration_fraction * max_timesteps),
                                 initial_p=exploration_start_eps,
@@ -68,6 +68,7 @@ def main():
         print_freq=10,
         # このiterごとにviewer用のlogを出力
         output_for_viewer=100,
+        # このstepごとに保存
         checkpoint_freq=10000,
         learning_starts=1000,
         gamma=1.0,

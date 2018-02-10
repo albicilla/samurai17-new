@@ -58,7 +58,8 @@ class ActWrapper(object):
         with open(path, "wb") as f:
             cloudpickle.dump((model_data, self._act_params), f)
 
-
+# enjoy_carpoleで使われている
+# stateを受け取ってactinを返す関数をloadして返す
 def load(path):
     """Load act function that was returned by learn function.
 
@@ -81,6 +82,7 @@ exploration = LinearSchedule(schedule_timesteps=int(0.1 * 100000),
 
 
 
+# 最も良い物のセーブはするが再開の面倒は見ない
 def learn(env,
           q_func,
           lr=5e-4,
@@ -283,7 +285,8 @@ def learn(env,
                 logger.dump_tabular()
 
             if done and num_episodes % output_for_viewer == 0:
-                env.render(mode='viewer')
+                print("env.render()")
+                env.render(mode='human+viewer')
 
             if (checkpoint_freq is not None and t > learning_starts and
                     num_episodes > 100 and t % checkpoint_freq == 0):
@@ -291,6 +294,7 @@ def learn(env,
                     if print_freq is not None:
                         logger.log("Saving model due to mean reward increase: {} -> {}".format(
                                    saved_mean_reward, mean_100ep_reward))
+                    # save
                     U.save_state(model_file)
                     model_saved = True
                     saved_mean_reward = mean_100ep_reward

@@ -4,6 +4,34 @@
     // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    {
+        "name": "train.py",
+        "type": "python",
+        "request": "launch",
+        // "stopOnEntry": true,
+        "pythonPath": "${config:python.pythonPath}",
+        "program": "${workspaceFolder}/gymEnv/Baselines/train.py",
+        "cwd": "${fileDirname}",
+        "env": {},
+        "envFile": "${workspaceFolder}/.env",
+        "debugOptions": [
+            "RedirectOutput"
+        ]
+    },
+    {
+        "name": "enjoy_samurai.py",
+        "type": "python",
+        "request": "launch",
+        "stopOnEntry": true,
+        "pythonPath": "${config:python.pythonPath}",
+        "program": "${workspaceFolder}/baselines/deepq/experiments/enjoy_samurai.py",
+        "cwd": "${fileDirname}",
+        "env": {},
+        "envFile": "${workspaceFolder}/.env",
+        "debugOptions": [
+            "RedirectOutput"
+        ]
+    },
         {
             "name": "Python",
             "type": "python",

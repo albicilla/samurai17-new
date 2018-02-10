@@ -1,4 +1,4 @@
-import gymEnv2
+import gymEnv3
 
 import argparse
 import gym
@@ -29,7 +29,6 @@ from baselines.common.azure_utils import Container
 from model import model, dueling_model
 
 
-rewards_arr = []
 
 def parse_args():
     parser = argparse.ArgumentParser("DQN experiments for Atari games")
@@ -43,13 +42,15 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=1e-4, help="learning rate for Adam optimizer")
     # 2 * 100,000,000 200M
     # 1億step
-    parser.add_argument("--num-steps", type=int, default=int(2e8), help="total number of steps to run the environment for")
+    # parser.add_argument("--num-steps", type=int, default=int(2e8), help="total number of steps to run the environment for")
+    parser.add_argument("--num-steps", type=int, default=int(1e7), help="total number of steps to run the environment for")
     parser.add_argument("--batch-size", type=int, default=32, help="number of transitions to optimize at the same time")
     # 何stepにつき一度学習するか
     # args.learning_freqで使われている
     # batch-size=32なので、1observationが平均8回使われる?
     parser.add_argument("--learning-freq", type=int, default=4, help="number of iterations between every optimization step")
-    parser.add_argument("--target-update-freq", type=int, default=40000, help="number of iterations between every target network update")
+    # parser.add_argument("--target-update-freq", type=int, default=40000, help="number of iterations between every target network update")
+    parser.add_argument("--target-update-freq", type=int, default=4000, help="number of iterations between every target network update")
     parser.add_argument("--param-noise-update-freq", type=int, default=50, help="number of iterations between every re-scaling of the parameter noise")
     parser.add_argument("--param-noise-reset-freq", type=int, default=10000, help="maximum number of steps to take per episode before re-perturbing the exploration policy")
     # Bells and whistles
@@ -79,6 +80,7 @@ def parse_args():
     return parser.parse_args()
 
 
+# 2/8 OK
 def make_env(game_name):
     # env = gym.make(game_name + "NoFrameskip-v4")
     env = gym.make("Samurai-v0")
@@ -89,6 +91,7 @@ def make_env(game_name):
     return monitored_env, monitored_env
 
 
+# 2/8 ok
 def maybe_save_model(savedir, container, state):
     """This function checkpoints the model and state of the training algorithm."""
     if savedir is None:
@@ -98,15 +101,19 @@ def maybe_save_model(savedir, container, state):
     U.save_state(os.path.join(savedir, model_dir, "saved"))
     if container is not None:
         container.put(os.path.join(savedir, model_dir), model_dir)
+    # state = {replay_buffer, num_iters}
     relatively_safe_pickle_dump(state, os.path.join(savedir, 'training_state.pkl.zip'), compression=True)
     if container is not None:
         container.put(os.path.join(savedir, 'training_state.pkl.zip'), 'training_state.pkl.zip')
+    #### TODO: !!!!
     # relatively_safe_pickle_dump(state["monitor_state"], os.path.join(savedir, 'monitor_state.pkl'))
     if container is not None:
         container.put(os.path.join(savedir, 'monitor_state.pkl'), 'monitor_state.pkl')
     logger.log("Saved model in {} seconds\n".format(time.time() - start_time))
 
 
+# 2/8 ok
+# maybe_save_modelしたものをload
 def maybe_load_model(savedir, container):
     """Load model if present at the specified path."""
     if savedir is None:
@@ -129,8 +136,10 @@ def maybe_load_model(savedir, container):
 
 
 if __name__ == '__main__':
+    print('start')
     args = parse_args()
     # Parse savedir and azure container.
+    # default 'save'
     savedir = args.save_dir
     if savedir is None:
         savedir = os.getenv('OPENAI_LOGDIR', None)
@@ -151,17 +160,17 @@ if __name__ == '__main__':
     print("action_shape: " + str(env.action_space.shape))
     if args.seed > 0:
         set_global_seeds(args.seed)
-        # env.unwrapped.seed(args.seed)
         env.unwrapped.seed(args.seed)
 
+    # default False
     if args.gym_monitor and savedir:
         env = gym.wrappers.Monitor(env, os.path.join(savedir, 'gym_monitor'), force=True)
 
     if savedir:
+        os.makedirs(savedir, exist_ok=True)
         file_path = os.path.join(savedir, 'args.json')
         print("save_file: " + str(file_path))
-        os.makedirs(savedir, exist_ok=True)
-        with open(os.path.join(savedir, 'args.json'), 'w') as f:
+        with open(file_path, 'w') as f:
             json.dump(vars(args), f)
 
     with U.make_session(4) as sess:
@@ -170,7 +179,7 @@ if __name__ == '__main__':
             actual_model = dueling_model if args.dueling else model
             return actual_model(img_in, num_actions, scope, layer_norm=args.layer_norm, **kwargs)
         act, train, update_target, debug = deepq.build_train(
-            make_obs_ph=lambda name: U.Uint8Input(env.observation_space.shape, name=name),
+            make_obs_ph=lambda name: U.myUint8Input(env.observation_space.shape, name=name),
             q_func=model_wrapper,
             num_actions=env.action_space.n,
             optimizer=tf.train.AdamOptimizer(learning_rate=args.lr, epsilon=1e-4),
@@ -181,16 +190,22 @@ if __name__ == '__main__':
         )
 
         approximate_num_iters = args.num_steps / 4
-        exploration = PiecewiseSchedule([
-            (0, 1.0),
-            (approximate_num_iters / 50, 0.1),
-            (approximate_num_iters / 5, 0.01)
-        ], outside_value=0.01)
+        # exploration = PiecewiseSchedule([
+        #     (0, 1.0),
+        #     (approximate_num_iters / 50, 0.1),
+        #     (approximate_num_iters / 5, 0.01)
+        # ], outside_value=0.01)
+
+        # exploration = PiecewiseSchedule([
+        #     (0, 1.0),
+        #     (args.num_steps * 1/3, 0.1),
+        #     (args.num_steps * 2/3, 0.01)
+        # ], outside_value=0.01)
 
         exploration = PiecewiseSchedule([
-            (0, 0.2),
-            (approximate_num_iters / 50, 0.1),
-            (approximate_num_iters / 5, 0.01)
+            (0, 1.0),
+            (args.num_steps * 1/3, 0.1),
+            (args.num_steps * 2/3, 0.01)
         ], outside_value=0.01)
 
         if args.prioritized:
@@ -202,16 +217,21 @@ if __name__ == '__main__':
         U.initialize()
         update_target()
         num_iters = 0
+        rewards_arr = []
 
         # Load the model
-        state = maybe_load_model(savedir, container)
-        if state is not None:
-            num_iters, replay_buffer = state["num_iters"], state["replay_buffer"],
-            # monitored_env.set_state(state["monitor_state"])
+        if args.load_on_start:
+            state = maybe_load_model(savedir, container)
+            if state is not None:
+                num_iters, replay_buffer = state["num_iters"], state["replay_buffer"],
+                rewards_arr = state["rewards_arr"]
+                # TODO: monitor
+                # monitored_env.set_state(state["monitor_state"])
 
         start_time, start_steps = None, None
         steps_per_iter = RunningAvg(0.999)
         iteration_time_est = RunningAvg(0.999)
+        prev_print = 0
         # loadするときはかならずgymがresetされる
         # stepを保存することは考えなくて良い
         obs = env.reset()
@@ -220,10 +240,10 @@ if __name__ == '__main__':
 
         epi_reward = 0
 
-        # Main trianing loop
+        # Main training loop
         while True:
             num_iters += 1
-            if num_iters % 2000 == 0:
+            if num_iters % 20000 == 0:
                 print("iters: " + str(num_iters))
             num_iters_since_reset += 1
 
@@ -273,15 +293,15 @@ if __name__ == '__main__':
             epi_reward += rew
             replay_buffer.add(obs, action, rew, new_obs, float(done))
             obs = new_obs
-            # if num_iters % 5000 == 0:
-                # env.render()
             if done:
-                num_iters_since_reset = 0
-                obs = env.reset()
-                    
-                reset = True
                 rewards_arr.append(epi_reward)
                 epi_reward = 0
+                if len(rewards_arr) % 100 == 0:
+                    print("render for viewer")
+                    env.render(mode='viewer')
+                num_iters_since_reset = 0
+                obs = env.reset()
+                reset = True
 
             if (num_iters > max(5 * args.batch_size, args.replay_buffer_size // 20) and
                     num_iters % args.learning_freq == 0):
@@ -303,35 +323,47 @@ if __name__ == '__main__':
                 update_target()
 
             if start_time is not None:
-                steps_per_iter.update(info['steps'] - start_steps)
+                # steps_per_iter.update(info["steps"] - start_steps)
+                steps_per_iter.update(1.0)
                 iteration_time_est.update(time.time() - start_time)
-            start_time, start_steps = time.time(), info["steps"]
+            start_time, start_steps = time.time(), float(info["steps"])
+            # if steps_per_iter._value:
+            #     print('steps_per_iter: ' + str(float(steps_per_iter)))
 
             # Save the model and training state.
-            if num_iters > 0 and (num_iters % args.save_freq == 0 or info["steps"] > args.num_steps):
+            if num_iters > 0 and (num_iters % args.save_freq == 0 or num_iters > args.num_steps):
                 maybe_save_model(savedir, container, {
                     'replay_buffer': replay_buffer,
                     'num_iters': num_iters,
+                    'rewards_arr': rewards_arr
                     # 'monitor_state': monitored_env.get_state(),
                 })
 
-            if info["steps"] > args.num_steps:
+            if num_iters > args.num_steps:
                 break
 
-            if done:
-                steps_left = args.num_steps - info["steps"]
-                completion = np.round(info["steps"] / args.num_steps, 1)
+            if done and (num_iters - prev_print > 1000):
+                prev_print = num_iters
+                steps_left = args.num_steps - num_iters
+                completion = np.round(num_iters / args.num_steps * 100, 1)
 
                 logger.record_tabular("% completion", completion)
-                logger.record_tabular("steps", info["steps"])
-                logger.record_tabular("iters", num_iters)
+                logger.record_tabular("goal step", info["steps"])
+                logger.record_tabular("num_iters", num_iters)
+                # logger.record_tabular("episodes", len(info["rewards"]))
                 logger.record_tabular("episodes", len(rewards_arr))
-                logger.record_tabular("reward", str(epi_reward))
-                logger.record_tabular("reward (100 epi mean)", np.mean(rewards_arr[-100:]))
+                # logger.record_tabular("reward", str(["rewards"][-1]))
+                logger.record_tabular("reward", str(rewards_arr[-1]))
+                # if len(info["rewards"]) >= 10:
+                if len(rewards_arr) >= 10:
+                    # logger.record_tabular("reward (100 epi mean)", np.mean(info["rewards"][-100:]))
+                    logger.record_tabular("reward (100 epi mean)", np.mean(rewards_arr[-100:]))
                 logger.record_tabular("exploration", exploration.value(num_iters))
                 if args.prioritized:
                     logger.record_tabular("max priority", replay_buffer._max_priority)
-                fps_estimate = (float(steps_per_iter) / (float(iteration_time_est) + 1e-6)
+                # if steps_per_iter._value:
+                #     print('steps_per_iter: ' + str(float(steps_per_iter)))
+                fps_estimate = (1.0 / (float(iteration_time_est) + 1e-6)
                                 if steps_per_iter._value is not None else "calculating...")
                 logger.dump_tabular()
                 logger.log()
