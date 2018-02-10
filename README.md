@@ -1,5 +1,16 @@
 <img src="data/logo.jpg" width=25% align="right" />
 
+# for Samurai17
+samuraiEnv + OpenAI Baselinesです。Baselines側もカスタマイズしているので、トップディレクトリで`pip install -e .`してください。
+更新したくないpackageはsetup.pyからコメントアウトしてください。
+
+gymEnv/Baselines/train.pyで学習します。save以下にモデルの一時保存が順次作られます。
+Ubuntuだと/tmp以下に[Open-AI-日付ディレクトリ]を作って、Logを吐きます。
+そのディレクトリでtensorboard --logdir tdするとtensorboardが立ち上がるので、ブラウザでlocalhost:6006にアクセスしてください。
+
+gym環境もバクを直して同じ階層のgymEnv3になりました。こちらを使ってください。
+human_play.pyは gymEnv/Baselines/human_play.pyから動かせます。
+
 # Baselines
 
 OpenAI Baselines is a set of high-quality implementations of reinforcement learning algorithms.
