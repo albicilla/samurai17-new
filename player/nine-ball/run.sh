@@ -1,3 +1,3 @@
 cd $(dirname $0)
 filepath=`pwd`
-"$filepath"/ghost2
+"$filepath"/nine-ball
