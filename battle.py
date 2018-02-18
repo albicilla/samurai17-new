@@ -7,7 +7,7 @@ import itertools
 import subprocess
 
 # 実行可能形式ファイルへのパス
-official = '.official/official'
+official = './official/official'
 
 # playerの名前と実行可能形式ファイルへのパス 名前に空白を入れるとバグるので注意 nameはユニークでないとバグる
 player = [
