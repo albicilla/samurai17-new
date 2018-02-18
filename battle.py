@@ -7,13 +7,14 @@ import itertools
 import subprocess
 
 # 実行可能形式ファイルへのパス
-official = './official/official'
+official = '.official/official'
 
 # playerの名前と実行可能形式ファイルへのパス 名前に空白を入れるとバグるので注意 nameはユニークでないとバグる
 player = [
-    {'name': 'ghost2', 'path': 'player/ghost2/greedy'},
+    {'name': 'ghost2', 'path': 'player/ghost2/ghost2'},
+    {'name': 'ice', 'path': 'player/ice/ice'},
+    {'name': 'nine-ball', 'path': 'player/ice/nine-ball'},
     {'name': 'sample', 'path': 'player/sample/greedy'},
-    {'name': 'sample-dmy', 'path': 'player/sample/greedy'},
 ]
 
 # コースファイルへのパス
@@ -28,10 +29,13 @@ course = [
     'course/course08.smrjky',
     'course/course09.smrjky',
     'course/course10.smrjky',
+    'course/noObstacle.smrjky',
+    'course/sample-course.smrjky',
 ]
 
 
 def battle(c: str, p0: dict, p1: dict) -> (bytes, bytes):
+    # logは未対応…
     ret = subprocess.run([official, c, p0['path'], p0['name'], p1['path'], p1['name']],
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
     return ret.stdout, ret.stderr
@@ -89,4 +93,4 @@ if __name__ == '__main__':
     # pointは降順、timeは昇順でソート
     score = sorted(score.items(), key=lambda s: (-s[1]['point'], s[1]['time']))
     for i, s in enumerate(score):
-        print(f"{i + 1:2d}位: {s[0]:10s}  {s[1]['point']:2d}pts  {s[1]['time']:2.4f}steps")
+        print(f"{i + 1:2d}位: {s[0]:10s}  {s[1]['point']:2d}pts  {s[1]['time']:5.4f}steps")
