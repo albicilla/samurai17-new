@@ -14,7 +14,7 @@
 
 using namespace std;
 //9ならほぼのコースで
-int MAX_DEPTH = 1;
+int MAX_DEPTH = 9;
 int MAX_ENEMY_DEPTH = 1;
 int ThinkTime;
 int StepLimit;
@@ -27,8 +27,8 @@ int OVERCLOCK=0;
 //flag_general はcourse03みたいなコースのtimeout対策
 bool flag_general=true;
 
-vector<vector<int>> course(210, vector<int>(110, 1));
-#define COURSE(i,j)  course[(i)+(int)10][(j)+(int)10]
+vector<vector<int>> course(510, vector<int>(310, 1));
+#define COURSE(i,j)  course[(i)+(int)12][(j)+(int)12]
 
 
 struct NowState{
@@ -304,7 +304,9 @@ IntVec enemyPlay(RaceState &rs) {
         }
     } while (!enemy_candidates.empty());
 
-    cerr<<"roop finish"<<endl;
+   // cerr<<"roop finish"<<endl;
+
+
 
     if (best == &initialCand) {
         // 良い動きが見つからなかったよ！
@@ -424,7 +426,7 @@ vector<Candidate *> generate_next_status(Candidate *ca, RaceState &rs,int depth,
         Candidate *now = candidates.front();
         //前の評価値を伝搬
         //double pastCost = now->cost;
-        cerr <<"here"<<endl;
+        //cerr <<"here"<<endl;
         //もし深さが0の時specialcostを計算　そうでないなら親から継承する
 
         candidates.pop();
@@ -541,7 +543,7 @@ IntVec play(RaceState &rs){
 
     for(int tate=rs.position.y+vision;tate>=rs.position.y-vision;tate--){
         {
-            rep(yoko,course[tate+10].size()){
+            rep(yoko,course[tate+12].size()){
                 //cerr<<COURSE(tate,yoko);
                 //ファイル書き出し
                 outputfile<<COURSE(tate,yoko);
@@ -551,7 +553,7 @@ IntVec play(RaceState &rs){
             outputfile<<endl;
         }
     }
-    cerr<<"obs"<<endl;
+    //cerr<<"obs"<<endl;
 
     reached.clear();
     while(!candidates.empty())candidates.pop();
@@ -586,10 +588,10 @@ IntVec play(RaceState &rs){
     //1なら自分2なら相手 0ならどちらにもない
     int dominance = ifPredominance(&initialCand,rs);
 
-    cerr<<"ene"<<endl;
+   // cerr<<"ene"<<endl;
     //貪欲サンプルにより的の次の座標を取得
     Point nextoppPos = rs.oppPosition+enemyPlay(rs)+rs.oppVelocity;
-    cerr<<"ene finish"<<endl;
+   // cerr<<"ene finish"<<endl;
 
     for (int depth = 0; depth < MAX_DEPTH; depth++) {
 
@@ -644,14 +646,14 @@ int main(){
         //NowState now;
         //cin>>now.step>>now.lefttime>>now.myposx>>now.myposy>>now.myvelox>>now.myveloy>>now.eneposx>>now.eneposy>>now.enevelox>>now.eneveloy;
         for(int i=-vision;i<=vision;i++){
-            course[rs.position.y+i+10].clear();
-            rep(j,10){
-                course[rs.position.y+i+10].push_back(1);
+            course[rs.position.y+i+12].clear();
+            rep(j,12){
+                course[rs.position.y+i+12].push_back(1);
             }
             rep(j,CourseWidth){
                 int a;
                 cin>>a;
-                course[rs.position.y+i+10].push_back(a);
+                course[rs.position.y+i+12].push_back(a);
             }
         }
 
