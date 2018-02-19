@@ -14,8 +14,8 @@
 
 using namespace std;
 //9ならほぼのコースで
-int MAX_DEPTH = 9;
-int MAX_ENEMY_DEPTH = 1;
+int MAX_DEPTH = 13;
+int MAX_ENEMY_DEPTH = 7;
 int ThinkTime;
 int StepLimit;
 int CourseWidth;
@@ -23,12 +23,14 @@ int CourseLength;
 int vision;
 double ini_y=0;
 const double EPS=0.1;
+//小さいと時間切れになるときあり
+const int care=123;
 int OVERCLOCK=0;
 //flag_general はcourse03みたいなコースのtimeout対策
 bool flag_general=true;
 
-vector<vector<int>> course(510, vector<int>(310, 1));
-#define COURSE(i,j)  course[(i)+(int)12][(j)+(int)12]
+vector<vector<int>> course(510, vector<int>(310, 0));
+#define COURSE(i,j)  course[(i)+(int)care][(j)+(int)care]
 
 
 struct NowState{
@@ -539,20 +541,20 @@ vector<Candidate *> generate_next_status(Candidate *ca, RaceState &rs,int depth,
 
 IntVec play(RaceState &rs){
     cerr<<"now.step="<<rs.step<<endl;
-    ofstream outputfile("/Users/albicilla/programming/samurai/samurai17/test"+to_string(rs.step)+".txt");
-
-    for(int tate=rs.position.y+vision;tate>=rs.position.y-vision;tate--){
-        {
-            rep(yoko,course[tate+12].size()){
-                //cerr<<COURSE(tate,yoko);
-                //ファイル書き出し
-                outputfile<<COURSE(tate,yoko);
-            }
-            //cerr<<endl;
-            //
-            outputfile<<endl;
-        }
-    }
+//    ofstream outputfile("/Users/albicilla/programming/samurai/samurai17/test"+to_string(rs.step)+".txt");
+//
+//    for(int tate=rs.position.y+vision;tate>=rs.position.y-vision;tate--){
+//        {
+//            rep(yoko,course[tate+care].size()){
+//                //cerr<<COURSE(tate,yoko);
+//                //ファイル書き出し
+//                //outputfile<<COURSE(tate,yoko);
+//            }
+//            //cerr<<endl;
+//            //
+//            //outputfile<<endl;
+//        }
+//    }
     //cerr<<"obs"<<endl;
 
     reached.clear();
@@ -646,20 +648,19 @@ int main(){
         //NowState now;
         //cin>>now.step>>now.lefttime>>now.myposx>>now.myposy>>now.myvelox>>now.myveloy>>now.eneposx>>now.eneposy>>now.enevelox>>now.eneveloy;
         for(int i=-vision;i<=vision;i++){
-            course[rs.position.y+i+12].clear();
-            rep(j,12){
-                course[rs.position.y+i+12].push_back(1);
+            course[rs.position.y+i+care].clear();
+            rep(j,care){
+                course[rs.position.y+i+care].push_back(1);
             }
             rep(j,CourseWidth){
                 int a;
                 cin>>a;
-                course[rs.position.y+i+12].push_back(a);
+                course[rs.position.y+i+care].push_back(a);
             }
         }
 
-
         IntVec accel = play(rs);
-        cerr  << "accel.x" << accel.x << " " << "accel.y" << accel.y << endl;
+        //cerr  << "accel.x" << accel.x << " " << "accel.y" << accel.y << endl;
 
         cout<<accel.x<<' '<<accel.y<<endl;
     }
