@@ -2,7 +2,7 @@
 #
 # How to use
 # python course_generator.py [course_dir] [save_dir] [num]
-# ex) python course_generator.py course testcourse/generated/ 200
+# ex) python course_generator.py course/ testcourse/generated/ 200
 #
 # Requirement
 # Python3 / numpy / PIL(Pillow)
@@ -27,7 +27,7 @@ class Course:
         self.length = 100
         self.obstacles = np.array([])
         self.stepLimit = 200
-        self.thinkTime = 2000
+        self.thinkTime = 4000
         self.vision = 20
         self.width = 20
         self.x0 = 0
@@ -52,6 +52,13 @@ class Course:
     # コースの切り出し
     def get_slice(self, start, end, horizontal=True):
         if horizontal:
+            sliced = self.obstacles[start: end]
+
+            # 進行不可能な場合、左端を進行可能にする
+            for i, row in enumerate(sliced):
+                if len(np.where(row==1)) == len(row):
+                    sliced[i][0] = 0
+
             return self.obstacles[start: end]
         else:
             # 垂直に切り出すことはあまり無いはず
@@ -94,11 +101,10 @@ class Course:
         with open(name, "w") as c:
             json.dump(smrjky, c)
         
-        print("course saved at " + name)
+        print("course was saved at " + name)
 
 
 # PILの機能を利用してサイズ変更
-
 def resize(obstacles ,width, height):
     image = Image.fromarray(np.array(obstacles, dtype="uint8"))
     # ToDo: 縮小の度合いによっては進行不可能なコースが出来上がる可能性あり
@@ -114,12 +120,14 @@ if __name__ == "__main__":
     base_courses = [args[1] + course for course in os.listdir(args[1]) if course.endswith(".smrjky")]
     
     # コース生成のパラメーター
-    # stepLimit, thinkTime, visionは、利用したコースと、切り抜いた割合に応じて算出
+    # stepLimit, visionは、利用したコースと、切り抜いた割合に応じて算出
     # 例) 高さ100, stepLimit100のコースから高さ40、高さ150, stepLimit200のコースから高さ60を切り貼りした場合
     #     stepLimit = 100x40/100 + 200x60/150
+    #
+    # thinkTime = stepLimit * 200 + 1000
     
-    slice_params = [20, 30, 40]
-    width_params = [15, 20, 25, 30, 35, 40, 45, 50]
+    slice_params = np.arange(20, 36).tolist()
+    width_params = np.arange(5, 21).tolist()
     
     # 指定された数のコースを生成
     for i in range(int(args[3])):
@@ -128,7 +136,6 @@ if __name__ == "__main__":
         
         # パラメーターの初期化
         stepLimit = 0
-        thinkTime = 0
         vision = 0
         
         # 生成するコースのインスタンスを生成
@@ -152,7 +159,6 @@ if __name__ == "__main__":
 
             # パラメーターの更新
             stepLimit += sub_course.stepLimit * slice_param // (sub_course.length+20)
-            thinkTime += sub_course.thinkTime * slice_param // (sub_course.length+20)
             vision += sub_course.vision * slice_param // (sub_course.length+20)
             
             # 幅を合わせ、高さをランダムに変形して結合
@@ -160,7 +166,7 @@ if __name__ == "__main__":
         
         # 保存
         course.stepLimit = stepLimit
-        course.thinkTime = thinkTime
+        course.thinkTime = stepLimit * 200 + 1000
         course.vision = vision
         course.save(args[2] + "course" + str(i) + ".smrjky")
 
