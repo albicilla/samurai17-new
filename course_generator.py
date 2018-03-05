@@ -120,9 +120,10 @@ if __name__ == "__main__":
     base_courses = [args[1] + course for course in os.listdir(args[1]) if course.endswith(".smrjky")]
     
     # コース生成のパラメーター
-    # stepLimit, visionは、利用したコースと、切り抜いた割合に応じて算出
+    # stepLimit, visionは、利用したコースと、切り抜いた割合に応じて算出したものに、
+    # マージンを追加した文を考慮して定数を足す
     # 例) 高さ100, stepLimit100のコースから高さ40、高さ150, stepLimit200のコースから高さ60を切り貼りした場合
-    #     stepLimit = 100x40/100 + 200x60/150
+    #     stepLimit = 100x40/100 + 5 + 200x60/150 + 5
     #
     # thinkTime = stepLimit * 200 + 1000
     
@@ -157,16 +158,17 @@ if __name__ == "__main__":
                 continue
             sliced_obstacles = sub_course.get_slice(slice_start, slice_start + slice_param)
 
+            slice_resize_param = random.choice(slice_params)
+
             # パラメーターの更新
-            stepLimit += sub_course.stepLimit * slice_param // (sub_course.length+20)
-            vision += sub_course.vision * slice_param // (sub_course.length+20)
+            stepLimit += sub_course.stepLimit * slice_resize_param // (sub_course.length) + 5
+            vision += sub_course.vision * slice_param // (sub_course.length)
             
             # 幅を合わせ、高さをランダムに変形して結合
-            course.join(resize(sliced_obstacles, width, random.choice(slice_params)))
+            course.join(resize(sliced_obstacles, width, slice_resize_param))
         
         # 保存
         course.stepLimit = stepLimit
         course.thinkTime = stepLimit * 200 + 1000
         course.vision = vision
         course.save(args[2] + "course" + str(i) + ".smrjky")
-
