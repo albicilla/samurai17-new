@@ -30,8 +30,8 @@ class Course:
         self.thinkTime = 4000
         self.vision = 20
         self.width = 20
-        self.x0 = 0
-        self.x1 = 1
+        self.x0 = 1
+        self.x1 = 2
     
     # コースの読み込み
     def load(self, course_path):
@@ -95,8 +95,8 @@ class Course:
         smrjky['width'] = self.width
         
         # 初期位置はランダム
-        smrjky['x0'] = random.randint(0, self.width // 2)
-        smrjky['x1'] = random.randint((self.width // 2 + 1), self.width)
+        smrjky['x0'] = random.randint(1, self.width // 2)
+        smrjky['x1'] = random.randint((self.width // 2 + 1), self.width - 1)
         
         with open(name, "w") as c:
             json.dump(smrjky, c)
